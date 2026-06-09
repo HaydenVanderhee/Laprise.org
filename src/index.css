@@ -1,0 +1,126 @@
+/* All @imports must come before any rules */
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0d1514;
+  --color-surface: #0d1514;
+  --color-surface-dim: #0d1514;
+  --color-surface-bright: #333b39;
+  --color-surface-container-lowest: #08100f;
+  --color-surface-container-low: #161d1c;
+  --color-surface-container: #1a2120;
+  --color-surface-container-high: #242b2a;
+  --color-surface-container-highest: #2f3635;
+  --color-surface-variant: #2f3635;
+  --color-surface-tint: #24ddd1;
+  --color-on-surface: #dce4e2;
+  --color-on-surface-variant: #bacac7;
+  --color-on-background: #dce4e2;
+  --color-inverse-surface: #dce4e2;
+  --color-inverse-on-surface: #2a3231;
+  --color-outline: #849491;
+  --color-outline-variant: #3b4a48;
+  --color-primary: #47f1e4;
+  --color-on-primary: #003733;
+  --color-primary-container: #00d4c8;
+  --color-on-primary-container: #005651;
+  --color-primary-fixed: #54faed;
+  --color-primary-fixed-dim: #24ddd1;
+  --color-on-primary-fixed: #00201e;
+  --color-on-primary-fixed-variant: #00504b;
+  --color-inverse-primary: #006a64;
+  --color-secondary: #c6c5d0;
+  --color-on-secondary: #2f3038;
+  --color-secondary-container: #45464f;
+  --color-on-secondary-container: #b5b4bf;
+  --color-secondary-fixed: #e2e1ec;
+  --color-secondary-fixed-dim: #c6c5d0;
+  --color-on-secondary-fixed: #1a1b23;
+  --color-on-secondary-fixed-variant: #45464f;
+  --color-tertiary: #ffd1a5;
+  --color-on-tertiary: #492900;
+  --color-tertiary-container: #ffac4c;
+  --color-on-tertiary-container: #704200;
+  --color-tertiary-fixed: #ffdcbc;
+  --color-tertiary-fixed-dim: #ffb86c;
+  --color-on-tertiary-fixed: #2c1700;
+  --color-on-tertiary-fixed-variant: #683d00;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-body: "Hanken Grotesk", sans-serif;
+  --font-subheading: "Newsreader", serif;
+
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0a0a0f;
+  color: #dce4e2;
+  font-family: 'Hanken Grotesk', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+#root { width: 100%; min-height: 100vh; }
+
+@keyframes bg-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.bg-fade-in {
+  animation: bg-fade-in 1.4s ease-out 0s both;
+}
+
+/* ── Material Symbols ── */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-style: normal;
+  line-height: 1;
+  display: inline-block;
+  user-select: none;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Glass card ── */
+.glass-card {
+  background: rgba(36, 43, 42, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(71, 241, 228, 0.12);
+}
+
+/* ── Background ── */
+.bg-deep-space {
+  background-color: #080c0c;
+  background-image:
+    /* large left teal bloom */
+    radial-gradient(ellipse 55% 50% at 5% 45%, rgba(0, 212, 200, 0.13) 0%, transparent 65%),
+    /* right teal accent */
+    radial-gradient(ellipse 35% 40% at 95% 55%, rgba(0, 212, 200, 0.07) 0%, transparent 55%),
+    /* bottom-right warmth */
+    radial-gradient(ellipse 40% 30% at 80% 90%, rgba(0, 180, 170, 0.05) 0%, transparent 50%),
+    /* top subtle centre glow */
+    radial-gradient(ellipse 60% 25% at 50% 0%, rgba(36, 221, 209, 0.05) 0%, transparent 60%);
+}

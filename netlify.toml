@@ -1,0 +1,44 @@
+[[redirects]]
+  from = "/old"
+  to = "/old/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/old/*"
+  to = "/old/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/weight-loss"
+  to = "/weight-loss/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/weight-loss/*"
+  to = "/weight-loss/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/skin"
+  to = "/skin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/skin/*"
+  to = "/skin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/hair"
+  to = "/hair/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/hair/*"
+  to = "/hair/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

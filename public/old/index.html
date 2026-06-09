@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Laserflow - AI Automation for Med Spas | Laser Hair Removal Clinic Software</title>
+  <meta name="description"
+    content="AI automation for laser hair removal med spas. Automate leads, onboarding, and client management with intelligent AI agents." />
+  <meta name="keywords"
+    content="med spa automation, laser hair removal software, AI lead generation, client onboarding, med spa AI agents" />
+  <meta name="author" content="Laserflow" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow" />
+  <meta property="og:title" content="Laserflow - AI Automation for Med Spas" />
+  <meta property="og:description"
+    content="Automate your med spa's entire onboarding system with AI agents. Streamline leads, responses, and client management. Join 500+ med spas already using Laserflow." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://laserflow.co" />
+  <meta property="og:site_name" content="Laserflow" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Laserflow - AI Automation for Med Spas" />
+  <meta name="twitter:description"
+    content="Automate your med spa's entire onboarding system with AI agents. Streamline leads, responses, and client management." />
+  <meta name="twitter:site" content="@laserflow" />
+  <link rel="canonical" href="https://laserflow.co" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=3" />
+
+  <!-- Leadsy Tracking Pixel -->
+  <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="1jsollCrkhOx8l0Mr" data-version="062024"></script>
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Laserflow",
+      "applicationCategory": "BusinessApplication",
+      "description": "AI-powered automation platform for laser hair removal med spas. Automates lead capture, client onboarding, appointment scheduling, and communication.",
+      "url": "https://laserflow.co",
+      "operatingSystem": "Web-based",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free discovery call available"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "500"
+      }
+    }
+    </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Laserflow",
+      "url": "https://laserflow.co",
+      "logo": "https://laserflow.co/logo.png",
+      "description": "AI automation solutions for laser hair removal med spas",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@laserflow.co",
+        "contactType": "sales"
+      }
+    }
+    </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+    rel="stylesheet" />
+  <script type="module" crossorigin src="./assets/index-Bm2jV5u_.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-0whc8IH7.css">
+
+  <style>
+    @keyframes lf-fade-in { from { opacity: 0; } to { opacity: 1; } }
+    .lf-fade-in { animation: lf-fade-in 1.4s ease-out 0s both; }
+    /* Strip the old page's opaque backgrounds so the canvas shows through */
+    :root { --background: transparent !important; }
+    html, body { background: transparent !important; background-color: transparent !important; }
+    .bg-\[#060913\] { background-color: transparent !important; }
+    .section-overlay { background: transparent !important; }
+  </style>
+</head>
+
+<body>
+  <!-- Background gradient bloom -->
+  <div aria-hidden="true" class="lf-fade-in" style="position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 55% 50% at 62% 48%,rgba(0,212,200,.08) 0%,transparent 65%),radial-gradient(ellipse 45% 50% at 6% 52%,rgba(36,221,209,.05) 0%,transparent 60%)"></div>
+  <!-- Streaming lines canvas -->
+  <canvas id="lf-canvas" aria-hidden="true" class="lf-fade-in" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
+  <!-- Cursor spotlight -->
+  <div id="lf-spotlight" aria-hidden="true" style="position:fixed;inset:0;z-index:9999;pointer-events:none"></div>
+  <!-- Entrance overlay — fades out on load -->
+  <div id="lf-overlay" aria-hidden="true" style="position:fixed;inset:0;z-index:10000;background:#080c0c;pointer-events:none;opacity:1;transition:opacity 1.4s ease-out 0.15s"></div>
+
+  <div id="root"></div>
+  <script defer src="%VITE_ANALYTICS_ENDPOINT%/umami" data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+
+  <script>
+  (function () {
+    // Entrance overlay fade-out
+    var overlay = document.getElementById('lf-overlay');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        overlay.style.opacity = '0';
+        setTimeout(function () { overlay.style.display = 'none'; }, 2000);
+      });
+    });
+
+    // Cursor spotlight
+    var spotlight = document.getElementById('lf-spotlight');
+    var spTX = -9999, spTY = -9999, spCX = -9999, spCY = -9999;
+    window.addEventListener('mousemove', function (e) { spTX = e.clientX; spTY = e.clientY; }, { passive: true });
+
+    // Canvas
+    var canvas = document.getElementById('lf-canvas');
+    var ctx = canvas.getContext('2d');
+
+    var STREAMS = [
+      { x0:-80,  y0:780, cx1:350, cy1:590, cx2:900, cy2:290, x3:1340, y3:180, color:'#47f1e4', width:1.4, alpha:0.54, phase:0.0, amplitude:18, speed:0.40 },
+      { x0:-60,  y0:830, cx1:340, cy1:620, cx2:920, cy2:310, x3:1360, y3:210, color:'#24ddd1', width:1.0, alpha:0.41, phase:1.5, amplitude:14, speed:0.35 },
+      { x0: 20,  y0:860, cx1:390, cy1:640, cx2:950, cy2:350, x3:1380, y3:240, color:'#24ddd1', width:0.8, alpha:0.30, phase:3.0, amplitude:11, speed:0.30 },
+      { x0:100,  y0:-40, cx1:400, cy1:230, cx2:900, cy2:410, x3:1340, y3:380, color:'#47f1e4', width:1.2, alpha:0.47, phase:0.8, amplitude:16, speed:0.38 },
+      { x0: 60,  y0:-60, cx1:380, cy1:210, cx2:880, cy2:400, x3:1380, y3:370, color:'#24ddd1', width:0.9, alpha:0.34, phase:2.2, amplitude:12, speed:0.32 },
+      { x0:-120, y0:700, cx1:320, cy1:540, cx2:860, cy2:380, x3:1400, y3:340, color:'#24ddd1', width:0.9, alpha:0.32, phase:1.0, amplitude:13, speed:0.36 },
+      { x0:200,  y0:920, cx1:480, cy1:680, cx2:980, cy2:420, x3:1440, y3:300, color:'#47f1e4', width:0.7, alpha:0.26, phase:4.0, amplitude:10, speed:0.28 },
+      { x0:-40,  y0:200, cx1:340, cy1:310, cx2:840, cy2:430, x3:1360, y3:420, color:'#24ddd1', width:0.6, alpha:0.23, phase:2.8, amplitude: 8, speed:0.25 },
+      { x0:700,  y0:-60, cx1:960, cy1:60,  cx2:1200, cy2:100, x3:1500, y3:160, color:'#47f1e4', width:0.6, alpha:0.22, phase:1.2, amplitude:10, speed:0.22 },
+      { x0:750,  y0:-80, cx1:980, cy1:80,  cx2:1220, cy2:130, x3:1500, y3:200, color:'#24ddd1', width:0.5, alpha:0.18, phase:3.4, amplitude: 8, speed:0.20 },
+      { x0:600,  y0:960, cx1:900, cy1:820, cx2:1180, cy2:720, x3:1500, y3:580, color:'#47f1e4', width:0.6, alpha:0.20, phase:2.0, amplitude:11, speed:0.24 },
+      { x0:650,  y0:980, cx1:920, cy1:840, cx2:1200, cy2:750, x3:1500, y3:640, color:'#24ddd1', width:0.5, alpha:0.17, phase:0.6, amplitude: 9, speed:0.21 },
+    ];
+
+    var GLOW = [[8, 0.04], [4, 0.10], [2, 0.22], [1, 1.00]];
+
+    var CLUSTERS = [
+      {
+        nodes: [
+          { bx:0.855, by:0.10, dA:0.006, dP:0.0, dS:0.28, r:1.8, alpha:0.50, color:'#47f1e4' },
+          { bx:0.900, by:0.16, dA:0.005, dP:1.4, dS:0.22, r:2.4, alpha:0.60, color:'#47f1e4' },
+          { bx:0.940, by:0.09, dA:0.007, dP:2.8, dS:0.32, r:1.6, alpha:0.45, color:'#24ddd1' },
+          { bx:0.875, by:0.21, dA:0.005, dP:0.9, dS:0.18, r:1.4, alpha:0.40, color:'#24ddd1' },
+          { bx:0.960, by:0.18, dA:0.006, dP:2.1, dS:0.25, r:1.8, alpha:0.48, color:'#47f1e4' },
+        ],
+        edges: [[0,1],[1,2],[1,3],[2,4],[3,4]],
+      },
+      {
+        nodes: [
+          { bx:0.780, by:0.76, dA:0.006, dP:1.0, dS:0.20, r:1.6, alpha:0.45, color:'#24ddd1' },
+          { bx:0.840, by:0.82, dA:0.007, dP:2.5, dS:0.27, r:2.2, alpha:0.55, color:'#47f1e4' },
+          { bx:0.900, by:0.74, dA:0.005, dP:0.4, dS:0.23, r:1.8, alpha:0.50, color:'#47f1e4' },
+          { bx:0.870, by:0.88, dA:0.006, dP:3.2, dS:0.19, r:1.4, alpha:0.38, color:'#24ddd1' },
+          { bx:0.950, by:0.80, dA:0.008, dP:1.8, dS:0.30, r:2.0, alpha:0.52, color:'#47f1e4' },
+        ],
+        edges: [[0,1],[1,2],[1,3],[2,4],[3,4],[0,3]],
+      },
+    ];
+
+    var COLORS = ['#47f1e4', '#24ddd1', '#00d4c8'];
+    var particles = [];
+    for (var i = 0; i < 110; i++) {
+      var ang = Math.random() * Math.PI * 2;
+      var spd = 0.008 + Math.random() * 0.018;
+      particles.push({
+        x: Math.random(), y: Math.random(),
+        vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
+        r: 0.5 + Math.random() * 1.2,
+        alpha: (0.15 + Math.random() * 0.45) * 0.75,
+        phase: Math.random() * Math.PI * 2,
+        ts: 0.4 + Math.random() * 1.0,
+        color: COLORS[Math.floor(Math.random() * 3)],
+      });
+    }
+
+    var dpr = window.devicePixelRatio || 1;
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      canvas.width  = window.innerWidth  * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width  = window.innerWidth  + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var t0 = null, tLast = 0;
+    function draw(ts) {
+      if (t0 === null) t0 = ts;
+      var t  = (ts - t0) / 1000;
+      var dt = Math.min((ts - tLast) / 1000, 0.05);
+      tLast  = ts;
+
+      var W = window.innerWidth, H = window.innerHeight;
+      ctx.clearRect(0, 0, W, H);
+
+      // Streams
+      var sx = W / 1440, sy = H / 900;
+      for (var si = 0; si < STREAMS.length; si++) {
+        var s = STREAMS[si];
+        var w1 =  Math.sin(t * s.speed + s.phase)           * s.amplitude;
+        var w2 = -Math.sin(t * s.speed + s.phase + Math.PI) * s.amplitude;
+        for (var gi = 0; gi < GLOW.length; gi++) {
+          ctx.beginPath();
+          ctx.moveTo(s.x0 * sx, s.y0 * sy);
+          ctx.bezierCurveTo(s.cx1 * sx, (s.cy1 + w1) * sy, s.cx2 * sx, (s.cy2 + w2) * sy, s.x3 * sx, s.y3 * sy);
+          ctx.strokeStyle = s.color;
+          ctx.lineWidth   = s.width * GLOW[gi][0];
+          ctx.globalAlpha = s.alpha * GLOW[gi][1];
+          ctx.lineCap     = 'round';
+          ctx.stroke();
+        }
+      }
+
+      // Node clusters
+      for (var ci = 0; ci < CLUSTERS.length; ci++) {
+        var cl = CLUSTERS[ci];
+        var pos = cl.nodes.map(function (n) {
+          return {
+            x: (n.bx + Math.sin(t * n.dS + n.dP)        * n.dA) * W,
+            y: (n.by + Math.sin(t * n.dS + n.dP + 1.57) * n.dA) * H,
+          };
+        });
+        for (var ei = 0; ei < cl.edges.length; ei++) {
+          var e = cl.edges[ei];
+          var twE = 0.5 + 0.5 * Math.sin(t * 0.4 + cl.nodes[e[0]].dP);
+          ctx.beginPath();
+          ctx.moveTo(pos[e[0]].x, pos[e[0]].y);
+          ctx.lineTo(pos[e[1]].x, pos[e[1]].y);
+          ctx.strokeStyle = '#47f1e4';
+          ctx.lineWidth   = 0.4;
+          ctx.globalAlpha = 0.18 * twE;
+          ctx.stroke();
+        }
+        for (var ni = 0; ni < cl.nodes.length; ni++) {
+          var n = cl.nodes[ni];
+          var px = pos[ni].x, py = pos[ni].y;
+          var twN = 0.5 + 0.5 * Math.sin(t * n.dS * 1.3 + n.dP);
+          var a = n.alpha * twN;
+          ctx.fillStyle = n.color;
+          ctx.beginPath(); ctx.arc(px, py, n.r * 4, 0, Math.PI * 2); ctx.globalAlpha = a * 0.10; ctx.fill();
+          ctx.beginPath(); ctx.arc(px, py, n.r * 2, 0, Math.PI * 2); ctx.globalAlpha = a * 0.22; ctx.fill();
+          ctx.beginPath(); ctx.arc(px, py, n.r,     0, Math.PI * 2); ctx.globalAlpha = a;         ctx.fill();
+        }
+      }
+
+      // Particles
+      for (var pi = 0; pi < particles.length; pi++) {
+        var p = particles[pi];
+        p.x += p.vx * dt; p.y += p.vy * dt;
+        if (p.x < -0.02) p.x = 1.02;
+        if (p.x >  1.02) p.x = -0.02;
+        if (p.y < -0.02) p.y = 1.02;
+        if (p.y >  1.02) p.y = -0.02;
+        var ppx = p.x * W, ppy = p.y * H;
+        var ptw = 0.5 + 0.5 * Math.sin(t * p.ts + p.phase);
+        var pa  = p.alpha * ptw;
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.arc(ppx, ppy, p.r * 4, 0, Math.PI * 2); ctx.globalAlpha = pa * 0.08; ctx.fill();
+        ctx.beginPath(); ctx.arc(ppx, ppy, p.r * 2, 0, Math.PI * 2); ctx.globalAlpha = pa * 0.18; ctx.fill();
+        ctx.beginPath(); ctx.arc(ppx, ppy, p.r,     0, Math.PI * 2); ctx.globalAlpha = pa;         ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+
+      // Cursor spotlight
+      spCX += (spTX - spCX) * 0.08;
+      spCY += (spTY - spCY) * 0.08;
+      spotlight.style.background =
+        'radial-gradient(circle 520px at ' + spCX + 'px ' + spCY + 'px,' +
+        'rgba(71,241,228,0.07) 0%,rgba(0,212,200,0.04) 30%,transparent 70%)';
+
+      requestAnimationFrame(draw);
+    }
+
+    requestAnimationFrame(draw);
+  })();
+  </script>
+</body>
+
+</html>

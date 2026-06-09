@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LaserFlow - AI Infrastructure for Aesthetic Clinics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&amp;family=Hanken+Grotesk:wght@400;600&amp;family=Newsreader:ital,wght@1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#3b4a48",
+                        "inverse-primary": "#006a64",
+                        "surface-dim": "#0d1514",
+                        "tertiary-fixed-dim": "#ffb86c",
+                        "on-tertiary-fixed": "#2c1700",
+                        "on-secondary-fixed-variant": "#45464f",
+                        "surface-bright": "#333b39",
+                        "surface-container-high": "#242b2a",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#683d00",
+                        "surface-container-highest": "#2f3635",
+                        "inverse-on-surface": "#2a3231",
+                        "background": "#0d1514",
+                        "on-secondary": "#2f3038",
+                        "surface-container-lowest": "#08100f",
+                        "on-primary-fixed-variant": "#00504b",
+                        "secondary": "#c6c5d0",
+                        "surface-tint": "#24ddd1",
+                        "inverse-surface": "#dce4e2",
+                        "on-secondary-container": "#b5b4bf",
+                        "on-primary": "#003733",
+                        "surface": "#0d1514",
+                        "on-tertiary-container": "#704200",
+                        "outline": "#849491",
+                        "on-tertiary": "#492900",
+                        "surface-container-low": "#161d1c",
+                        "primary-fixed": "#54faed",
+                        "primary-container": "#00d4c8",
+                        "surface-container": "#1a2120",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#ffdcbc",
+                        "tertiary": "#ffd1a5",
+                        "primary-fixed-dim": "#24ddd1",
+                        "secondary-container": "#45464f",
+                        "on-primary-container": "#005651",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#1a1b23",
+                        "on-surface-variant": "#bacac7",
+                        "on-surface": "#dce4e2",
+                        "on-primary-fixed": "#00201e",
+                        "on-background": "#dce4e2",
+                        "surface-variant": "#2f3635",
+                        "secondary-fixed": "#e2e1ec",
+                        "secondary-fixed-dim": "#c6c5d0",
+                        "primary": "#47f1e4",
+                        "tertiary-container": "#ffac4c",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Space Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "display-lg-mobile": ["Space Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-caps": ["Hanken Grotesk"],
+                        "subheading-premium": ["Newsreader"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "subheading-premium": ["24px", { "lineHeight": "1.4", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom styles for the flowing background */
+        .bg-flowing {
+            background-color: #0A0A0F;
+            background-image: 
+                radial-gradient(circle at 10% 40%, rgba(0, 212, 200, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 60%, rgba(0, 212, 200, 0.05) 0%, transparent 30%);
+        }
+        
+        .glass-card {
+            background: rgba(36, 43, 42, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 200, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(0, 212, 200, 0.3);
+            transform: translateY(-4px);
+            box-shadow: inset 0 0 20px rgba(0, 212, 200, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-flowing text-on-surface min-h-screen flex flex-col font-body-lg">
+<!-- Background Image that wraps the hero and cards -->
+<div class="fixed inset-0 z-[-1] opacity-60 pointer-events-none" data-alt="A sophisticated, abstract digital background representing AI infrastructure. Deep black space is intersected by flowing, organic streams of glowing teal light and subtle interconnected geometric nodes. The lighting is low-key with high-contrast, premium teal luminescence, evoking a calm, technological superiority and high-end aesthetic clinic atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuClYo_wIvC6hYW6Ia6k6KbROiOyjMk_oO3FAc8TO3S0lPxOScMd-55mRH3rA9K75K0CygB2uLuiDifSYrwEhglGb_ZAxfVZFHZ5S1VXCcNndUcUe4IcqMCKSi-5_JFls_Np8jJmHvCJ2JHHO_Oa5d2C3AOXDd2w1yNmcAlTTK23ERN2r1hcBKg3wq1vHWpyFStkI38d1NaFjLZDlXcZ7316bNWtMi_j13lL3uZ2k5LwCPIMxkbqRuH3jW4DvdrWuW7B-2o5v6Rd'); background-size: cover; background-position: center;">
+</div>
+<!-- TopAppBar -->
+<header class="w-full top-0 left-0 bg-transparent no borders, glassmorphism backdrop-blur-xl flat no shadows z-50 fixed border-b border-white/5">
+<div class="flex justify-between items-center w-full px-margin-desktop py-unit max-w-container-max mx-auto h-20">
+<!-- Brand Logo -->
+<a class="font-display-lg text-headline-md font-bold tracking-tight text-on-surface dark:text-on-surface flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-primary text-3xl">bubble_chart</span>
+                LaserFlow
+            </a>
+<!-- Navigation Links -->
+<nav class="hidden md:flex gap-8 items-center"><a class="text-on-surface-variant dark:text-on-surface-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary transition-colors duration-300 scale-95 active:transition-transform uppercase" href="#">Contact Us</a></nav>
+<!-- Mobile Menu Placeholder (Hidden on Web) -->
+<div class="md:hidden">
+<span class="material-symbols-outlined text-on-surface">menu</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center justify-center pt-32 pb-section-gap px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto relative z-10">
+<!-- Hero Section -->
+<section class="flex flex-col items-center text-center max-w-4xl mx-auto mt-16 md:mt-24 mb-24">
+<!-- Badge -->
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 mb-8">
+<span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(71,241,228,0.8)]"></span>
+<span class="font-label-caps text-label-caps text-primary tracking-wider uppercase">AI INFRASTRUCTURE FOR AESTHETIC CLINICS</span>
+</div>
+<!-- Headline -->
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-6">
+                Your growth partner in aesthetic medicine.
+            </h1>
+<!-- Subheading -->
+<h2 class="font-subheading-premium text-subheading-premium text-primary italic mb-6 font-serif">
+                Precision-built. Patient-ready.
+            </h2>
+<!-- Description -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[600px] mx-auto">
+                LaserFlow is the AI infrastructure layer behind modern aesthetic clinics — quietly turning enquiries into booked patients while your team focuses on care.
+            </p>
+<div class="mt-12 text-on-surface-variant/60 font-body-sm text-body-sm">
+                Trusted by aesthetic clinics across North America and Europe
+            </div>
+</section>
+<!-- Router Cards -->
+<section class="w-full grid grid-cols-1 md:grid-cols-3 gap-gutter mt-12 relative z-20">
+<!-- Card 1 -->
+<div class="glass-card rounded-xl p-8 flex flex-col items-start gap-4 h-full cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-primary/20 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="monitor_weight" data-weight="fill">monitor_weight</span>
+</div>
+<h3 class="font-headline-md text-2xl text-on-surface mt-2">Weight Loss Clinics</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                    Capture every GLP-1 enquiry and keep monthly patients booked solid.
+                </p>
+</div>
+<!-- Card 2 -->
+<div class="glass-card rounded-xl p-8 flex flex-col items-start gap-4 h-full cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-primary/20 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="face" data-weight="fill">face</span>
+</div>
+<h3 class="font-headline-md text-2xl text-on-surface mt-2">Hair Restoration</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                    Turn high-value consultations into booked procedures, automatically.
+                </p>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-xl p-8 flex flex-col items-start gap-4 h-full cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-primary/20 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="spa" data-weight="fill">spa</span>
+</div>
+<h3 class="font-headline-md text-2xl text-on-surface mt-2">Skin Rejuvenation</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                    Fill your treatment chairs with rebooking patients on autopilot.
+                </p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bottom-0 bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/20 flat no shadows relative z-50">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-desktop py-gutter max-w-container-max mx-auto gap-unit">
+<!-- Brand Logo / Copyright -->
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-body-lg font-bold text-on-surface dark:text-on-surface">LaserFlow</span>
+<span class="text-on-surface-variant dark:text-on-surface-variant font-body-sm text-body-sm">© 2024 LaserFlow. Precision-built. Patient-ready.</span>
+</div>
+<!-- Links -->
+<nav class="flex gap-6 mt-4 md:mt-0">
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100 uppercase" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100 uppercase" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100 uppercase" href="#">Security</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-caps text-label-caps hover:text-primary dark:hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100 uppercase" href="#">Status</a>
+</nav>
+</div>
+</footer>
+</body></html>
