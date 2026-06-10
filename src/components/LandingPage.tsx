@@ -40,8 +40,8 @@ function Nav() {
     >
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px,5vw,80px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-          <LogoMark size={36} />
-          <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: '#dce4e2', letterSpacing: '-0.01em' }}>Laprise</span>
+          <LogoMark size={44} />
+          <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 26, fontWeight: 700, color: '#dce4e2', letterSpacing: '-0.01em' }}>Laprise</span>
         </a>
 
         {/* Desktop nav */}
@@ -59,7 +59,7 @@ function Nav() {
           }}
             onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.03)')}
             onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}>
-            Get Started
+            Book a 15-Minute Chat
           </a>
         </nav>
 
@@ -86,7 +86,7 @@ function Nav() {
             </a>
           ))}
           <a href="/book" style={{ display: 'block', background: '#48CFCB', color: '#0D0D12', padding: '12px 0', borderRadius: 8, textAlign: 'center', fontWeight: 700, textDecoration: 'none', marginTop: 12 }}>
-            Get Started
+            Book a 15-Minute Chat
           </a>
         </div>
       )}
@@ -109,7 +109,7 @@ const TRIAGE_INITIAL = [
 const FAQS = [
   {
     question: 'Do you work with brand new swim schools?',
-    answer: "Not immediately. Our system is built to capture and convert existing enquiry flow. If your school has zero incoming enquiries, we'd recommend establishing a paid traffic baseline first before installing the enrollment system.",
+    answer: "Not immediately. Our system is built to capture and convert existing enquiry flow. If your school has zero incoming enquiries, we'd recommend establishing a paid traffic baseline first before installing the enrolment system.",
   },
   {
     question: 'Can I customise the AI responses for my school?',
@@ -125,7 +125,7 @@ const FAQS = [
   },
   {
     question: 'How fast can you set this up for my school?',
-    answer: 'Once we map your workflows on our Strategy Call, the entire enrollment engine is typically built, tested, and deployed within 14 days.',
+    answer: 'Once we map your workflows on our Strategy Call, the entire enrolment engine is typically built, tested, and deployed within 14 days.',
   },
   {
     question: 'How does Laprise connect with my existing booking system or CRM?',
@@ -133,7 +133,7 @@ const FAQS = [
   },
   {
     question: 'Is my student and family data kept private and secure?',
-    answer: 'Absolutely. Our architecture uses enterprise-grade encryption and compliant data routing to ensure all family information remains strictly confidential.',
+    answer: 'Absolutely. Our system uses enterprise-grade encryption and compliant data routing to ensure all family information remains strictly confidential.',
   },
   {
     question: 'What if we don\'t see more trial bookings — do we still pay?',
@@ -200,9 +200,9 @@ export function LandingPage() {
         <div style={{ position: 'relative', zIndex: 20, width: '100%', maxWidth: 896, margin: '0 auto', textAlign: 'center', padding: '0 24px' }}>
           <motion.p {...fadeUp(0)} style={{
             display: 'inline-block', fontWeight: 700, color: '#48CFCB', letterSpacing: '0.1em',
-            textTransform: 'uppercase', marginBottom: 24, fontSize: 11,
+            textTransform: 'uppercase', marginBottom: 24, fontSize: 13,
             border: '1px solid rgba(72,207,203,0.3)', background: 'rgba(13,13,18,0.8)',
-            backdropFilter: 'blur(8px)', padding: '10px 20px', borderRadius: 9999,
+            backdropFilter: 'blur(8px)', padding: '13px 28px', borderRadius: 9999,
           }}>
             Stop Losing After-Hours Enquiries to the School Down the Road
           </motion.p>
@@ -215,7 +215,7 @@ export function LandingPage() {
           </motion.h1>
 
           <motion.p {...fadeUp(0.2)} style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: '#9ca3af', marginBottom: 40, maxWidth: 672, margin: '0 auto 40px', lineHeight: 1.7 }}>
-            We install a 24/7 enrollment system that instantly answers pricing questions, books qualified trial lessons, and follows up on no-shows — even while you're in the pool teaching.
+            We install a 24/7 enrolment system that instantly answers pricing questions, books qualified trial lessons, and follows up on no-shows — even while you're in the pool teaching.
           </motion.p>
 
           <motion.div {...fadeUp(0.3)} style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center' }}>
@@ -226,7 +226,7 @@ export function LandingPage() {
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 50px rgba(72,207,203,0.4)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 30px rgba(72,207,203,0.2)' }}>
-              Book Your Strategy Call <ArrowRight size={16} />
+              Book a 15-Minute Chat <ArrowRight size={16} />
             </a>
             <button
               onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
@@ -248,10 +248,10 @@ export function LandingPage() {
           <motion.div {...fadeUp(0)} style={{ display: 'flex', flexWrap: 'wrap', gap: 24, marginBottom: 64, alignItems: 'flex-end', justifyContent: 'space-between' }}>
             <div>
               <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16 }}>
-                The 24/7 <span style={{ color: '#48CFCB' }}>Enrollment Engine</span>
+                The 24/7 <span style={{ color: '#48CFCB' }}>Enrolment Engine</span>
               </h2>
               <p style={{ color: '#9ca3af', fontSize: 18, maxWidth: 672, lineHeight: 1.6 }}>
-                Stop missing enquiries because you're on deck. We deploy purpose-built AI and automation to handle every stage of the enrollment journey — from first enquiry to attended trial.
+                Stop missing enquiries because you're on deck. We use purpose-built AI and automation to handle every stage of the enrolment journey — from first enquiry to attended trial.
               </p>
             </div>
           </motion.div>
@@ -263,7 +263,7 @@ export function LandingPage() {
               onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(72,207,203,0.3)')}
               onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)')}>
               <div style={{ marginBottom: 48 }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>The 24/7 Triage Agent</h3>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Your After-Hours Receptionist</h3>
                 <p style={{ fontSize: 13, color: '#9ca3af' }}>Instantly replies to late-night enquiries, qualifying family intent and capturing their info while you're still on deck.</p>
               </div>
               <div style={{ position: 'relative', flex: 1, paddingTop: 16 }}>
@@ -293,7 +293,7 @@ export function LandingPage() {
               onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(72,207,203,0.3)')}
               onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)')}>
               <div style={{ marginBottom: 24 }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Objection Handling Protocol</h3>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Answers Parents' Questions For You</h3>
                 <p style={{ fontSize: 13, color: '#9ca3af' }}>Automatically answers questions about pricing, level assessment, and trial policies to recover families who went cold.</p>
               </div>
               <div style={{ flex: 1, background: 'rgba(20,20,28,0.88)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', padding: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: '#d1d5db', lineHeight: 1.7, overflow: 'hidden', position: 'relative' }}>
@@ -301,9 +301,9 @@ export function LandingPage() {
                   <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#ef4444' }} />
                   <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#eab308' }} />
                   <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }} />
-                  <span style={{ fontSize: 10, color: '#6b7280', marginLeft: 8 }}>sms_server.log</span>
+                  <span style={{ fontSize: 10, color: '#6b7280', marginLeft: 8 }}>messages.log</span>
                 </div>
-                <span style={{ color: '#48CFCB' }}>&gt; system.execute_sms_recovery(lead_492)</span><br /><br />
+                <span style={{ color: '#48CFCB' }}>&gt; new message to Sarah M.</span><br /><br />
                 <span style={{ opacity: 0.9 }}>{typingText}</span>
                 <span style={{ display: 'inline-block', width: 8, height: 16, background: '#48CFCB', marginLeft: 4, verticalAlign: 'middle', opacity: 0.8, animation: 'pulse 1s infinite' }} />
               </div>
@@ -315,7 +315,7 @@ export function LandingPage() {
               onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(72,207,203,0.3)')}
               onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)')}>
               <div style={{ marginBottom: 24 }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>The ROI Telemetry</h3>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>See Exactly What's Working</h3>
                 <p style={{ fontSize: 13, color: '#9ca3af' }}>Total operational clarity. See exactly which campaigns are actually turning into booked trial lessons.</p>
               </div>
               <div style={{ flex: 1, position: 'relative', background: 'rgba(20,20,28,0.88)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
@@ -345,10 +345,10 @@ export function LandingPage() {
       <section style={{ padding: '48px 24px', position: 'relative', zIndex: 20 }}>
         <div style={{ maxWidth: 896, margin: '0 auto', textAlign: 'center' }}>
           <motion.p {...fadeUp(0)} style={{ fontSize: 18, color: '#6b7280', marginBottom: 24, fontWeight: 500 }}>
-            Most marketing agencies focus on: cheap leads and zero school visibility.
+            Most marketing agencies focus on: cheap quick wins and zero school visibility.
           </motion.p>
           <motion.p {...fadeUp(0.1)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 700, lineHeight: 1.2 }}>
-            We focus on: delivering <span style={{ color: '#48CFCB' }}>autonomous systems</span> that fill your lanes every term.
+            We focus on: <span style={{ color: '#48CFCB' }}>systems</span> that fill your lanes every term.
           </motion.p>
         </div>
       </section>
@@ -395,15 +395,26 @@ export function LandingPage() {
               <div style={{ position: 'absolute', top: 24, left: 24, fontFamily: "'JetBrains Mono', monospace", color: '#48CFCB', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', background: 'rgba(72,207,203,0.1)', padding: '6px 12px', borderRadius: 9999, border: '1px solid rgba(72,207,203,0.2)', zIndex: 10 }}>Step 02</div>
               <div style={{ marginTop: 56, marginBottom: 32, width: '85%' }}>
                 <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.25rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, lineHeight: 1.1 }}>
-                  The 24/7 Triage<br />
-                  <span style={{ backgroundImage: 'linear-gradient(to right, #9ca3af, #6b7280)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Integration.</span>
+                  Around-the-Clock<br />
+                  <span style={{ backgroundImage: 'linear-gradient(to right, #9ca3af, #6b7280)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Responses.</span>
                 </h2>
                 <p style={{ fontSize: 18, color: '#9ca3af', lineHeight: 1.7 }}>Every enquiry that comes in gets responded to immediately, around the clock. No family sits unanswered over a weekend while they enrol at the school down the road.</p>
               </div>
-              <div style={{ width: '100%', height: 200, border: '1px solid rgba(255,255,255,0.05)', background: 'rgba(13,13,18,0.8)', backdropFilter: 'blur(8px)', borderRadius: 12, padding: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#22c55e', overflow: 'hidden' }}>
-                <div style={{ opacity: 0.7, whiteSpace: 'pre', animation: 'slideUp 20s linear infinite' }}>
-                  {`> recv: POST /webhook/lead\n> payload: { name: 'Emma W.',\n    source: 'FB_Ad_v3' }\n> status: 200 OK\n> init: agent_swim_enrol\n> parsing intent...\n> intent: Trial_Lesson\n> match_score: 0.98\n> action: dispatch_sms\n> status: delivered\n\n`.repeat(4)}
-                </div>
+              <div style={{ width: '100%', height: 200, border: '1px solid rgba(255,255,255,0.05)', background: 'rgba(13,13,18,0.8)', backdropFilter: 'blur(8px)', borderRadius: 12, padding: 20, display: 'flex', flexDirection: 'column', gap: 10, justifyContent: 'center' }}>
+                {[
+                  { label: 'New enquiry received', sub: 'Emma W. — Trial Lesson', time: '10:42 pm', color: '#9ca3af' },
+                  { label: 'Reply sent automatically', sub: 'Answered pricing & availability', time: '10:42 pm', color: '#48CFCB' },
+                  { label: 'Trial lesson booked', sub: 'Saturday 9:00 am confirmed', time: '10:44 pm', color: '#22c55e' },
+                ].map((item, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: item.color, flexShrink: 0 }} />
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: '#e5e7eb' }}>{item.label}</div>
+                      <div style={{ fontSize: 11, color: '#6b7280', marginTop: 2 }}>{item.sub}</div>
+                    </div>
+                    <span style={{ fontSize: 11, color: '#48CFCB', fontFamily: "'JetBrains Mono', monospace", whiteSpace: 'nowrap' }}>{item.time}</span>
+                  </div>
+                ))}
               </div>
             </motion.div>
 
@@ -416,8 +427,8 @@ export function LandingPage() {
               <div style={{ position: 'absolute', top: 24, left: 24, fontFamily: "'JetBrains Mono', monospace", color: '#48CFCB', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', background: 'rgba(72,207,203,0.1)', padding: '6px 12px', borderRadius: 9999, border: '1px solid rgba(72,207,203,0.2)', zIndex: 10 }}>Step 03</div>
               <div style={{ marginTop: 56, marginBottom: 32, width: '85%' }}>
                 <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.25rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, lineHeight: 1.1 }}>
-                  The Autonomous<br />
-                  <span style={{ backgroundImage: 'linear-gradient(to right, #9ca3af, #6b7280)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Funnel.</span>
+                  From Enquiry to<br />
+                  <span style={{ backgroundImage: 'linear-gradient(to right, #9ca3af, #6b7280)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Booked Trial, Automatically.</span>
                 </h2>
                 <p style={{ fontSize: 18, color: '#9ca3af', lineHeight: 1.7 }}>The system knows the questions swim parents ask before enrolling — pricing, level progression, makeup lesson policies — and handles them automatically before they reach your front desk.</p>
               </div>
@@ -439,13 +450,13 @@ export function LandingPage() {
               <div style={{ position: 'absolute', top: 24, left: 24, fontFamily: "'JetBrains Mono', monospace", color: '#48CFCB', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', background: 'rgba(72,207,203,0.1)', padding: '6px 12px', borderRadius: 9999, border: '1px solid rgba(72,207,203,0.2)', zIndex: 10 }}>Step 04</div>
               <div style={{ marginTop: 56, marginBottom: 32, width: '85%' }}>
                 <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.25rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, lineHeight: 1.1 }}>
-                  Total Operational<br />
-                  <span style={{ backgroundImage: 'linear-gradient(to right, #9ca3af, #6b7280)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Clarity.</span>
+                  Know Your Numbers<br />
+                  <span style={{ backgroundImage: 'linear-gradient(to right, #9ca3af, #6b7280)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>at a Glance.</span>
                 </h2>
                 <p style={{ fontSize: 18, color: '#9ca3af', lineHeight: 1.7 }}>Real-time visibility into every enquiry, ad dollar, and booked trial. Stop guessing what your marketing is doing — know exactly what fills lanes.</p>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                {[{ label: 'CONVERSION', val: '68%', color: '#fff' }, { label: 'COST/LEAD', val: '$14', color: '#48CFCB' }].map(m => (
+                {[{ label: 'CONVERSION', val: '68%', color: '#fff' }, { label: 'COST/BOOKING', val: '$14', color: '#48CFCB' }].map(m => (
                   <div key={m.label} style={{ background: 'rgba(18,18,26,0.9)', padding: 24, borderRadius: 16, border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
                     <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#6b7280', marginBottom: 8, letterSpacing: '0.1em' }}>{m.label}</div>
                     <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 36, fontWeight: 700, color: m.color }}>{m.val}</div>
@@ -454,7 +465,7 @@ export function LandingPage() {
                 <div style={{ gridColumn: 'span 2', background: 'rgba(18,18,26,0.9)', padding: 24, borderRadius: 16, border: '1px solid rgba(72,207,203,0.2)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', boxShadow: '0 0 20px rgba(72,207,203,0.05)' }}>
                   <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: '#48CFCB', boxShadow: '0 0 10px #48CFCB' }} />
                   <Activity size={24} color="#48CFCB" style={{ marginBottom: 8, animation: 'pulse 2s infinite' }} />
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: '#48CFCB', fontWeight: 700, letterSpacing: '0.1em' }}>SYSTEM_NOMINAL</span>
+                  <span style={{ fontSize: 13, color: '#48CFCB', fontWeight: 600 }}>All systems active</span>
                 </div>
               </div>
             </motion.div>
@@ -471,7 +482,7 @@ export function LandingPage() {
                   Scaleable <span style={{ backgroundImage: 'linear-gradient(to right, #48CFCB, #60a5fa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Partnership.</span>
                 </h2>
                 <p style={{ fontSize: 18, color: '#9ca3af', lineHeight: 1.7 }}>
-                  After the system is live, we stay on as your long-term growth partner — expanding to new pool locations, building new enrollment workflows, developing term-specific campaigns, and creating custom tools as your school scales.
+                  After the system is live, we stay on as your long-term growth partner — expanding to new pool locations, building new enrolment workflows, developing term-specific campaigns, and creating custom tools as your school scales.
                 </p>
               </div>
               <div style={{ width: '100%', height: 120, marginTop: 32, border: '1px solid rgba(255,255,255,0.05)', background: 'rgba(13,13,18,0.8)', backdropFilter: 'blur(8px)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
@@ -480,7 +491,7 @@ export function LandingPage() {
                 <div style={{ position: 'absolute', top: '50%', left: '50%', width: 16, height: 16, background: '#48CFCB', borderRadius: '50%', boxShadow: '0 0 20px #48CFCB', transform: 'translate(-50%,-50%)', animation: 'pulse 2s infinite' }} />
                 <div style={{ position: 'absolute', top: '50%', left: '25%', width: 8, height: 8, background: '#fff', borderRadius: '50%', boxShadow: '0 0 10px white', transform: 'translate(-50%,-50%)' }} />
                 <div style={{ position: 'absolute', top: '50%', left: '75%', width: 8, height: 8, background: '#fff', borderRadius: '50%', boxShadow: '0 0 10px white', transform: 'translate(-50%,-50%)' }} />
-                <span style={{ position: 'absolute', bottom: 16, right: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(72,207,203,0.7)', letterSpacing: '0.1em' }}>SCALING_PROTOCOL_INITIATED</span>
+                <span style={{ position: 'absolute', bottom: 16, right: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(72,207,203,0.7)', letterSpacing: '0.1em' }}>Growing with you</span>
               </div>
             </motion.div>
           </div>
@@ -495,7 +506,7 @@ export function LandingPage() {
               What We <span style={{ color: '#48CFCB' }}>Offer</span>
             </h2>
             <p style={{ color: '#9ca3af', textAlign: 'center', fontSize: 18, maxWidth: 672, lineHeight: 1.6 }}>
-              We deploy the complete architecture needed to rapidly scale private swim schools without overwhelming the owner-instructor.
+              We build everything your school needs to keep classes full — without adding to your plate.
             </p>
           </motion.div>
 
@@ -585,7 +596,7 @@ export function LandingPage() {
                           <span key={n} style={{ fontSize: 28, color: '#48CFCB', lineHeight: 1, filter: 'drop-shadow(0 0 6px rgba(72,207,203,0.5))' }}>★</span>
                         ))}
                       </div>
-                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#48CFCB', letterSpacing: '0.12em' }}>REVIEW_CAPTURED</div>
+                      <div style={{ fontSize: 12, color: '#48CFCB' }}>New review received</div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '60%', alignItems: 'center' }}>
                         <div style={{ height: 5, width: '100%', background: 'rgba(255,255,255,0.1)', borderRadius: 3 }} />
                         <div style={{ height: 5, width: '80%', background: 'rgba(255,255,255,0.07)', borderRadius: 3 }} />
@@ -611,11 +622,11 @@ export function LandingPage() {
             <div style={{ flex: 1, minWidth: 280 }}>
               <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 700, marginBottom: 12 }}>Tailored on <span style={{ color: '#48CFCB' }}>Demand.</span></h3>
               <p style={{ color: '#9ca3af', fontSize: 14, lineHeight: 1.6, maxWidth: 480 }}>
-                Our platform is built to grow with your school — continuously adding new automations, term-specific campaigns, and enrollment workflows tailored specifically for swim schools. Every enquiry touchpoint, handled.
+                Our platform is built to grow with your school — continuously adding new automations, term-specific campaigns, and enrolment workflows tailored specifically for swim schools. Every enquiry touchpoint, handled.
               </p>
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, maxWidth: 384, justifyContent: 'flex-end' }}>
-              {['Trial Lead Capture', 'Enrolment Reminders', 'Intake Automation', 'Level FAQ Handling', 'Two-Way SMS', 'CRM Integrations', 'Term Re-enrolment', 'Holiday Program Campaigns'].map(tag => (
+              {['Trial Enquiry Capture', 'Enrolment Reminders', 'Intake Automation', 'Level FAQ Handling', 'Two-Way SMS', 'CRM Integrations', 'Term Re-enrolment', 'Holiday Program Campaigns'].map(tag => (
                 <span key={tag} style={{ fontSize: 12, padding: '6px 12px', borderRadius: 9999, border: '1px solid rgba(72,207,203,0.2)', color: 'rgba(72,207,203,0.7)', background: 'rgba(72,207,203,0.05)', whiteSpace: 'nowrap' }}>{tag}</span>
               ))}
             </div>
@@ -664,19 +675,22 @@ export function LandingPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, width: '100%', marginBottom: 64 }}>
             {[
               {
-                stat: '55–65%', stat2: 'Trial-to-Enrollment',
+                stat: '55–65%', stat2: 'Trial-to-Enrolment',
                 h4: 'With Automated Follow-Up vs. 30–45% Without',
-                desc: 'Schools with automated trial follow-up sequences see dramatically higher enrollment rates. Families who get a reminder and a warm check-in show up — and enrol.',
+                desc: 'Schools with automated trial follow-up sequences see dramatically higher enrolment rates. Families who get a reminder and a warm check-in show up — and enrol.',
+                source: 'Source: [TODO — add citation]',
               },
               {
                 stat: '40–55% of Enquiries', stat2: 'Arrive After 6PM',
                 h4: "When You're Teaching and Can't Pick Up",
-                desc: 'Swim schools lose nearly half their potential enrolments simply by being in the pool. Autonomous triage captures families that currently go to a competitor who answered first.',
+                desc: 'Swim schools lose nearly half their potential enrolments simply by being in the pool. Our system captures families that currently go to a competitor who answered first.',
+                source: 'Source: [TODO — add citation]',
               },
               {
                 stat: '45–50%', stat2: 'Annual Churn',
                 h4: 'A 400-student school needs ~180 new students every year just to stay flat.',
                 desc: 'At ~45% annual churn, standing still means running a constant replacement race. Without a reliable enrolment engine, you\'re always behind.',
+                source: 'Source: [TODO — add citation]',
               },
             ].map((b, i) => (
               <motion.div key={i} {...fadeUp(i * 0.1)} style={{ background: 'rgba(18,18,26,0.88)', border: '1px solid #2A2A35', borderRadius: 24, padding: 32, position: 'relative', overflow: 'hidden', transition: 'border-color 0.3s' }}
@@ -690,6 +704,7 @@ export function LandingPage() {
                   </h3>
                   <h4 style={{ color: '#fff', fontWeight: 700, fontSize: 18, marginBottom: 16 }}>{b.h4}</h4>
                   <p style={{ color: '#9ca3af', lineHeight: 1.6, fontSize: 14 }}>{b.desc}</p>
+                  <p style={{ fontSize: 11, color: '#4b5563', marginTop: 12, fontStyle: 'italic' }}>{b.source}</p>
                 </div>
               </motion.div>
             ))}
@@ -708,7 +723,7 @@ export function LandingPage() {
             <span style={{ display: 'block', color: '#6b7280', fontSize: 'clamp(1.5rem, 4vw, 3.5rem)', marginTop: 16 }}>Or We Work for Free Until You Do.</span>
           </motion.h2>
           <motion.p {...fadeUp(0.2)} style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', color: '#9ca3af', maxWidth: 768, textAlign: 'center', marginBottom: 64, lineHeight: 1.7 }}>
-            Stop losing after-hours enquiries and watching booked trials go cold. We install a 24/7 enrollment system that turns website visitors and missed calls into families sitting poolside on trial day.
+            Stop losing after-hours enquiries and watching booked trials go cold. We install a 24/7 enrolment system that turns website visitors and missed calls into families sitting poolside on trial day.
           </motion.p>
           <motion.a {...fadeUp(0.3)} href="/book" style={{
             display: 'inline-flex', alignItems: 'center', gap: 12,
@@ -718,10 +733,13 @@ export function LandingPage() {
           }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 80px rgba(72,207,203,0.5)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 0 50px rgba(72,207,203,0.3)' }}>
-            Book a Free Strategy Call <ArrowRight size={24} />
+            Book a 15-Minute Chat <ArrowRight size={24} />
           </motion.a>
         </div>
       </section>
+
+      {/* ── FOOTER FADE ───────────────────────────────────────────────────── */}
+      <div style={{ height: 30, background: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 60%, #000 100%)', marginTop: -30, position: 'relative', zIndex: 19, pointerEvents: 'none' }} />
 
       {/* ── FOOTER ────────────────────────────────────────────────────────── */}
       <footer style={{ background: '#000', borderTop: '1px solid rgba(255,255,255,0.08)', padding: '64px 24px', position: 'relative', zIndex: 20 }}>
@@ -733,7 +751,7 @@ export function LandingPage() {
                 <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: '#dce4e2' }}>Laprise</span>
               </a>
               <p style={{ color: '#6b7280', maxWidth: 384, lineHeight: 1.7, fontSize: 14 }}>
-                Filling swim school lanes every term with intelligent enrollment automation.
+                Filling swim school lanes every term with intelligent enrolment automation.
               </p>
             </div>
             <div>
@@ -749,7 +767,7 @@ export function LandingPage() {
             <div>
               <h4 style={{ fontWeight: 600, marginBottom: 16, color: '#dce4e2', fontSize: 15 }}>Contact</h4>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <li><a href="mailto:hello@laprise.org" style={{ color: '#6b7280', fontSize: 14, textDecoration: 'none' }}>hello@laprise.org</a></li>
+                <li><a href="mailto:haydenvanderhee@laprise.org" style={{ color: '#6b7280', fontSize: 14, textDecoration: 'none' }}>haydenvanderhee@laprise.org</a></li>
                 <li><a href="https://laprise.org" style={{ color: '#6b7280', fontSize: 14, textDecoration: 'none' }}>laprise.org</a></li>
               </ul>
             </div>
@@ -760,6 +778,10 @@ export function LandingPage() {
               {[
                 { label: 'Privacy Policy', href: 'https://app.termly.io/policy-viewer/policy.html?policyUUID=576499bb-e5ba-4839-989d-a639e19739ef' },
                 { label: 'Terms of Service', href: 'https://app.termly.io/policy-viewer/policy.html?policyUUID=ca6aefbb-e411-4065-8cfb-36cbea11c613' },
+                { label: 'Cookie Policy', href: 'https://app.termly.io/policy-viewer/policy.html?policyUUID=2ec82e6e-58f8-4a44-9c2a-5d09144afc69' },
+                { label: 'Disclaimer', href: 'https://app.termly.io/policy-viewer/policy.html?policyUUID=a6f7794e-80e0-4702-81d0-c2ce2289671d' },
+                { label: 'Acceptable Use Policy', href: 'https://app.termly.io/policy-viewer/policy.html?policyUUID=04469ba4-1e6f-4edf-8662-aba4c608f0b8' },
+                { label: 'Accessibility Statement', href: 'https://app.termly.io/policy-viewer/policy.html?policyUUID=023cecf5-639f-4c22-84e2-f7685cadc132' },
               ].map(l => (
                 <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" style={{ color: '#4b5563', fontSize: 13, textDecoration: 'none' }}
                   onMouseEnter={e => (e.currentTarget.style.color = '#48CFCB')}

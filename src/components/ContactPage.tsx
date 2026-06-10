@@ -130,7 +130,7 @@ export function ContactPage() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginBottom: 36 }}>
               {[
-                { icon: <Mail size={20} color="#0D0D12" />, label: 'Email Us', content: <a href="mailto:hello@laprise.org" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = TEAL)} onMouseLeave={e => (e.currentTarget.style.color = '#9ca3af')}>hello@laprise.org</a> },
+                { icon: <Mail size={20} color="#0D0D12" />, label: 'Email Us', content: <a href="mailto:haydenvanderhee@laprise.org" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = TEAL)} onMouseLeave={e => (e.currentTarget.style.color = '#9ca3af')}>haydenvanderhee@laprise.org</a> },
                 { icon: <Globe size={20} color="#0D0D12" />, label: 'Website', content: <a href="https://laprise.org" target="_blank" rel="noopener noreferrer" style={{ color: '#9ca3af', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = TEAL)} onMouseLeave={e => (e.currentTarget.style.color = '#9ca3af')}>laprise.org</a> },
                 { icon: <Clock size={20} color="#0D0D12" />, label: 'Response Time', content: <span style={{ color: '#9ca3af' }}>Within one business day</span> },
               ].map(({ icon, label, content }) => (
