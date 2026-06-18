@@ -23,10 +23,11 @@ const ACCENT = '#0E7FA8'
 const GREEN = '#1FB39B'   // aqua-green (default tick colour)
 const MINT = '#26D7C4'    // bright spring-teal band (Soakly-style)
 
-// depth-bloom gradients — warm glow + highlight + shadow so a flat band gets light & shade
-const CYAN_BLOOM = 'radial-gradient(ellipse 45% 40% at 86% 5%, rgba(255,194,71,0.20), transparent 60%), radial-gradient(ellipse 55% 55% at 8% 94%, rgba(255,255,255,0.22), transparent 62%), radial-gradient(ellipse 48% 52% at 96% 88%, rgba(11,42,56,0.22), transparent 60%)'
-const NAVY_BLOOM = 'radial-gradient(ellipse 45% 40% at 88% 5%, rgba(255,194,71,0.14), transparent 55%), radial-gradient(ellipse 55% 55% at 6% 94%, rgba(23,181,174,0.20), transparent 60%), radial-gradient(ellipse 50% 50% at 82% 85%, rgba(28,167,196,0.22), transparent 60%)'
-const MINT_BLOOM = 'radial-gradient(ellipse 45% 40% at 85% 7%, rgba(255,255,255,0.26), transparent 60%), radial-gradient(ellipse 55% 55% at 6% 92%, rgba(14,127,168,0.18), transparent 62%), radial-gradient(ellipse 46% 52% at 96% 86%, rgba(255,194,71,0.14), transparent 60%)'
+// depth-bloom gradients — a single soft CENTRED glow that fades to nothing well before
+// the top/bottom edges, so a band's edges stay pure flat colour (no tonal line at the wave joins)
+const CYAN_BLOOM = 'radial-gradient(ellipse 82% 44% at 50% 50%, rgba(255,255,255,0.13), transparent 70%)'
+const NAVY_BLOOM = 'radial-gradient(ellipse 82% 44% at 50% 44%, rgba(28,167,196,0.16), transparent 70%)'
+const MINT_BLOOM = 'radial-gradient(ellipse 82% 44% at 50% 50%, rgba(255,255,255,0.15), transparent 70%)'
 
 // ── Decorative drifting bubbles (organic depth; circles cross section edges) ──
 // `soft: true` renders a blurred radial-gradient glow instead of a hard circle/ring.
@@ -722,7 +723,7 @@ export function LandingPage() {
       <WaveDivider top={CYAN} bottom={NAVY} />
 
       {/* ── RESULTS / WHY AUTOMATION WINS (dark navy) ─────────────────────── */}
-      <section style={{ position: 'relative', zIndex: 20, background: NAVY_GRAD, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
+      <section style={{ position: 'relative', zIndex: 20, background: NAVY, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
         <Blooms gradient={NAVY_BLOOM} />
         <Bubbles items={[
           { size: 120, top: '-40px', left: '8%', color: 'rgba(28,167,196,0.18)', anim: 'bubble-a' },
