@@ -753,7 +753,6 @@ export function LandingPage() {
                   </h3>
                   <h4 style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 18, marginBottom: 16 }}>{b.h4}</h4>
                   <p style={{ color: 'rgba(230,240,243,0.8)', lineHeight: 1.6, fontSize: 14 }}>{b.desc}</p>
-                  <p style={{ fontSize: 11, color: 'rgba(230,240,243,0.45)', marginTop: 12, fontStyle: 'italic' }}>{b.source}</p>
                 </motion.div>
               )
             })}
