@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { LogoMark } from './LogoMark'
+import { WaveDivider } from './LandingPage'
 import { CheckCircle2, Building2, ChevronDown, ChevronUp, MessageSquare } from 'lucide-react'
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
@@ -104,20 +105,24 @@ export function BookPage() {
   return (
     <div style={{ minHeight: '100vh', background: BG, color: '#0F2A38', fontFamily: "'Hanken Grotesk',sans-serif" }}>
       <PageNav />
-      <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(100px,12vw,140px) clamp(20px,5vw,40px) 80px' }}>
 
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ textAlign: 'center', marginBottom: 40 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: TEAL, background: 'rgba(28,167,196,0.10)', border: '1px solid rgba(28,167,196,0.25)', padding: '6px 16px', borderRadius: 9999, marginBottom: 20 }}>
+      {/* Cyan hero header + wave into the form */}
+      <section style={{ background: '#1CA7C4', padding: 'clamp(120px,16vw,160px) clamp(20px,5vw,40px) clamp(48px,7vw,72px)', textAlign: 'center' }}>
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ maxWidth: 720, margin: '0 auto' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#FFFFFF', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', padding: '6px 16px', borderRadius: 9999, marginBottom: 20 }}>
             Free Discovery Call
           </span>
-          <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 'clamp(2rem,5.5vw,3.2rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 16 }}>
-            Book Your <span style={{ color: TEAL }}>Discovery Call</span>
+          <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 'clamp(2rem,5.5vw,3.2rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 16, color: '#FFFFFF' }}>
+            Book Your Discovery Call
           </h1>
-          <p style={{ fontSize: 16, color: '#54707C', lineHeight: 1.7, maxWidth: 520, margin: '0 auto' }}>
+          <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.9)', lineHeight: 1.7, maxWidth: 520, margin: '0 auto' }}>
             Tell us about your swim school so we can prepare a customised demonstration of how Laprise can transform your enrolment pipeline.
           </p>
         </motion.div>
+      </section>
+      <WaveDivider top="#1CA7C4" bottom="#F7FAFB" />
+
+      <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(20px,5vw,40px) 80px' }}>
 
         {/* Form card */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}

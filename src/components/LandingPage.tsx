@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, CheckCircle2, ChevronDown } from 'lucide-react'
+import { ArrowRight, Check, CheckCircle2, ChevronDown, Megaphone, CalendarClock, PhoneCall, MapPin, Monitor, Star } from 'lucide-react'
 import { LogoMark } from './LogoMark'
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
@@ -10,6 +10,125 @@ const fadeUp = (delay = 0) => ({
   viewport: { once: false, amount: 0.12 } as const,
   transition: { duration: 0.75, ease: EASE, delay },
 })
+
+// ── Palette ───────────────────────────────────────────────────────────────────
+const NAVY = '#0B2A38'
+const NAVY_GRAD = 'linear-gradient(180deg, #0B2A38 0%, #0E3346 100%)'
+const CYAN = '#1CA7C4'
+const WHITE_BAND = '#F7FAFB'
+const INK = '#0F2A38'
+const BODY = '#54707C'
+const ACCENT = '#0E7FA8'
+// warm + local "sunlit pool" accents (used sparingly for personality)
+const GREEN = '#1FB39B'   // aqua-green (default tick colour)
+const MINT = '#26D7C4'    // bright spring-teal band (Soakly-style)
+
+// ── Decorative drifting bubbles (organic depth; circles cross section edges) ──
+// `soft: true` renders a blurred radial-gradient glow instead of a hard circle/ring.
+type Bubble = { size: number; top?: string; bottom?: string; left?: string; right?: string; color: string; ring?: boolean; soft?: boolean; anim: string }
+function Bubbles({ items }: { items: Bubble[] }) {
+  return (
+    <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'visible', pointerEvents: 'none', zIndex: 1 }}>
+      {items.map((b, i) => (
+        <span key={i} className={b.anim} style={{
+          position: 'absolute', width: b.size, height: b.size, borderRadius: '50%',
+          top: b.top, bottom: b.bottom, left: b.left, right: b.right,
+          ...(b.soft
+            ? { background: `radial-gradient(circle, ${b.color}, transparent 70%)`, filter: 'blur(6px)' }
+            : b.ring
+              ? { background: 'transparent', border: `2px solid ${b.color}` }
+              : { background: b.color }),
+        }} />
+      ))}
+    </div>
+  )
+}
+
+// ── Wave divider — big sweeping arch + a translucent echo for depth ───────────
+// Two tiled copies per layer translate for a seamless loop; the back layer drifts
+// slower and dips lower so the bands feel like they pour into each other.
+export function WaveDivider({ top, bottom, height = 104 }: { top: string; bottom: string; height?: number }) {
+  // Smooth periodic waves: start and end at the same height (y=60) so the two
+  // tiled copies join seamlessly — no jagged connector. Back layer ~70% taller.
+  const front = 'M0,60 C240,28 480,28 720,60 C960,92 1200,92 1440,60 L1440,0 L0,0 Z'
+  const back = 'M0,60 C240,5 480,5 720,60 C960,115 1200,115 1440,60 L1440,0 L0,0 Z'
+  return (
+    <div style={{ background: bottom, overflow: 'hidden', lineHeight: 0, position: 'relative', height, zIndex: 21 }} aria-hidden="true">
+      <div className="wave-drift" style={{ position: 'absolute', inset: 0, display: 'flex', width: '200%', animation: 'wave-drift 34s linear infinite' }}>
+        {[0, 1].map(i => (
+          <svg key={i} viewBox="0 0 1440 120" width="50%" height={height} preserveAspectRatio="none" style={{ display: 'block' }}>
+            <path d={back} fill={top} fillOpacity={0.4} />
+          </svg>
+        ))}
+      </div>
+      <div className="wave-drift" style={{ position: 'absolute', inset: 0, display: 'flex', width: '200%', animation: 'wave-drift 22s linear infinite' }}>
+        {[0, 1].map(i => (
+          <svg key={i} viewBox="0 0 1440 120" width="50%" height={height} preserveAspectRatio="none" style={{ display: 'block' }}>
+            <path d={front} fill={top} />
+          </svg>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Blob-masked breathing photo ───────────────────────────────────────────────
+function BlobImage({ src, alt, height = 360 }: { src: string; alt: string; height?: number }) {
+  return (
+    // TODO: replace with a licensed AU swim-school photo
+    <div className="blob" style={{ position: 'relative', width: '100%', maxWidth: 460, boxShadow: '0 30px 60px rgba(14,127,168,0.20)' }}>
+      <img src={src} alt={alt} style={{ width: '100%', height, objectFit: 'cover', display: 'block' }} />
+    </div>
+  )
+}
+
+// ── Tick list (solid colour circles + white checks, Soakly-style) ─────────────
+function TickList({ items, tint = GREEN, textColor = BODY }: { items: string[]; tint?: string; textColor?: string }) {
+  return (
+    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {items.map(t => (
+        <li key={t} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 15, lineHeight: 1.5, color: textColor }}>
+          <span style={{ flexShrink: 0, width: 22, height: 22, borderRadius: '50%', background: tint, color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 1, boxShadow: `0 3px 8px ${tint}55` }}>
+            <Check size={13} strokeWidth={3} />
+          </span>
+          {t}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+// ── Alternating feature row (per-row colour for personality) ──────────────────
+function FeatureRow({ eyebrow, title, accent, body, bullets, visual, reverse, tone = ACCENT }: {
+  eyebrow: string; title: string; accent: string; body: string; bullets: string[]; visual: React.ReactNode; reverse?: boolean; tone?: string
+}) {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'clamp(32px,5vw,72px)', alignItems: 'center', marginBottom: 'clamp(56px,8vw,104px)' }}>
+      <motion.div {...fadeUp(0)} style={{ order: reverse ? 2 : 1 }}>
+        <span style={{ display: 'inline-block', color: tone, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: `${tone}18`, border: `1px solid ${tone}3A`, padding: '5px 14px', borderRadius: 9999, marginBottom: 18 }}>{eyebrow}</span>
+        <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 16, color: INK }}>
+          {title} <span style={{ color: tone }}>{accent}</span>
+        </h3>
+        <p style={{ fontSize: 17, color: BODY, lineHeight: 1.7, marginBottom: 24, maxWidth: 520 }}>{body}</p>
+        <TickList items={bullets} tint={tone} />
+      </motion.div>
+      <motion.div {...fadeUp(0.1)} style={{ order: reverse ? 1 : 2, display: 'flex', justifyContent: 'center', position: 'relative' }}>
+        {/* soft tone shading radiating from the visual — organic, varied, spilling past the edges */}
+        <div aria-hidden="true" className="blob" style={{
+          position: 'absolute', width: '116%', height: '110%', top: '6%', left: reverse ? '-10%' : '8%',
+          background: `radial-gradient(circle at 40% 42%, ${tone}30, ${tone}16 46%, transparent 72%)`,
+          zIndex: 0,
+        }} />
+        <div aria-hidden="true" className="blob" style={{
+          position: 'absolute', width: '58%', height: '54%', bottom: '-4%', right: reverse ? '6%' : '-8%',
+          background: `radial-gradient(circle, ${tone}26, transparent 68%)`,
+          zIndex: 0, animationDelay: '-6s',
+        }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>{visual}</div>
+      </motion.div>
+    </div>
+  )
+}
 
 // ── Nav ─────────────────────────────────────────────────────────────────────
 function Nav() {
@@ -41,20 +160,20 @@ function Nav() {
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px,5vw,80px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
           <LogoMark size={44} />
-          <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 26, fontWeight: 700, color: scrolled ? '#0F2A38' : '#FFFFFF', letterSpacing: '-0.01em', transition: 'color 0.3s' }}>Laprise</span>
+          <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 26, fontWeight: 700, color: scrolled ? INK : '#FFFFFF', letterSpacing: '-0.01em', transition: 'color 0.3s' }}>Laprise</span>
         </a>
 
         {/* Desktop nav */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: 40 }} className="hidden-mobile">
           {links.map(l => (
-            <a key={l.href} href={l.href} style={{ color: scrolled ? '#54707C' : 'rgba(255,255,255,0.9)', fontSize: 14, fontWeight: 500, textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => (e.currentTarget.style.color = scrolled ? '#0E7FA8' : '#FFFFFF')}
-              onMouseLeave={e => (e.currentTarget.style.color = scrolled ? '#54707C' : 'rgba(255,255,255,0.9)')}>
+            <a key={l.href} href={l.href} style={{ color: scrolled ? BODY : 'rgba(255,255,255,0.9)', fontSize: 14, fontWeight: 500, textDecoration: 'none', transition: 'color 0.2s' }}
+              onMouseEnter={e => (e.currentTarget.style.color = scrolled ? ACCENT : '#FFFFFF')}
+              onMouseLeave={e => (e.currentTarget.style.color = scrolled ? BODY : 'rgba(255,255,255,0.9)')}>
               {l.label}
             </a>
           ))}
           <a href="/book" style={{
-            background: '#1CA7C4', color: '#FFFFFF', padding: '10px 24px', borderRadius: 9999,
+            background: CYAN, color: '#FFFFFF', padding: '10px 24px', borderRadius: 9999,
             fontWeight: 700, fontSize: 14, textDecoration: 'none', transition: 'transform 0.2s',
             boxShadow: '0 4px 14px rgba(14,127,168,0.25)',
           }}
@@ -67,7 +186,7 @@ function Nav() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          style={{ background: 'none', border: 'none', color: scrolled ? '#0F2A38' : '#FFFFFF', cursor: 'pointer', padding: 8 }}
+          style={{ background: 'none', border: 'none', color: scrolled ? INK : '#FFFFFF', cursor: 'pointer', padding: 8 }}
           className="show-mobile"
         >
           <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -82,11 +201,11 @@ function Nav() {
       {mobileOpen && (
         <div style={{ background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(20px)', padding: '16px 24px', borderTop: '1px solid rgba(14,42,56,0.08)' }}>
           {links.map(l => (
-            <a key={l.href} href={l.href} style={{ display: 'block', color: '#0F2A38', padding: '12px 0', textDecoration: 'none', fontSize: 15, borderBottom: '1px solid rgba(14,42,56,0.06)' }}>
+            <a key={l.href} href={l.href} style={{ display: 'block', color: INK, padding: '12px 0', textDecoration: 'none', fontSize: 15, borderBottom: '1px solid rgba(14,42,56,0.06)' }}>
               {l.label}
             </a>
           ))}
-          <a href="/book" style={{ display: 'block', background: '#1CA7C4', color: '#FFFFFF', padding: '12px 0', borderRadius: 8, textAlign: 'center', fontWeight: 700, textDecoration: 'none', marginTop: 12 }}>
+          <a href="/book" style={{ display: 'block', background: CYAN, color: '#FFFFFF', padding: '12px 0', borderRadius: 8, textAlign: 'center', fontWeight: 700, textDecoration: 'none', marginTop: 12 }}>
             Book a 15-Minute Chat
           </a>
         </div>
@@ -95,16 +214,50 @@ function Nav() {
   )
 }
 
-// ── Main page ────────────────────────────────────────────────────────────────
-const TRIAGE_SERVICES = [
-  'Trial Lesson Enquiry', 'Adult Learn to Swim', 'Term 4 Enrolment',
-  'Holiday Intensive', 'Level Assessment', 'Squad Enquiry', 'New Family Intake',
+// ── Data ──────────────────────────────────────────────────────────────────────
+const CHECKLIST = [
+  {
+    heading: 'Set up for you',
+    items: ['No setup fee to get started', 'Live in about 14 days', 'Works with your booking system', 'Trained on your levels & pricing'],
+  },
+  {
+    heading: 'Works around the clock',
+    items: ['Answers enquiries 24/7', 'Replies in seconds, day or night', 'Books trials onto your calendar', 'Chases no-shows automatically'],
+  },
+  {
+    heading: 'You stay in control',
+    items: ['You only pay for results', 'Tricky questions go to your staff', 'Family data kept private & secure', 'No lock-in — cancel any time'],
+  },
 ]
 
-const TRIAGE_INITIAL = [
-  { id: 1, time: '23:42', name: 'Sarah M.', intent: 'Trial Lesson Enquiry', status: 'Booked' },
-  { id: 2, time: '21:15', name: 'Jessica T.', intent: 'Term 4 Enrolment', status: 'Booked' },
-  { id: 3, time: '19:30', name: 'Emily R.', intent: 'Holiday Intensive', status: 'Booked' },
+const SERVICES = [
+  { title: 'Personalised Ads', desc: 'High-converting ad creatives designed specifically to attract families searching for swim lessons in your local area.' },
+  { title: 'Trial Booking Automation', desc: 'Streamlined workflows that guide new families from first enquiry to confirmed trial lesson without any manual follow-up.' },
+  { title: 'After-Hours Handling', desc: "Seamless call and message management when you're in the pool. Your AI assistant handles enquiries professionally after 6pm and on weekends." },
+  { title: 'Local SEO', desc: 'Long-term organic growth strategies ensuring your swim school ranks #1 for families searching "swim lessons near me" in your suburb.' },
+  { title: 'Custom Websites', desc: 'Stunning, high-performance web architecture that not only looks incredible but actively drives trial bookings and enrolments.' },
+  { title: 'Review Management', desc: 'Automated follow-up protocols to capture 5-star reviews from happy families while intercepting negative feedback privately.' },
+]
+
+const BENCHMARKS = [
+  {
+    stat: '55–65%', stat2: 'Trial-to-Enrolment',
+    h4: 'With Automated Follow-Up vs. 30–45% Without',
+    desc: 'Schools with automated trial follow-up sequences see dramatically higher enrolment rates. Families who get a reminder and a warm check-in show up — and enrol.',
+    source: 'Source: [TODO — add citation]',
+  },
+  {
+    stat: '40–55% of Enquiries', stat2: 'Arrive After 6PM',
+    h4: "When You're Teaching and Can't Pick Up",
+    desc: 'Swim schools lose nearly half their potential enrolments simply by being in the pool. Our system captures families that currently go to a competitor who answered first.',
+    source: 'Source: [TODO — add citation]',
+  },
+  {
+    stat: '45–50%', stat2: 'Annual Churn',
+    h4: 'A 400-student school needs ~180 new students every year just to stay flat.',
+    desc: "At ~45% annual churn, standing still means running a constant replacement race. Without a reliable enrolment engine, you're always behind.",
+    source: 'Source: [TODO — add citation]',
+  },
 ]
 
 const FAQS = [
@@ -142,39 +295,88 @@ const FAQS = [
   },
 ]
 
+// ── Mockup visuals (light, plain-language) ────────────────────────────────────
+function TimelineCard() {
+  return (
+    <div style={{ width: '100%', maxWidth: 420, background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 24, padding: 24, boxShadow: '0 20px 50px rgba(14,127,168,0.12)', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {[
+        { label: 'New enquiry received', sub: 'Emma W. — Trial Lesson', time: '10:42 pm', color: '#7C95A0' },
+        { label: 'Reply sent automatically', sub: 'Answered pricing & availability', time: '10:42 pm', color: CYAN },
+        { label: 'Trial lesson booked', sub: 'Saturday 9:00 am confirmed', time: '10:44 pm', color: '#17B5AE' },
+      ].map((item, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 12, background: '#F1F7F9', border: '1px solid rgba(14,42,56,0.06)' }}>
+          <div style={{ width: 10, height: 10, borderRadius: '50%', background: item.color, flexShrink: 0 }} />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: INK }}>{item.label}</div>
+            <div style={{ fontSize: 12, color: '#7C95A0', marginTop: 2 }}>{item.sub}</div>
+          </div>
+          <span style={{ fontSize: 12, color: ACCENT, fontWeight: 600, whiteSpace: 'nowrap' }}>{item.time}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function BookingCard() {
+  return (
+    <div style={{ width: '100%', maxWidth: 360, background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 24, padding: 24, boxShadow: '0 20px 50px rgba(14,127,168,0.12)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+        <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 15, color: INK }}>October</span>
+        <span style={{ fontSize: 12, color: '#7C95A0', fontWeight: 600 }}>Trial lessons</span>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 6 }}>
+        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+          <div key={`h${i}`} style={{ textAlign: 'center', fontSize: 10, color: '#7C95A0', fontWeight: 700 }}>{d}</div>
+        ))}
+        {Array.from({ length: 21 }).map((_, i) => {
+          const day = i + 1
+          const booked = day === 11
+          return (
+            <div key={i} style={{
+              aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 11, fontWeight: booked ? 700 : 500, borderRadius: 9,
+              background: booked ? 'linear-gradient(135deg,#1CA7C4,#17B5AE)' : 'transparent',
+              color: booked ? '#FFFFFF' : BODY,
+              boxShadow: booked ? '0 6px 14px rgba(14,127,168,0.28)' : 'none',
+            }}>{day}</div>
+          )
+        })}
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16, padding: '12px 14px', background: '#F1F7F9', border: '1px solid rgba(14,42,56,0.06)', borderRadius: 12 }}>
+        <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#17B5AE', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700 }}>✓</div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: INK }}>Trial lesson — Sat 9:00am</div>
+          <div style={{ fontSize: 11, color: '#7C95A0' }}>Booked automatically</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function StatsCard() {
+  return (
+    <div style={{ width: '100%', maxWidth: 420, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      {[{ label: 'Conversion', val: '68%', color: INK }, { label: 'Cost / booking', val: '$14', color: ACCENT }].map(m => (
+        <div key={m.label} style={{ background: '#FFFFFF', padding: 24, borderRadius: 18, border: '1px solid rgba(14,42,56,0.10)', boxShadow: '0 14px 36px rgba(14,127,168,0.10)' }}>
+          <div style={{ fontSize: 11, color: '#7C95A0', marginBottom: 8, fontWeight: 600 }}>{m.label}</div>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 38, fontWeight: 700, color: m.color }}>{m.val}</div>
+        </div>
+      ))}
+      <div style={{ gridColumn: 'span 2', background: '#FFFFFF', padding: '18px 24px', borderRadius: 18, border: '1px solid rgba(23,181,174,0.30)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 14px 36px rgba(14,127,168,0.10)' }}>
+        <CheckCircle2 size={22} color="#17B5AE" />
+        <span style={{ fontSize: 14, color: '#0C6A65', fontWeight: 700 }}>Everything's running smoothly</span>
+      </div>
+    </div>
+  )
+}
+
 export function LandingPage() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [triageCards, setTriageCards] = useState(TRIAGE_INITIAL)
   const [typingText, setTypingText] = useState('')
 
   const fullSms = "Hi Sarah, completely understand the hesitation! Our trial lessons are completely no-pressure — your child swims, our instructor assesses their level, and we'll give you an honest recommendation. Shall I lock in a spot? 🏊"
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top })
-  }
-
-  // Rotating triage cards
-  useEffect(() => {
-    let idx = 0
-    const iv = setInterval(() => {
-      setTriageCards(prev => {
-        const card = {
-          id: Date.now(),
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          name: 'New Enquiry',
-          intent: TRIAGE_SERVICES[idx % TRIAGE_SERVICES.length],
-          status: 'Processing',
-        }
-        idx++
-        return [card, ...prev.slice(0, 2)]
-      })
-    }, 4000)
-    return () => clearInterval(iv)
-  }, [])
-
-  // Typing animation for card 2 terminal
+  // Typing animation for the hero chat
   useEffect(() => {
     let i = 0
     const iv = setInterval(() => {
@@ -186,528 +388,331 @@ export function LandingPage() {
   }, [])
 
   return (
-    <div style={{ color: '#0F2A38', fontFamily: "'Inter', sans-serif", overflowX: 'clip', position: 'relative' }}>
+    <div style={{ color: INK, fontFamily: "'Hanken Grotesk', sans-serif", overflowX: 'clip', position: 'relative' }}>
       <Nav />
 
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section
-        className="section-hero"
-        onMouseMove={handleMouseMove}
-        style={{ position: 'relative', zIndex: 20, width: '100%', display: 'flex', alignItems: 'center', paddingTop: 160, paddingBottom: 120, background: 'linear-gradient(180deg, #0B2A38 0%, #0E3346 100%)' }}
-      >
-        {/* Mouse glow — fixed so it bleeds through section boundaries (soft water tint) */}
-        <div style={{ pointerEvents: 'none', position: 'absolute', inset: 0, zIndex: 0, background: `radial-gradient(800px circle at ${mousePos.x}px ${mousePos.y}px, rgba(28,167,196,0.18), transparent 45%)` }} />
+      {/* ── HERO (dark navy, two-column) ──────────────────────────────────── */}
+      <section style={{ position: 'relative', zIndex: 20, background: NAVY_GRAD, paddingTop: 'clamp(140px,18vw,180px)', paddingBottom: 'clamp(72px,9vw,110px)', overflow: 'visible' }}>
+        {/* soft water blooms + a warm Aussie sun glow top-right */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 42% 40% at 88% 6%, rgba(255,194,71,0.18), transparent 55%), radial-gradient(ellipse 50% 50% at 78% 14%, rgba(28,167,196,0.22), transparent 60%), radial-gradient(ellipse 45% 45% at 6% 92%, rgba(23,181,174,0.18), transparent 60%)', pointerEvents: 'none' }} />
+        <Bubbles items={[
+          { size: 90, top: '16%', left: '4%', color: 'rgba(127,215,230,0.18)', anim: 'bubble-a' },
+          { size: 46, top: '30%', left: '46%', color: 'rgba(255,194,71,0.4)', ring: true, anim: 'bubble-c' },
+          { size: 150, bottom: '-70px', left: '18%', color: 'rgba(28,167,196,0.14)', anim: 'bubble-b' },
+          { size: 30, top: '24%', right: '5%', color: 'rgba(84,224,214,0.55)', anim: 'bubble-c' },
+        ]} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px,5vw,80px)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'clamp(40px,5vw,72px)', alignItems: 'center' }}>
+          {/* Left: copy */}
+          <div>
+            <motion.p {...fadeUp(0)} style={{
+              display: 'inline-block', fontWeight: 700, color: '#7FD7E6', letterSpacing: '0.06em',
+              textTransform: 'uppercase', marginBottom: 22, fontSize: 12,
+              border: '1px solid rgba(127,215,230,0.30)', background: 'rgba(28,167,196,0.14)',
+              padding: '9px 18px', borderRadius: 9999,
+            }}>
+              Stop Losing After-Hours Enquiries to the School Down the Road
+            </motion.p>
 
-        <div style={{ position: 'relative', zIndex: 20, width: '100%', maxWidth: 896, margin: '0 auto', textAlign: 'center', padding: '0 24px' }}>
-          <motion.p {...fadeUp(0)} style={{
-            display: 'inline-block', fontWeight: 700, color: '#7FD7E6', letterSpacing: '0.08em',
-            textTransform: 'uppercase', marginBottom: 24, fontSize: 13,
-            border: '1px solid rgba(127,215,230,0.30)', background: 'rgba(28,167,196,0.14)',
-            backdropFilter: 'blur(8px)', padding: '13px 28px', borderRadius: 9999,
-          }}>
-            Stop Losing After-Hours Enquiries to the School Down the Road
-          </motion.p>
+            <motion.h1 {...fadeUp(0.1)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.5rem, 6vw, 4.25rem)', fontWeight: 700, lineHeight: 1.08, marginBottom: 24, color: '#FFFFFF' }}>
+              Fill Your Lanes. <br />
+              <span style={{ position: 'relative', display: 'inline-block' }}>
+                <span style={{ backgroundImage: 'linear-gradient(to right, #54E0D6, #1CA7C4, #7FD7E6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                  Keep Teaching.
+                </span>
+                {/* hand-drawn underline */}
+                <svg aria-hidden="true" viewBox="0 0 300 18" preserveAspectRatio="none" style={{ position: 'absolute', left: 0, bottom: '-0.28em', width: '100%', height: '0.4em', overflow: 'visible' }}>
+                  <path d="M4,11 C70,3 150,3 210,9 C245,12 275,9 296,5" fill="none" stroke="#FFC247" strokeWidth="5" strokeLinecap="round" />
+                </svg>
+              </span>
+            </motion.h1>
 
-          <motion.h1 {...fadeUp(0.1)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.5rem, 7vw, 4.5rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 32, color: '#FFFFFF' }}>
-            Fill Your Lanes. <br />
-            <span style={{ backgroundImage: 'linear-gradient(to right, #54E0D6, #1CA7C4, #7FD7E6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Keep Teaching.
-            </span>
-          </motion.h1>
+            <motion.p {...fadeUp(0.2)} style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', color: 'rgba(230,240,243,0.82)', marginBottom: 32, maxWidth: 540, lineHeight: 1.7 }}>
+              We install a 24/7 enrolment system that instantly answers pricing questions, books qualified trial lessons, and follows up on no-shows — even while you're in the pool teaching.
+            </motion.p>
 
-          <motion.p {...fadeUp(0.2)} style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: 'rgba(230,240,243,0.82)', marginBottom: 40, maxWidth: 672, margin: '0 auto 40px', lineHeight: 1.7 }}>
-            We install a 24/7 enrolment system that instantly answers pricing questions, books qualified trial lessons, and follows up on no-shows — even while you're in the pool teaching.
-          </motion.p>
-
-          <motion.div {...fadeUp(0.3)} style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center' }}>
-            <a href="/book" style={{
-              background: '#1CA7C4', color: '#FFFFFF', padding: '16px 32px', borderRadius: 9999,
-              fontWeight: 700, fontSize: 15, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8,
-              boxShadow: '0 10px 30px rgba(28,167,196,0.35)', transition: 'all 0.2s',
-            }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 14px 40px rgba(28,167,196,0.5)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 10px 30px rgba(28,167,196,0.35)' }}>
-              Book a 15-Minute Chat <ArrowRight size={16} />
-            </a>
-            <button
-              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-              style={{
-                background: 'rgba(255,255,255,0.10)', color: '#FFFFFF', padding: '16px 32px', borderRadius: 9999,
-                fontWeight: 700, fontSize: 15, border: '1px solid rgba(255,255,255,0.25)', cursor: 'pointer', transition: 'all 0.2s',
+            <motion.div {...fadeUp(0.3)} style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'center' }}>
+              <a href="/book" style={{
+                background: CYAN, color: '#FFFFFF', padding: '16px 32px', borderRadius: 9999,
+                fontWeight: 700, fontSize: 15, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8,
+                boxShadow: '0 10px 30px rgba(28,167,196,0.4)', transition: 'all 0.2s',
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.18)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.10)')}>
-              Learn More
-            </button>
-          </motion.div>
-        </div>
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 14px 40px rgba(28,167,196,0.55)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 10px 30px rgba(28,167,196,0.4)' }}>
+                Book a 15-Minute Chat <ArrowRight size={16} />
+              </a>
+            </motion.div>
 
-        {/* Hero swim photo — real learn-to-swim lesson, used like punctuation under the CTAs */}
-        {/* TODO: replace with a licensed AU swim-school lesson photo */}
-        <motion.div {...fadeUp(0.4)} style={{ position: 'relative', zIndex: 20, width: '100%', maxWidth: 1040, margin: '64px auto 0', padding: '0 24px' }}>
-          <img
-            src="https://images.unsplash.com/photo-1560090995-01632a28895b?auto=format&fit=crop&w=1600&q=80"
-            alt="A swim instructor guiding a young child during a learn-to-swim lesson in a bright pool"
-            style={{ width: '100%', height: 'clamp(240px, 42vw, 460px)', objectFit: 'cover', borderRadius: 28, boxShadow: '0 24px 60px rgba(14,127,168,0.18)', border: '1px solid rgba(14,42,56,0.06)' }}
-          />
-        </motion.div>
-      </section>
+            {/* trust strip */}
+            <motion.div {...fadeUp(0.4)} style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(14px,3vw,28px)', marginTop: 28 }}>
+              {['Built for AU & NZ swim schools', 'You only pay for results'].map(t => (
+                <span key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'rgba(230,240,243,0.78)', fontSize: 13, fontWeight: 600 }}>
+                  <Check size={15} strokeWidth={3} color="#54E0D6" /> {t}
+                </span>
+              ))}
+            </motion.div>
+          </div>
 
-      {/* ── FEATURES ──────────────────────────────────────────────────────── */}
-      <section style={{ padding: '80px 24px', position: 'relative', zIndex: 20, background: '#1CA7C4' }}>
-        <div id="how-it-works" style={{ maxWidth: 1280, margin: '0 auto', scrollMarginTop: 96 }}>
-          <motion.div {...fadeUp(0)} style={{ display: 'flex', flexWrap: 'wrap', gap: 24, marginBottom: 64, alignItems: 'flex-end', justifyContent: 'space-between' }}>
-            <div>
-              <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, color: '#FFFFFF' }}>
-                The 24/7 <span style={{ color: '#EAFBFF' }}>Enrolment Engine</span>
-              </h2>
-              <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 18, maxWidth: 672, lineHeight: 1.6 }}>
-                Stop missing enquiries because you're on deck. We use purpose-built AI and automation to handle every stage of the enrolment journey — from first enquiry to attended trial.
-              </p>
+          {/* Right: floating chat + booking mockups */}
+          <motion.div {...fadeUp(0.2)} style={{ position: 'relative', minHeight: 380, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {/* floating "after-hours" chip top-left */}
+            <div className="soft-float" style={{ position: 'absolute', top: -6, left: 'clamp(-6px,1vw,4px)', zIndex: 3, background: '#FFFFFF', borderRadius: 16, boxShadow: '0 16px 40px rgba(0,0,0,0.28)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, animationDelay: '1.5s' }}>
+              <div style={{ width: 26, height: 26, borderRadius: '50%', background: '#FF7D54', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700 }}>⏱</div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: INK }}>New enquiry</div>
+                <div style={{ fontSize: 11, color: '#7C95A0' }}>10:42 pm · answered</div>
+              </div>
+            </div>
+            {/* chat card */}
+            <div style={{ width: '100%', maxWidth: 360, background: '#FFFFFF', borderRadius: 24, border: '1px solid rgba(255,255,255,0.6)', boxShadow: '0 30px 70px rgba(0,0,0,0.35)', padding: 20, position: 'relative', zIndex: 2 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, borderBottom: '1px solid rgba(14,42,56,0.08)', paddingBottom: 14 }}>
+                <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#D6EEF4', color: ACCENT, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14 }}>S</div>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: INK }}>Sarah M.</div>
+                  <div style={{ fontSize: 11, color: '#17B5AE', fontWeight: 600 }}>● Online</div>
+                </div>
+              </div>
+              <div style={{ alignSelf: 'flex-start', maxWidth: '85%', background: '#F1F7F9', border: '1px solid rgba(14,42,56,0.06)', color: INK, borderRadius: '16px 16px 16px 4px', padding: '10px 14px', fontSize: 13, lineHeight: 1.5, marginBottom: 10 }}>
+                Hi! Is my daughter too nervous for a trial lesson? 😟
+              </div>
+              <div style={{ marginLeft: 'auto', maxWidth: '92%', background: 'linear-gradient(135deg,#1CA7C4,#17B5AE)', color: '#FFFFFF', borderRadius: '16px 16px 4px 16px', padding: '12px 14px', fontSize: 13, lineHeight: 1.55, boxShadow: '0 6px 16px rgba(14,127,168,0.25)' }}>
+                {typingText}
+                <span style={{ display: 'inline-block', width: 2, height: 14, background: 'rgba(255,255,255,0.85)', marginLeft: 3, verticalAlign: 'middle', animation: 'pulse 1s infinite' }} />
+              </div>
+            </div>
+            {/* floating booked pill */}
+            <div className="soft-float" style={{ position: 'absolute', bottom: -8, right: 'clamp(-4px,2vw,8px)', zIndex: 3, background: '#FFFFFF', borderRadius: 16, boxShadow: '0 16px 40px rgba(0,0,0,0.28)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ width: 26, height: 26, borderRadius: '50%', background: '#17B5AE', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700 }}>✓</div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: INK }}>Trial booked</div>
+                <div style={{ fontSize: 11, color: '#7C95A0' }}>Sat 9:00am</div>
+              </div>
             </div>
           </motion.div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
-            {/* Card 1: Triage agent */}
-            <motion.div {...fadeUp(0.05)} style={{ background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 32, padding: 32, height: 450, overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s', boxShadow: '0 10px 30px rgba(14,127,168,0.08)' }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-              onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.45)')}
-              onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.10)')}>
-              <div style={{ marginBottom: 48 }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Your After-Hours Receptionist</h3>
-                <p style={{ fontSize: 13, color: '#54707C' }}>Instantly replies to late-night enquiries, qualifying family intent and capturing their info while you're still on deck.</p>
-              </div>
-              <div style={{ position: 'relative', flex: 1, paddingTop: 16 }}>
-                {triageCards.map((c, i) => (
-                  <div key={c.id} style={{
-                    position: 'absolute', left: 0, right: 0,
-                    background: '#F1F7F9', border: '1px solid rgba(14,42,56,0.08)',
-                    padding: 20, borderRadius: 16,
-                    top: `${i * 24}px`, transform: `scale(${1 - i * 0.04})`,
-                    opacity: 1 - i * 0.15, zIndex: 10 - i,
-                    transition: 'all 0.7s cubic-bezier(0.4,0,0.2,1)',
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                      <span style={{ color: '#0E7FA8', fontSize: 12, fontWeight: 700 }}>{c.time}</span>
-                      <span style={{ fontSize: 10, fontWeight: 700, padding: '4px 8px', background: 'rgba(28,167,196,0.12)', color: '#0E7FA8', borderRadius: 6, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{c.status}</span>
-                    </div>
-                    <p style={{ fontWeight: 600, marginBottom: 4, color: '#0F2A38' }}>{c.name}</p>
-                    <p style={{ fontSize: 12, color: '#54707C' }}>{c.intent}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Card 2: Friendly text-message chat (was a terminal) */}
-            <motion.div {...fadeUp(0.15)} style={{ background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 32, padding: 32, height: 450, display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s', boxShadow: '0 10px 30px rgba(14,127,168,0.08)' }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-              onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.45)')}
-              onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.10)')}>
-              <div style={{ marginBottom: 24 }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Answers Parents' Questions For You</h3>
-                <p style={{ fontSize: 13, color: '#54707C' }}>Automatically answers questions about pricing, level assessment, and trial policies to recover families who went cold.</p>
-              </div>
-              <div style={{ flex: 1, background: '#F1F7F9', borderRadius: 16, border: '1px solid rgba(14,42,56,0.08)', padding: 20, overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column' }}>
-                {/* Chat header */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, borderBottom: '1px solid rgba(14,42,56,0.08)', paddingBottom: 14 }}>
-                  <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#D6EEF4', color: '#0E7FA8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13 }}>S</div>
-                  <div>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: '#0F2A38' }}>Sarah M.</div>
-                    <div style={{ fontSize: 11, color: '#17B5AE', fontWeight: 600 }}>● Online</div>
-                  </div>
-                </div>
-                {/* Incoming parent bubble */}
-                <div style={{ alignSelf: 'flex-start', maxWidth: '82%', background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.08)', color: '#0F2A38', borderRadius: '16px 16px 16px 4px', padding: '10px 14px', fontSize: 13, lineHeight: 1.5, marginBottom: 10, boxShadow: '0 2px 6px rgba(14,127,168,0.06)' }}>
-                  Hi! Is my daughter too nervous for a trial lesson? 😟
-                </div>
-                {/* Outgoing system bubble — types out the Sarah reply */}
-                <div style={{ alignSelf: 'flex-end', maxWidth: '88%', background: 'linear-gradient(135deg,#1CA7C4,#17B5AE)', color: '#FFFFFF', borderRadius: '16px 16px 4px 16px', padding: '12px 14px', fontSize: 13, lineHeight: 1.55, boxShadow: '0 6px 16px rgba(14,127,168,0.22)' }}>
-                  {typingText}
-                  <span style={{ display: 'inline-block', width: 2, height: 14, background: 'rgba(255,255,255,0.85)', marginLeft: 3, verticalAlign: 'middle', animation: 'pulse 1s infinite' }} />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Card 3: ROI chart */}
-            <motion.div {...fadeUp(0.25)} style={{ background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 32, padding: 32, height: 450, display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s', boxShadow: '0 10px 30px rgba(14,127,168,0.08)' }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-              onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.45)')}
-              onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.10)')}>
-              <div style={{ marginBottom: 24 }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 8 }}>See Exactly What's Working</h3>
-                <p style={{ fontSize: 13, color: '#54707C' }}>Total operational clarity. See exactly which campaigns are actually turning into booked trial lessons.</p>
-              </div>
-              <div style={{ flex: 1, position: 'relative', background: '#F1F7F9', borderRadius: 16, border: '1px solid rgba(14,42,56,0.08)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-                <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(14,42,56,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(14,42,56,0.04) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-                <svg style={{ position: 'absolute', left: 0, right: 0, bottom: 0, width: '100%', height: '80%' }} viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="roiG" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#1CA7C4" stopOpacity="0.28" />
-                      <stop offset="100%" stopColor="#1CA7C4" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M 0 90 Q 20 80, 40 50 T 100 10 L 100 100 L 0 100 Z" fill="url(#roiG)" />
-                  <path d="M 0 90 Q 20 80, 40 50 T 100 10" fill="none" stroke="#1CA7C4" strokeWidth="2" />
-                </svg>
-                <div style={{ position: 'absolute', bottom: 24, left: 24, right: 24, display: 'flex', justifyContent: 'space-between', fontSize: 11, background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(8px)', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(14,42,56,0.08)', boxShadow: '0 4px 14px rgba(14,127,168,0.08)' }}>
-                  <div><div style={{ color: '#7C95A0', marginBottom: 4, fontWeight: 600 }}>Spend</div><div style={{ color: '#0F2A38', fontWeight: 700 }}>$240.50</div></div>
-                  <div style={{ width: 1, background: 'rgba(14,42,56,0.1)' }} />
-                  <div><div style={{ color: '#0E7FA8', marginBottom: 4, fontWeight: 600 }}>Booked</div><div style={{ color: '#0E7FA8', fontWeight: 700 }}>8 trials</div></div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
         </div>
       </section>
 
-      {/* ── PHILOSOPHY ────────────────────────────────────────────────────── */}
-      <section style={{ padding: '48px 24px', position: 'relative', zIndex: 20 }}>
-        <div style={{ maxWidth: 896, margin: '0 auto', textAlign: 'center' }}>
-          <motion.p {...fadeUp(0)} style={{ fontSize: 18, color: '#7C95A0', marginBottom: 24, fontWeight: 500 }}>
-            Most marketing agencies focus on: cheap quick wins and zero school visibility.
-          </motion.p>
-          <motion.p {...fadeUp(0.1)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 700, lineHeight: 1.2 }}>
-            We focus on: <span style={{ color: '#0E7FA8' }}>systems</span> that fill your lanes every term.
-          </motion.p>
-        </div>
-      </section>
+      <WaveDivider top={NAVY} bottom={CYAN} />
 
-      {/* ── PROTOCOL ──────────────────────────────────────────────────────── */}
-      <section id="protocol" style={{ padding: '80px 0', position: 'relative', zIndex: 20, background: 'linear-gradient(180deg, #0B2A38 0%, #0E3346 100%)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 clamp(16px,5vw,80px)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 32, marginBottom: 32 }}>
-            {/* ── Step 01 ── */}
-            <motion.div {...fadeUp(0)} style={{ background: '#FFFFFF', borderRadius: 24, border: '1px solid rgba(14,42,56,0.10)', padding: 'clamp(32px,4vw,48px)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 500, boxShadow: '0 14px 40px rgba(14,127,168,0.08)', transition: 'border-color 0.5s' }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(28,167,196,0.45)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(14,42,56,0.10)' }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 0% 0%, rgba(28,167,196,0.07), transparent 50%)', pointerEvents: 'none' }} />
-              <div style={{ position: 'absolute', top: 24, left: 24, color: '#0E7FA8', fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', background: 'rgba(28,167,196,0.12)', padding: '6px 14px', borderRadius: 9999, border: '1px solid rgba(28,167,196,0.25)', zIndex: 10 }}>Step 01</div>
-              <div style={{ marginTop: 56, marginBottom: 32, width: '85%' }}>
-                <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.25rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, lineHeight: 1.1 }}>
-                  Precision Ad Campaigns<br />
-                  <span style={{ backgroundImage: 'linear-gradient(to right, #0E7FA8, #1CA7C4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>For Your Swim School.</span>
-                </h2>
-                <p style={{ fontSize: 18, color: '#54707C', lineHeight: 1.7 }}>High-converting ad creatives built specifically for swim school families — targeting parents already searching for lessons in your area, not a general audience.</p>
-              </div>
-              <div style={{ width: '100%', height: 200, border: '1px solid rgba(14,42,56,0.08)', background: '#F1F7F9', borderRadius: 12, padding: 24, display: 'flex', flexDirection: 'column', gap: 16, overflow: 'hidden' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'linear-gradient(135deg,#1CA7C4,#17B5AE)' }} />
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    <div style={{ height: 8, width: 96, background: 'rgba(14,42,56,0.16)', borderRadius: 4 }} />
-                    <div style={{ height: 6, width: 64, background: 'rgba(14,42,56,0.10)', borderRadius: 4 }} />
-                  </div>
-                </div>
-                <div style={{ flex: 1, borderRadius: 8, background: 'linear-gradient(135deg,rgba(28,167,196,0.10),transparent)', border: '1px solid rgba(14,42,56,0.06)' }} />
-                <div style={{ height: 26, borderRadius: 9999, background: 'rgba(23,181,174,0.12)', border: '1px solid rgba(23,181,174,0.30)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontSize: 11, color: '#0C6A65', fontWeight: 700, letterSpacing: '0.02em' }}>Your ad — live</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ── Step 02 ── */}
-            <motion.div {...fadeUp(0.12)} style={{ background: '#FFFFFF', borderRadius: 24, border: '1px solid rgba(14,42,56,0.10)', padding: 'clamp(32px,4vw,48px)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 500, boxShadow: '0 14px 40px rgba(14,127,168,0.08)', transition: 'border-color 0.5s' }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(28,167,196,0.45)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(14,42,56,0.10)' }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 0% 100%, rgba(28,167,196,0.05), transparent 60%)', pointerEvents: 'none' }} />
-              <div style={{ position: 'absolute', top: 24, left: 24, color: '#0E7FA8', fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', background: 'rgba(28,167,196,0.12)', padding: '6px 14px', borderRadius: 9999, border: '1px solid rgba(28,167,196,0.25)', zIndex: 10 }}>Step 02</div>
-              <div style={{ marginTop: 56, marginBottom: 32, width: '85%' }}>
-                <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.25rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, lineHeight: 1.1 }}>
-                  Around-the-Clock<br />
-                  <span style={{ backgroundImage: 'linear-gradient(to right, #1CA7C4, #17B5AE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Responses.</span>
-                </h2>
-                <p style={{ fontSize: 18, color: '#54707C', lineHeight: 1.7 }}>Every enquiry that comes in gets responded to immediately, around the clock. No family sits unanswered over a weekend while they enrol at the school down the road.</p>
-              </div>
-              <div style={{ width: '100%', height: 200, border: '1px solid rgba(14,42,56,0.08)', background: '#F1F7F9', borderRadius: 12, padding: 20, display: 'flex', flexDirection: 'column', gap: 10, justifyContent: 'center' }}>
-                {[
-                  { label: 'New enquiry received', sub: 'Emma W. — Trial Lesson', time: '10:42 pm', color: '#7C95A0' },
-                  { label: 'Reply sent automatically', sub: 'Answered pricing & availability', time: '10:42 pm', color: '#1CA7C4' },
-                  { label: 'Trial lesson booked', sub: 'Saturday 9:00 am confirmed', time: '10:44 pm', color: '#17B5AE' },
-                ].map((item, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 10, background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.06)' }}>
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: item.color, flexShrink: 0 }} />
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: '#0F2A38' }}>{item.label}</div>
-                      <div style={{ fontSize: 11, color: '#7C95A0', marginTop: 2 }}>{item.sub}</div>
-                    </div>
-                    <span style={{ fontSize: 11, color: '#0E7FA8', fontWeight: 600, whiteSpace: 'nowrap' }}>{item.time}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* ── Step 03 ── */}
-            <motion.div {...fadeUp(0)} style={{ background: '#FFFFFF', borderRadius: 24, border: '1px solid rgba(14,42,56,0.10)', padding: 'clamp(32px,4vw,48px)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 500, boxShadow: '0 14px 40px rgba(14,127,168,0.08)', transition: 'border-color 0.5s' }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(28,167,196,0.45)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(14,42,56,0.10)' }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 100% 0%, rgba(28,167,196,0.05), transparent 60%)', pointerEvents: 'none' }} />
-              <div style={{ position: 'absolute', top: 24, left: 24, color: '#0E7FA8', fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', background: 'rgba(28,167,196,0.12)', padding: '6px 14px', borderRadius: 9999, border: '1px solid rgba(28,167,196,0.25)', zIndex: 10 }}>Step 03</div>
-              <div style={{ marginTop: 56, marginBottom: 32, width: '85%' }}>
-                <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.25rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, lineHeight: 1.1 }}>
-                  From Enquiry to<br />
-                  <span style={{ backgroundImage: 'linear-gradient(to right, #1CA7C4, #17B5AE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Booked Trial, Automatically.</span>
-                </h2>
-                <p style={{ fontSize: 18, color: '#54707C', lineHeight: 1.7 }}>The system knows the questions swim parents ask before enrolling — pricing, level progression, makeup lesson policies — and handles them automatically before they reach your front desk.</p>
-              </div>
-              {/* Friendly booking card (was concentric glowing rings) */}
-              <div style={{ width: '100%', minHeight: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: '100%', maxWidth: 320, background: '#F1F7F9', border: '1px solid rgba(14,42,56,0.08)', borderRadius: 16, padding: 20 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                    <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 14, color: '#0F2A38' }}>October</span>
-                    <span style={{ fontSize: 11, color: '#7C95A0', fontWeight: 600 }}>Trial lessons</span>
-                  </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 6 }}>
-                    {['M','T','W','T','F','S','S'].map((d, i) => (
-                      <div key={`h${i}`} style={{ textAlign: 'center', fontSize: 9, color: '#7C95A0', fontWeight: 700 }}>{d}</div>
-                    ))}
-                    {Array.from({ length: 21 }).map((_, i) => {
-                      const day = i + 1
-                      const booked = day === 11
-                      return (
-                        <div key={i} style={{
-                          aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          fontSize: 10, fontWeight: booked ? 700 : 500, borderRadius: 8,
-                          background: booked ? 'linear-gradient(135deg,#1CA7C4,#17B5AE)' : 'transparent',
-                          color: booked ? '#FFFFFF' : '#54707C',
-                          boxShadow: booked ? '0 4px 12px rgba(14,127,168,0.28)' : 'none',
-                        }}>{day}</div>
-                      )
-                    })}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 14, padding: '10px 12px', background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.06)', borderRadius: 10 }}>
-                    <div style={{ width: 18, height: 18, borderRadius: '50%', background: '#17B5AE', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700 }}>✓</div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: '#0F2A38' }}>Trial lesson — Sat 9:00am</div>
-                      <div style={{ fontSize: 10, color: '#7C95A0' }}>Booked automatically</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ── Step 04 ── */}
-            <motion.div {...fadeUp(0.12)} style={{ background: '#FFFFFF', borderRadius: 24, border: '1px solid rgba(28,167,196,0.30)', padding: 'clamp(32px,4vw,48px)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 500, boxShadow: '0 14px 40px rgba(14,127,168,0.10)', transition: 'border-color 0.5s' }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(28,167,196,0.55)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(28,167,196,0.30)' }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 100% 100%, rgba(28,167,196,0.05), transparent 60%)', pointerEvents: 'none' }} />
-              <div style={{ position: 'absolute', top: 24, left: 24, color: '#0E7FA8', fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', background: 'rgba(28,167,196,0.12)', padding: '6px 14px', borderRadius: 9999, border: '1px solid rgba(28,167,196,0.25)', zIndex: 10 }}>Step 04</div>
-              <div style={{ marginTop: 56, marginBottom: 32, width: '85%' }}>
-                <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.25rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, lineHeight: 1.1 }}>
-                  Know Your Numbers<br />
-                  <span style={{ backgroundImage: 'linear-gradient(to right, #1CA7C4, #17B5AE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>at a Glance.</span>
-                </h2>
-                <p style={{ fontSize: 18, color: '#54707C', lineHeight: 1.7 }}>Real-time visibility into every enquiry, ad dollar, and booked trial. Stop guessing what your marketing is doing — know exactly what fills lanes.</p>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                {[{ label: 'Conversion', val: '68%', color: '#0F2A38' }, { label: 'Cost / booking', val: '$14', color: '#0E7FA8' }].map(m => (
-                  <div key={m.label} style={{ background: '#F1F7F9', padding: 24, borderRadius: 16, border: '1px solid rgba(14,42,56,0.06)' }}>
-                    <div style={{ fontSize: 11, color: '#7C95A0', marginBottom: 8, fontWeight: 600 }}>{m.label}</div>
-                    <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 36, fontWeight: 700, color: m.color }}>{m.val}</div>
-                  </div>
-                ))}
-                <div style={{ gridColumn: 'span 2', background: '#F1F7F9', padding: 24, borderRadius: 16, border: '1px solid rgba(23,181,174,0.30)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-                  <CheckCircle2 size={22} color="#17B5AE" />
-                  <span style={{ fontSize: 14, color: '#0C6A65', fontWeight: 700 }}>Everything's running smoothly</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ── Step 05: full-width ── */}
-            <motion.div {...fadeUp(0.06)} style={{ gridColumn: '1 / -1', background: '#FFFFFF', borderRadius: 24, border: '1px solid rgba(14,42,56,0.10)', padding: 'clamp(32px,4vw,48px)', position: 'relative', overflow: 'hidden', boxShadow: '0 14px 40px rgba(14,127,168,0.08)', transition: 'border-color 0.5s' }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(28,167,196,0.45)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(14,42,56,0.10)' }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 100%, rgba(28,167,196,0.05), transparent 60%)', pointerEvents: 'none' }} />
-              <div style={{ position: 'absolute', top: 24, left: 24, color: '#0E7FA8', fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', background: 'rgba(28,167,196,0.12)', padding: '6px 14px', borderRadius: 9999, border: '1px solid rgba(28,167,196,0.25)' }}>Step 05</div>
-              <div style={{ marginTop: 56, marginBottom: 16, maxWidth: 896 }}>
-                <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.25rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 24, lineHeight: 1.1 }}>
-                  Scaleable <span style={{ backgroundImage: 'linear-gradient(to right, #0E7FA8, #17B5AE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Partnership.</span>
-                </h2>
-                <p style={{ fontSize: 18, color: '#54707C', lineHeight: 1.7 }}>
-                  After the system is live, we stay on as your long-term growth partner — expanding to new pool locations, building new enrolment workflows, developing term-specific campaigns, and creating custom tools as your school scales.
-                </p>
-              </div>
-              <div style={{ width: '100%', height: 120, marginTop: 32, border: '1px solid rgba(14,42,56,0.08)', background: '#F1F7F9', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 2, background: 'linear-gradient(to right, transparent, rgba(28,167,196,0.45), transparent)', transform: 'translateY(-50%)' }} />
-                <div style={{ position: 'absolute', top: '50%', left: '50%', width: 16, height: 16, background: 'linear-gradient(135deg,#1CA7C4,#17B5AE)', borderRadius: '50%', boxShadow: '0 6px 16px rgba(14,127,168,0.30)', transform: 'translate(-50%,-50%)' }} />
-                <div style={{ position: 'absolute', top: '50%', left: '25%', width: 10, height: 10, background: '#FFFFFF', border: '2px solid #1CA7C4', borderRadius: '50%', transform: 'translate(-50%,-50%)' }} />
-                <div style={{ position: 'absolute', top: '50%', left: '75%', width: 10, height: 10, background: '#FFFFFF', border: '2px solid #17B5AE', borderRadius: '50%', transform: 'translate(-50%,-50%)' }} />
-                <span style={{ position: 'absolute', bottom: 14, right: 20, fontSize: 11, color: '#0E7FA8', fontWeight: 600 }}>Growing with you</span>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── WHAT WE OFFER ─────────────────────────────────────────────────── */}
-      <section style={{ padding: '80px 24px', position: 'relative', zIndex: 20, background: '#1CA7C4' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <motion.div {...fadeUp(0)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 64 }}>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, textAlign: 'center', color: '#FFFFFF' }}>
-              What We <span style={{ color: '#EAFBFF' }}>Offer</span>
+      {/* ── VALUE CHECKLIST (light blue) ──────────────────────────────────── */}
+      <section style={{ position: 'relative', zIndex: 20, background: CYAN, padding: 'clamp(64px,9vw,96px) 24px', overflow: 'visible' }}>
+        <Bubbles items={[
+          { size: 130, top: '-50px', left: '5%', color: 'rgba(255,255,255,0.10)', anim: 'bubble-a' },
+          { size: 64, top: '18%', right: '9%', color: 'rgba(255,255,255,0.5)', ring: true, anim: 'bubble-b' },
+          { size: 210, bottom: '-90px', right: '-50px', color: 'rgba(255,255,255,0.08)', anim: 'bubble-c' },
+          { size: 38, bottom: '14%', left: '11%', color: 'rgba(255,194,71,0.55)', anim: 'bubble-b' },
+        ]} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1152, margin: '0 auto' }}>
+          <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: 56, maxWidth: 760, marginLeft: 'auto', marginRight: 'auto' }}>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, color: '#FFFFFF', lineHeight: 1.15 }}>
+              Fair, simple and clear
             </h2>
-            <p style={{ color: 'rgba(255,255,255,0.9)', textAlign: 'center', fontSize: 18, maxWidth: 672, lineHeight: 1.6 }}>
+            <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 18, lineHeight: 1.6 }}>
+              Most agencies sell you cheap quick wins. We install systems that fill your lanes every term — and you only pay when families actually show up.
+            </p>
+          </motion.div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24, alignItems: 'start' }}>
+            {CHECKLIST.map((col, i) => {
+              const tints = ['#FFC247', '#FF7D54', '#34D8C2']
+              return (
+                <motion.div key={col.heading} {...fadeUp(i * 0.1)} style={{ background: '#FFFFFF', borderRadius: 26, padding: 'clamp(26px,3vw,34px)', boxShadow: '0 18px 44px rgba(4,49,63,0.18)', marginTop: i === 1 ? 'clamp(0px,4vw,40px)' : 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 14, background: tints[i], display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: `0 8px 18px ${tints[i]}66` }}>
+                    <Check size={22} strokeWidth={3} color="#FFFFFF" />
+                  </div>
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, fontWeight: 700, color: INK, marginBottom: 18 }}>{col.heading}</h3>
+                  <TickList items={col.items} tint={tints[i]} textColor={BODY} />
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      <WaveDivider top={CYAN} bottom={WHITE_BAND} />
+
+      {/* ── HOW IT WORKS — alternating feature rows (white) ───────────────── */}
+      <section id="how-it-works" className="mesh-bg" style={{ position: 'relative', zIndex: 20, background: WHITE_BAND, padding: 'clamp(72px,10vw,112px) 24px', scrollMarginTop: 96, overflow: 'visible' }}>
+        {/* soft drifting gradient glows — coloured to read against the white band */}
+        <Bubbles items={[
+          { size: 300, top: '2%', left: '-4%', color: 'rgba(28,167,196,0.22)', soft: true, anim: 'bubble-a' },
+          { size: 260, top: '24%', right: '-3%', color: 'rgba(255,125,84,0.16)', soft: true, anim: 'bubble-c' },
+          { size: 240, top: '52%', left: '0%', color: 'rgba(31,179,155,0.16)', soft: true, anim: 'bubble-b' },
+          { size: 220, top: '74%', right: '4%', color: 'rgba(255,194,71,0.16)', soft: true, anim: 'bubble-a' },
+          { size: 240, bottom: '-4%', left: '10%', color: 'rgba(18,124,142,0.14)', soft: true, anim: 'bubble-c' },
+        ]} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1180, margin: '0 auto' }}>
+          <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: 'clamp(48px,6vw,80px)', maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16 }}>
+              The 24/7 <span style={{ color: ACCENT }}>Enrolment Engine</span>
+            </h2>
+            <p style={{ color: BODY, fontSize: 18, lineHeight: 1.6 }}>
+              Stop missing enquiries because you're on deck. We handle every stage of the enrolment journey — from first enquiry to attended trial.
+            </p>
+          </motion.div>
+
+          <FeatureRow
+            tone={ACCENT}
+            eyebrow="Step 01"
+            title="Precision Ad Campaigns"
+            accent="For Your Swim School."
+            body="High-converting ad creatives built specifically for swim school families — targeting parents already searching for lessons in your area, not a general audience."
+            bullets={['Targets parents already searching nearby', 'Creative built for swim schools, not generic', 'Fills lanes through your quieter terms']}
+            visual={<BlobImage src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&w=900&q=80" alt="A swim instructor teaching a small group of children in a pool" />}
+          />
+          <FeatureRow
+            reverse
+            tone="#0E8C7B"
+            eyebrow="Step 02"
+            title="Around-the-Clock"
+            accent="Responses."
+            body="Every enquiry that comes in gets responded to immediately, around the clock. No family sits unanswered over a weekend while they enrol at the school down the road."
+            bullets={['Every enquiry answered in seconds', 'No family left waiting over the weekend', 'Works after 6pm and on weekends']}
+            visual={<TimelineCard />}
+          />
+          <FeatureRow
+            tone="#D9572E"
+            eyebrow="Step 03"
+            title="From Enquiry to"
+            accent="Booked Trial, Automatically."
+            body="The system knows the questions swim parents ask before enrolling — pricing, level progression, makeup lesson policies — and handles them automatically before they reach your front desk."
+            bullets={['Answers pricing & level questions', 'Books trials straight to your calendar', 'Hands tricky questions to your staff']}
+            visual={<BookingCard />}
+          />
+          <FeatureRow
+            reverse
+            tone="#C98A1E"
+            eyebrow="Step 04"
+            title="Know Your Numbers"
+            accent="at a Glance."
+            body="Real-time visibility into every enquiry, ad dollar, and booked trial. Stop guessing what your marketing is doing — know exactly what fills lanes."
+            bullets={['See every enquiry, ad dollar & booking', 'Know your cost per booked trial', "Stop guessing what's working"]}
+            visual={<StatsCard />}
+          />
+          <FeatureRow
+            tone="#127C8E"
+            eyebrow="Step 05"
+            title="Scaleable"
+            accent="Partnership."
+            body="After the system is live, we stay on as your long-term growth partner — expanding to new pool locations, building new enrolment workflows, developing term-specific campaigns, and creating custom tools as your school scales."
+            bullets={['New pools & locations as you grow', 'Term-specific enrolment campaigns', 'Custom tools built for your school']}
+            visual={<BlobImage src="https://images.unsplash.com/photo-1600965962361-9035dbfd1c50?auto=format&fit=crop&w=900&q=80" alt="A young swimmer learning to swim with a coach in a clear pool" />}
+          />
+        </div>
+      </section>
+
+      <WaveDivider top={WHITE_BAND} bottom={CYAN} />
+
+      {/* ── WHAT WE OFFER (light blue) ────────────────────────────────────── */}
+      <section style={{ position: 'relative', zIndex: 20, background: CYAN, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
+        <Bubbles items={[
+          { size: 90, top: '-30px', right: '12%', color: 'rgba(255,255,255,0.5)', ring: true, anim: 'bubble-a' },
+          { size: 160, top: '30%', left: '-50px', color: 'rgba(255,255,255,0.08)', anim: 'bubble-c' },
+          { size: 44, bottom: '8%', right: '8%', color: 'rgba(255,125,84,0.55)', anim: 'bubble-b' },
+        ]} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1240, margin: '0 auto' }}>
+          <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: 56, maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, color: '#FFFFFF' }}>
+              What We Offer
+            </h2>
+            <p style={{ color: 'rgba(255,255,255,0.92)', fontSize: 18, lineHeight: 1.6 }}>
               We build everything your school needs to keep classes full — without adding to your plate.
             </p>
           </motion.div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
-            {/* TODO: replace each Unsplash img below with a licensed photo */}
-            {[
-              { title: 'Personalised Ads', desc: 'High-converting ad creatives designed specifically to attract families searching for swim lessons in your local area.', img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=800&q=80', alt: 'Children smiling poolside at a swim school before a lesson', mockup: 'img' },
-              { title: 'Trial Booking Automation', desc: 'Streamlined workflows that guide new families from first enquiry to confirmed trial lesson without any manual follow-up.', img: '', alt: '', mockup: 'sms' },
-              { title: 'After-Hours Handling', desc: "Seamless call and message management when you're in the pool. Your AI assistant handles enquiries professionally after 6pm and on weekends.", img: '', alt: '', mockup: 'agent' },
-              { title: 'Local SEO', desc: 'Long-term organic growth strategies ensuring your swim school ranks #1 for families searching "swim lessons near me" in your suburb.', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80', alt: 'A bright outdoor swimming pool at a local swim school', mockup: 'img' },
-              { title: 'Custom Websites', desc: 'Stunning, high-performance web architecture that not only looks incredible but actively drives trial bookings and enrolments.', img: 'https://images.unsplash.com/photo-1600965962361-9035dbfd1c50?auto=format&fit=crop&w=800&q=80', alt: 'A young swimmer learning to swim with a coach in a clear pool', mockup: 'img' },
-              { title: 'Review Management', desc: 'Automated follow-up protocols to capture 5-star reviews from happy families while intercepting negative feedback privately.', img: '', alt: '', mockup: 'stars' },
-            ].map((s, i) => (
-              <motion.div key={i} {...fadeUp(i * 0.07)}
-                style={{ background: '#FFFFFF', borderRadius: 24, border: '1px solid rgba(14,42,56,0.10)', padding: '24px 32px 32px', display: 'flex', flexDirection: 'column', transition: 'border-color 0.5s', boxShadow: '0 10px 30px rgba(14,127,168,0.08)' }}
-                whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.45)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.10)')}>
-
-                {/* Image / mockup container */}
-                <div style={{ width: '100%', height: 224, borderRadius: 16, overflow: 'hidden', position: 'relative', marginBottom: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', ...(s.mockup === 'img' ? { border: '1px solid rgba(14,42,56,0.08)' } : { background: '#F1F7F9', border: '1px solid rgba(14,42,56,0.08)' }) }}>
-                  {/* Hover glow overlay */}
-                  <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 50%, rgba(28,167,196,0.05), transparent 70%)', pointerEvents: 'none', zIndex: 1 }} />
-
-                  {s.mockup === 'img' && (
-                    <img src={s.img} alt={s.alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  )}
-
-                  {s.mockup === 'sms' && (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', maxWidth: 260, padding: '0 12px', zIndex: 2 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                        <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#1CA7C4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <span style={{ fontSize: 7, fontWeight: 700, color: '#FFFFFF' }}>AI</span>
-                        </div>
-                        <div style={{ width: 80, height: 6, background: 'rgba(14,42,56,0.14)', borderRadius: 3 }} />
-                      </div>
-                      <div style={{ alignSelf: 'flex-start', width: '80%', background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.08)', borderRadius: '14px 14px 14px 4px', padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <div style={{ height: 5, background: 'rgba(14,42,56,0.14)', borderRadius: 3 }} />
-                        <div style={{ height: 5, width: '75%', background: 'rgba(14,42,56,0.10)', borderRadius: 3 }} />
-                      </div>
-                      <div style={{ alignSelf: 'flex-end', width: '65%', background: 'linear-gradient(135deg,#1CA7C4,#17B5AE)', borderRadius: '14px 14px 4px 14px', padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <div style={{ height: 5, background: 'rgba(255,255,255,0.55)', borderRadius: 3 }} />
-                        <div style={{ height: 5, width: '50%', background: 'rgba(255,255,255,0.40)', borderRadius: 3 }} />
-                      </div>
-                      <div style={{ alignSelf: 'flex-start', width: '85%', background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.08)', borderRadius: '14px 14px 14px 4px', padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 4 }}>
-                        <div style={{ height: 5, background: 'rgba(14,42,56,0.14)', borderRadius: 3 }} />
-                        <div style={{ height: 5, width: '83%', background: 'rgba(14,42,56,0.10)', borderRadius: 3 }} />
-                        <div style={{ height: 5, width: '60%', background: 'rgba(14,42,56,0.08)', borderRadius: 3 }} />
-                      </div>
-                      <div style={{ alignSelf: 'flex-end', width: '55%', background: 'linear-gradient(135deg,#1CA7C4,#17B5AE)', borderRadius: '14px 14px 4px 14px', padding: '10px 12px' }}>
-                        <div style={{ height: 5, background: 'rgba(255,255,255,0.55)', borderRadius: 3 }} />
-                      </div>
-                    </div>
-                  )}
-
-                  {s.mockup === 'agent' && (
-                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 2 }}>
-                      <div style={{ position: 'absolute', top: -20, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#17B5AE', boxShadow: '0 0 8px rgba(23,181,174,0.5)' }} />
-                        <div style={{ width: 2, height: 8, background: '#CBDDE4' }} />
-                      </div>
-                      <div style={{ width: 112, height: 160, background: '#FFFFFF', border: '3px solid #DCEAEF', borderRadius: 24, position: 'relative', overflow: 'hidden', boxShadow: '0 12px 30px rgba(14,127,168,0.18)' }}>
-                        <div style={{ position: 'absolute', top: 4, left: '50%', transform: 'translateX(-50%)', width: 32, height: 6, background: '#DCEAEF', borderRadius: 3 }} />
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', paddingTop: 8, gap: 6 }}>
-                          <div style={{ width: 52, height: 44, background: 'linear-gradient(to bottom, #1CA7C4, #17B5AE)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 16px rgba(14,127,168,0.25)' }}>
-                            <div style={{ display: 'flex', gap: 8 }}>
-                              <div style={{ width: 10, height: 10, background: '#FFFFFF', borderRadius: '50%' }} />
-                              <div style={{ width: 10, height: 10, background: '#FFFFFF', borderRadius: '50%' }} />
-                            </div>
-                          </div>
-                          <div style={{ width: 18, height: 18, border: '2px solid #1CA7C4', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <div style={{ width: 5, height: 7, background: '#1CA7C4', borderRadius: 2 }} />
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: 14 }}>
-                            {[5,10,7,13,9,11,5,10,7].map((h, idx) => (
-                              <div key={idx} style={{ width: 3, height: h, background: 'rgba(28,167,196,0.6)', borderRadius: 2, animation: 'pulse 1s infinite', animationDelay: `${idx * 0.1}s` }} />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {s.mockup === 'stars' && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, zIndex: 2 }}>
-                      <div style={{ display: 'flex', gap: 8 }}>
-                        {[1,2,3,4,5].map(n => (
-                          <span key={n} style={{ fontSize: 28, color: '#F2A65A', lineHeight: 1 }}>★</span>
-                        ))}
-                      </div>
-                      <div style={{ fontSize: 12, color: '#0E7FA8', fontWeight: 600 }}>New review received</div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '60%', alignItems: 'center' }}>
-                        <div style={{ height: 5, width: '100%', background: 'rgba(14,42,56,0.10)', borderRadius: 3 }} />
-                        <div style={{ height: 5, width: '80%', background: 'rgba(14,42,56,0.07)', borderRadius: 3 }} />
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Text */}
-                <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
-                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 700, marginBottom: 12, letterSpacing: '0.01em', color: '#0F2A38' }}>{s.title}</h3>
-                  <p style={{ color: '#54707C', fontSize: 13, lineHeight: 1.6 }}>{s.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 20, alignItems: 'start' }}>
+            {SERVICES.map((s, i) => {
+              const icons = [Megaphone, CalendarClock, PhoneCall, MapPin, Monitor, Star]
+              const colors = ['#0E7FA8', '#0E8C7B', '#FF7D54', '#127C8E', '#E0A12E', '#E85A9B']
+              const Icon = icons[i]
+              const c = colors[i]
+              const featured = i === 0 || i === 4
+              const lift = i % 2 === 1 ? 'clamp(0px,3vw,28px)' : 0
+              return (
+                <motion.div key={s.title} {...fadeUp(i * 0.06)}
+                  style={{
+                    background: featured ? `linear-gradient(155deg, ${c}, ${c}cc)` : '#FFFFFF',
+                    borderRadius: i % 3 === 1 ? 28 : 22, padding: '28px 28px 30px', marginTop: lift,
+                    boxShadow: featured ? `0 20px 44px ${c}55` : '0 16px 40px rgba(4,49,63,0.16)',
+                    display: 'flex', flexDirection: 'column', transition: 'transform 0.2s',
+                  }}
+                  whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}>
+                  <div style={{ width: 50, height: 50, borderRadius: 15, background: featured ? 'rgba(255,255,255,0.2)' : c, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: featured ? 'none' : `0 8px 18px ${c}59`, transform: 'rotate(-5deg)' }}>
+                    <Icon size={24} strokeWidth={2.2} color="#FFFFFF" />
+                  </div>
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 700, marginBottom: 10, color: featured ? '#FFFFFF' : INK }}>{s.title}</h3>
+                  <p style={{ color: featured ? 'rgba(255,255,255,0.9)' : BODY, fontSize: 14, lineHeight: 1.6 }}>{s.desc}</p>
+                </motion.div>
+              )
+            })}
           </div>
-
-          {/* Authentic swim-school photo — families poolside (punctuation between cards and CTA) */}
-          {/* TODO: replace with a licensed AU swim-school photo */}
-          <motion.div {...fadeUp(0.08)} style={{ marginTop: 24, borderRadius: 24, overflow: 'hidden', position: 'relative', border: '1px solid rgba(14,42,56,0.06)', boxShadow: '0 14px 40px rgba(14,127,168,0.12)' }}>
-            <img
-              src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&w=1600&q=80"
-              alt="A swim instructor teaching a small group of children in a swim-school pool"
-              style={{ width: '100%', height: 'clamp(200px, 30vw, 320px)', objectFit: 'cover', display: 'block' }}
-            />
-          </motion.div>
-
-          {/* Tailored box */}
-          <motion.div {...fadeUp(0.1)} style={{ marginTop: 24, background: '#FFFFFF', borderRadius: 24, border: '1px solid rgba(14,42,56,0.10)', padding: 'clamp(32px,4vw,56px)', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 32, transition: 'border-color 0.5s', boxShadow: '0 10px 30px rgba(14,127,168,0.08)' }}
-            whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-            onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.45)')}
-            onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.10)')}>
-            <div style={{ flex: 1, minWidth: 280 }}>
-              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 700, marginBottom: 12 }}>Tailored on <span style={{ color: '#0E7FA8' }}>Demand.</span></h3>
-              <p style={{ color: '#54707C', fontSize: 14, lineHeight: 1.6, maxWidth: 480 }}>
-                Our platform is built to grow with your school — continuously adding new automations, term-specific campaigns, and enrolment workflows tailored specifically for swim schools. Every enquiry touchpoint, handled.
-              </p>
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, maxWidth: 384, justifyContent: 'flex-end' }}>
-              {['Trial Enquiry Capture', 'Enrolment Reminders', 'Intake Automation', 'Level FAQ Handling', 'Two-Way SMS', 'CRM Integrations', 'Term Re-enrolment', 'Holiday Program Campaigns'].map(tag => (
-                <span key={tag} style={{ fontSize: 12, padding: '6px 12px', borderRadius: 9999, border: '1px solid rgba(28,167,196,0.25)', color: '#0E7FA8', background: 'rgba(28,167,196,0.08)', whiteSpace: 'nowrap', fontWeight: 600 }}>{tag}</span>
-              ))}
-            </div>
-          </motion.div>
         </div>
       </section>
 
-      {/* ── FAQ ───────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '56px 24px', position: 'relative', zIndex: 20 }}>
-        <div style={{ maxWidth: 1024, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <motion.h2 {...fadeUp(0)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 48, textAlign: 'center' }}>
-            Frequently Asked <span style={{ color: '#0E7FA8' }}>Questions</span>
+      <WaveDivider top={CYAN} bottom={NAVY} />
+
+      {/* ── RESULTS / WHY AUTOMATION WINS (dark navy) ─────────────────────── */}
+      <section style={{ position: 'relative', zIndex: 20, background: NAVY_GRAD, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
+        <Bubbles items={[
+          { size: 120, top: '-40px', left: '8%', color: 'rgba(28,167,196,0.18)', anim: 'bubble-a' },
+          { size: 70, top: '22%', right: '7%', color: 'rgba(127,215,230,0.4)', ring: true, anim: 'bubble-b' },
+          { size: 200, bottom: '-80px', right: '-40px', color: 'rgba(31,179,155,0.12)', anim: 'bubble-c' },
+        ]} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1152, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <motion.h2 {...fadeUp(0)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 700, marginBottom: 16, textAlign: 'center', color: '#FFFFFF' }}>
+            Why <span style={{ color: '#7FD7E6' }}>Automation Wins for Swim Schools</span>
+          </motion.h2>
+          <motion.p {...fadeUp(0.1)} style={{ color: 'rgba(230,240,243,0.82)', textAlign: 'center', fontSize: 18, maxWidth: 768, margin: '0 auto 56px', lineHeight: 1.6 }}>
+            Response speed and persistent follow-up are the deciding factors in whether a family enrols with you or the school down the road.
+          </motion.p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, width: '100%' }}>
+            {BENCHMARKS.map((b, i) => {
+              const statColors = ['#54E0D6', '#FFC247', '#FF9E7D']
+              const sc = statColors[i]
+              return (
+                <motion.div key={i} {...fadeUp(i * 0.1)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 24, padding: 32, transition: 'border-color 0.3s', marginTop: i === 1 ? 'clamp(0px,3vw,32px)' : 0 }}
+                  whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = `${sc}80`)}
+                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)')}>
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", color: sc, fontSize: 30, fontWeight: 700, marginBottom: 8, lineHeight: 1.2 }}>
+                    {b.stat}<br />{b.stat2}
+                  </h3>
+                  <h4 style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 18, marginBottom: 16 }}>{b.h4}</h4>
+                  <p style={{ color: 'rgba(230,240,243,0.8)', lineHeight: 1.6, fontSize: 14 }}>{b.desc}</p>
+                  <p style={{ fontSize: 11, color: 'rgba(230,240,243,0.45)', marginTop: 12, fontStyle: 'italic' }}>{b.source}</p>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      <WaveDivider top={NAVY} bottom={MINT} />
+
+      {/* ── FAQ (Soakly-style mint green) ─────────────────────────────────── */}
+      <section style={{ position: 'relative', zIndex: 20, background: MINT, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
+        <Bubbles items={[
+          { size: 120, top: '-44px', right: '10%', color: 'rgba(255,255,255,0.16)', anim: 'bubble-a' },
+          { size: 64, top: '20%', left: '7%', color: 'rgba(11,42,56,0.18)', ring: true, anim: 'bubble-b' },
+          { size: 190, bottom: '-80px', left: '-40px', color: 'rgba(255,255,255,0.10)', anim: 'bubble-c' },
+        ]} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1024, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <motion.h2 {...fadeUp(0)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 48, textAlign: 'center', color: INK }}>
+            Frequently Asked <span style={{ color: '#FFFFFF' }}>Questions</span>
           </motion.h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 16, width: '100%', alignItems: 'start' }}>
             {FAQS.map((faq, i) => (
               <motion.div key={i} {...fadeUp(i * 0.06)} style={{ background: '#FFFFFF', border: `1px solid ${openFaq === i ? 'rgba(28,167,196,0.55)' : 'rgba(14,42,56,0.10)'}`, borderRadius: 16, overflow: 'hidden', transition: 'border-color 0.3s', boxShadow: '0 6px 20px rgba(14,127,168,0.06)' }}>
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  style={{ width: '100%', textAlign: 'left', padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 700, fontSize: 16, background: 'none', border: 'none', color: '#0F2A38', cursor: 'pointer', minHeight: 72 }}>
+                  style={{ width: '100%', textAlign: 'left', padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontWeight: 700, fontSize: 16, background: 'none', border: 'none', color: INK, cursor: 'pointer', minHeight: 72 }}>
                   {faq.question}
-                  <ChevronDown size={20} color="#0E7FA8" style={{ flexShrink: 0, transform: openFaq === i ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }} />
+                  <ChevronDown size={20} color={ACCENT} style={{ flexShrink: 0, transform: openFaq === i ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }} />
                 </button>
                 <div style={{
                   maxHeight: openFaq === i ? 300 : 0, opacity: openFaq === i ? 1 : 0,
                   overflow: 'hidden', transition: 'all 0.5s cubic-bezier(0.4,0,0.2,1)',
-                  padding: openFaq === i ? '0 24px 24px' : '0 24px', color: '#54707C', lineHeight: 1.7,
+                  padding: openFaq === i ? '0 24px 24px' : '0 24px', color: BODY, lineHeight: 1.7,
                 }}>
                   {faq.answer}
                 </div>
@@ -717,73 +722,31 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* ── BENCHMARKS ────────────────────────────────────────────────────── */}
-      <section style={{ padding: '80px 24px', position: 'relative', zIndex: 20, background: 'linear-gradient(180deg, #0B2A38 0%, #0E3346 100%)' }}>
-        <div style={{ maxWidth: 1152, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <motion.h2 {...fadeUp(0)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 700, marginBottom: 16, textAlign: 'center', color: '#FFFFFF' }}>
-            Why <span style={{ color: '#7FD7E6' }}>Automation Wins for Swim Schools</span>
-          </motion.h2>
-          <motion.p {...fadeUp(0.1)} style={{ color: 'rgba(230,240,243,0.82)', textAlign: 'center', fontSize: 18, maxWidth: 768, margin: '0 auto 64px', lineHeight: 1.6 }}>
-            Response speed and persistent follow-up are the deciding factors in whether a family enrols with you or the school down the road.
-          </motion.p>
+      <WaveDivider top={MINT} bottom={CYAN} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, width: '100%', marginBottom: 64 }}>
-            {[
-              {
-                stat: '55–65%', stat2: 'Trial-to-Enrolment',
-                h4: 'With Automated Follow-Up vs. 30–45% Without',
-                desc: 'Schools with automated trial follow-up sequences see dramatically higher enrolment rates. Families who get a reminder and a warm check-in show up — and enrol.',
-                source: 'Source: [TODO — add citation]',
-              },
-              {
-                stat: '40–55% of Enquiries', stat2: 'Arrive After 6PM',
-                h4: "When You're Teaching and Can't Pick Up",
-                desc: 'Swim schools lose nearly half their potential enrolments simply by being in the pool. Our system captures families that currently go to a competitor who answered first.',
-                source: 'Source: [TODO — add citation]',
-              },
-              {
-                stat: '45–50%', stat2: 'Annual Churn',
-                h4: 'A 400-student school needs ~180 new students every year just to stay flat.',
-                desc: 'At ~45% annual churn, standing still means running a constant replacement race. Without a reliable enrolment engine, you\'re always behind.',
-                source: 'Source: [TODO — add citation]',
-              },
-            ].map((b, i) => (
-              <motion.div key={i} {...fadeUp(i * 0.1)} style={{ background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 24, padding: 32, position: 'relative', overflow: 'hidden', transition: 'border-color 0.3s', boxShadow: '0 10px 30px rgba(14,127,168,0.08)' }}
-                whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-                onMouseEnter={e => { (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.45)'); const glow = e.currentTarget.querySelector('.bench-glow') as HTMLElement; if (glow) glow.style.opacity = '1' }}
-                onMouseLeave={e => { (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.10)'); const glow = e.currentTarget.querySelector('.bench-glow') as HTMLElement; if (glow) glow.style.opacity = '0.5' }}>
-                <div className="bench-glow" style={{ position: 'absolute', top: 0, right: 0, width: 128, height: 128, background: 'rgba(28,167,196,0.14)', borderRadius: '50%', filter: 'blur(40px)', marginRight: -40, marginTop: -40, pointerEvents: 'none', opacity: 0.5, transition: 'opacity 0.3s' }} />
-                <div style={{ position: 'relative', zIndex: 10 }}>
-                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", color: '#0E7FA8', fontSize: 32, fontWeight: 700, marginBottom: 8, lineHeight: 1.2 }}>
-                    {b.stat}<br />{b.stat2}
-                  </h3>
-                  <h4 style={{ color: '#0F2A38', fontWeight: 700, fontSize: 18, marginBottom: 16 }}>{b.h4}</h4>
-                  <p style={{ color: '#54707C', lineHeight: 1.6, fontSize: 14 }}>{b.desc}</p>
-                  <p style={{ fontSize: 11, color: '#7C95A0', marginTop: 12, fontStyle: 'italic' }}>{b.source}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── GUARANTEE ─────────────────────────────────────────────────────── */}
-      <section style={{ padding: '88px 24px', position: 'relative', zIndex: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1CA7C4' }}>
-        <div style={{ maxWidth: 1024, margin: '0 auto', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+      {/* ── GUARANTEE + CTA (light blue) ──────────────────────────────────── */}
+      <section style={{ position: 'relative', zIndex: 20, background: CYAN, padding: 'clamp(80px,10vw,120px) 24px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'visible' }}>
+        <Bubbles items={[
+          { size: 150, top: '-60px', left: '8%', color: 'rgba(255,255,255,0.10)', anim: 'bubble-a' },
+          { size: 70, top: '24%', right: '10%', color: 'rgba(255,255,255,0.5)', ring: true, anim: 'bubble-b' },
+          { size: 50, bottom: '14%', left: '12%', color: 'rgba(255,194,71,0.5)', anim: 'bubble-c' },
+          { size: 220, bottom: '-100px', right: '-50px', color: 'rgba(255,255,255,0.07)', anim: 'bubble-b' },
+        ]} />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1024, margin: '0 auto', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <motion.div {...fadeUp(0)} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 20px', borderRadius: 9999, border: '1px solid rgba(255,255,255,0.35)', background: 'rgba(255,255,255,0.15)', color: '#FFFFFF', fontSize: 13, letterSpacing: '0.08em', marginBottom: 40, fontWeight: 700, textTransform: 'uppercase' }}>
             <LogoMark size={16} /> The Performance Guarantee
           </motion.div>
-          <motion.h2 {...fadeUp(0.1)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.5rem, 7vw, 5.5rem)', fontWeight: 700, marginBottom: 32, lineHeight: 1.05, color: '#FFFFFF' }}>
+          <motion.h2 {...fadeUp(0.1)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.5rem, 7vw, 5rem)', fontWeight: 700, marginBottom: 32, lineHeight: 1.05, color: '#FFFFFF' }}>
             Increase Your Bookings<br />by 30% in 90 Days.{' '}
-            <span style={{ display: 'block', color: 'rgba(255,255,255,0.75)', fontSize: 'clamp(1.5rem, 4vw, 3.5rem)', marginTop: 16 }}>Or We Work for Free Until You Do.</span>
+            <span style={{ display: 'block', color: 'rgba(255,255,255,0.75)', fontSize: 'clamp(1.5rem, 4vw, 3.25rem)', marginTop: 16 }}>Or We Work for Free Until You Do.</span>
           </motion.h2>
-          <motion.p {...fadeUp(0.2)} style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', color: 'rgba(255,255,255,0.9)', maxWidth: 768, textAlign: 'center', marginBottom: 64, lineHeight: 1.7 }}>
+          <motion.p {...fadeUp(0.2)} style={{ fontSize: 'clamp(1rem, 2vw, 1.4rem)', color: 'rgba(255,255,255,0.9)', maxWidth: 768, textAlign: 'center', marginBottom: 56, lineHeight: 1.7 }}>
             Stop losing after-hours enquiries and watching booked trials go cold. We install a 24/7 enrolment system that turns website visitors and missed calls into families sitting poolside on trial day.
           </motion.p>
           <motion.a {...fadeUp(0.3)} href="/book" style={{
             display: 'inline-flex', alignItems: 'center', gap: 12,
-            padding: '24px 48px', background: '#FFFFFF', color: '#0E7FA8', borderRadius: 9999,
-            fontWeight: 700, fontSize: 20, textDecoration: 'none',
+            padding: '22px 44px', background: '#FFFFFF', color: ACCENT, borderRadius: 9999,
+            fontWeight: 700, fontSize: 19, textDecoration: 'none',
             boxShadow: '0 14px 40px rgba(4,49,63,0.25)', transition: 'all 0.3s',
           }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 18px 55px rgba(4,49,63,0.4)' }}
@@ -793,11 +756,10 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* ── FOOTER FADE ───────────────────────────────────────────────────── */}
-      <div style={{ height: 30, background: 'linear-gradient(to bottom, transparent 0%, rgba(11,42,56,0.5) 60%, #0B2A38 100%)', marginTop: -30, position: 'relative', zIndex: 19, pointerEvents: 'none' }} />
+      <WaveDivider top={CYAN} bottom={NAVY} />
 
-      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
-      <footer style={{ background: '#0B2A38', borderTop: '1px solid rgba(255,255,255,0.10)', padding: '64px 24px', position: 'relative', zIndex: 20 }}>
+      {/* ── FOOTER (dark navy) ────────────────────────────────────────────── */}
+      <footer style={{ background: NAVY, padding: '64px 24px', position: 'relative', zIndex: 20 }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 48, marginBottom: 48 }}>
             <div style={{ gridColumn: 'span 2' }}>
@@ -848,11 +810,7 @@ export function LandingPage() {
       </footer>
 
       <style>{`
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes spinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
-        @keyframes slideUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
+        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
         @media (max-width: 768px) {
           .hidden-mobile { display: none !important; }
           .show-mobile { display: block !important; }

@@ -15,7 +15,7 @@ function NewHomePage() {
         initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
         transition={{ duration: 1.0, ease: 'easeOut', delay: 0.1 }}
-        style={{ position: 'fixed', inset: 0, zIndex: 200, background: '#F7FAFB', pointerEvents: 'none' }}
+        style={{ position: 'fixed', inset: 0, zIndex: 200, background: '#0B2A38', pointerEvents: 'none' }}
       />
       <LandingPage />
     </div>
