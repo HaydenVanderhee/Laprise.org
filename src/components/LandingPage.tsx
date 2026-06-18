@@ -723,7 +723,8 @@ export function LandingPage() {
       <WaveDivider top={CYAN} bottom={NAVY} />
 
       {/* ── RESULTS / WHY AUTOMATION WINS (dark navy) ─────────────────────── */}
-      <section style={{ position: 'relative', zIndex: 20, background: NAVY, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
+      {/* TODO: swap the Unsplash URL for a licensed photo of young swimmers */}
+      <section style={{ position: 'relative', zIndex: 20, background: 'linear-gradient(180deg, #0B2A38 0%, rgba(11,42,56,0.74) 26%, rgba(11,42,56,0.74) 74%, #0B2A38 100%), url("https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat', backgroundColor: NAVY, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
         <Blooms gradient={NAVY_BLOOM} />
         <Bubbles items={[
           { size: 120, top: '-40px', left: '8%', color: 'rgba(28,167,196,0.18)', anim: 'bubble-a' },
