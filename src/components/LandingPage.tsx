@@ -44,25 +44,37 @@ function Bubbles({ items }: { items: Bubble[] }) {
   )
 }
 
-// ── Bespoke swim iconography (custom — deliberately NOT the stock lucide set) ──
-type SwimIconName = 'ads' | 'booking' | 'afterhours' | 'seo' | 'websites' | 'reviews'
-function SwimIcon({ name, size = 24, color = '#FFFFFF' }: { name: SwimIconName; size?: number; color?: string }) {
-  const c = { fill: 'none', stroke: color, strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
-  const glyph: Record<SwimIconName, React.ReactNode> = {
-    // ripple target — reaching the right local ripples
-    ads: (<><circle cx="12" cy="12" r="2.4" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="9.6" /></>),
-    // water drop + tick — a booked trial
-    booking: (<><path d="M12 3.5C9 8 6.5 11.4 6.5 14.5a5.5 5.5 0 0 0 11 0C17.5 11.4 15 8 12 3.5Z" /><path d="M9.6 14.4l1.8 1.8 3.2-3.5" /></>),
-    // crescent moon — after hours
-    afterhours: (<><path d="M19.2 13.2A7.3 7.3 0 1 1 10.9 4.8 5.8 5.8 0 0 0 19.2 13.2Z" /><circle cx="17.4" cy="6.4" r="0.9" fill={color} stroke="none" /></>),
-    // pin shaped like a droplet — local
-    seo: (<><path d="M12 21s-6.5-6.2-6.5-10.8a6.5 6.5 0 1 1 13 0C18.5 14.8 12 21 12 21Z" /><circle cx="12" cy="10.2" r="2.4" /></>),
-    // browser window with a wave
-    websites: (<><rect x="3.2" y="5" width="17.6" height="14" rx="2.6" /><path d="M3.2 9.3h17.6" /><circle cx="6" cy="7.15" r="0.7" fill={color} stroke="none" /><circle cx="8.2" cy="7.15" r="0.7" fill={color} stroke="none" /><path d="M6 14.6q1.8-2 3.6 0t3.6 0 3.6 0" /></>),
-    // star — reviews
-    reviews: (<path d="M12 4.2l2.2 4.5 5 .7-3.6 3.5.85 4.95L12 15.9l-4.45 2.35.85-4.95L4.8 9.4l5-.7Z" />),
+// ── Hand-drawn swim doodles — clean line sketches run through a subtle roughen ──
+// filter so they read as penned, not vector-perfect (the opposite of stock icons).
+type DoodleName = 'ads' | 'booking' | 'afterhours' | 'seo' | 'websites' | 'reviews'
+function Doodle({ name, size = 56, color = ACCENT }: { name: DoodleName; size?: number; color?: string }) {
+  const fid = `rough-${name}`
+  const s = { fill: 'none', stroke: color, strokeWidth: 2.1, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
+  const glyph: Record<DoodleName, React.ReactNode> = {
+    // paper plane with a dotted trail — targeted local outreach
+    ads: (<><path d="M5 27 L44 8 L34 44 L26 30 Z" /><path d="M26 30 L44 8" /><path d="M5 39 q7 -1 11 -6" strokeDasharray="0.5 4.5" /></>),
+    // calendar with a tick — a booked trial
+    booking: (<><path d="M9 13 h30 a3 3 0 0 1 3 3 v23 a3 3 0 0 1 -3 3 h-30 a3 3 0 0 1 -3 -3 v-23 a3 3 0 0 1 3 -3 Z" /><path d="M16 9 v8" /><path d="M32 9 v8" /><path d="M6 22 h36" /><path d="M17 32 l5 5 l9 -10" /></>),
+    // crescent moon + a little sparkle — after hours
+    afterhours: (<><path d="M35 31 A13 13 0 1 1 21 11 A9.5 9.5 0 1 0 35 31 Z" /><path d="M40 10 l1 2.6 2.6 1 -2.6 1 -1 2.6 -1 -2.6 -2.6 -1 2.6 -1 Z" /></>),
+    // magnifying glass with a little pin — local search
+    seo: (<><circle cx="28" cy="21" r="12" /><path d="M19.5 30 L9 41" /><path d="M28 16 a3.4 3.4 0 0 1 3.4 3.4 c0 2.4 -3.4 5.6 -3.4 5.6 s-3.4 -3.2 -3.4 -5.6 A3.4 3.4 0 0 1 28 16 Z" /></>),
+    // browser window with a wave inside
+    websites: (<><path d="M7 12 h34 a2.5 2.5 0 0 1 2.5 2.5 v21 a2.5 2.5 0 0 1 -2.5 2.5 h-34 a2.5 2.5 0 0 1 -2.5 -2.5 v-21 a2.5 2.5 0 0 1 2.5 -2.5 Z" /><path d="M5 20 h38" /><circle cx="10" cy="16" r="1" fill={color} stroke="none" /><circle cx="14" cy="16" r="1" fill={color} stroke="none" /><path d="M11 30 q3.5 -3.5 7 0 t7 0 t7 0" /></>),
+    // two hand-drawn stars — reviews
+    reviews: (<><path d="M20 9 l3.4 7 7.6 .9 -5.6 5.2 1.4 7.5 -6.8 -3.7 -6.8 3.7 1.4 -7.5 -5.6 -5.2 7.6 -.9 Z" /><path d="M38 8 l1.5 3 3.3 .4 -2.4 2.3 .6 3.3 -3 -1.6 -3 1.6 .6 -3.3 -2.4 -2.3 3.3 -.4 Z" /></>),
   }
-  return <svg viewBox="0 0 24 24" width={size} height={size} {...c}>{glyph[name]}</svg>
+  return (
+    <svg viewBox="0 0 48 48" width={size} height={size} {...s}>
+      <defs>
+        <filter id={fid} x="-15%" y="-15%" width="130%" height="130%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="7" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+      <g filter={`url(#${fid})`}>{glyph[name]}</g>
+    </svg>
+  )
 }
 
 // organic "squishy" blob radii for icon holders (kills the rounded-square AI tell)
@@ -652,7 +664,7 @@ export function LandingPage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 20, alignItems: 'start' }}>
             {SERVICES.map((s, i) => {
-              const names: SwimIconName[] = ['ads', 'booking', 'afterhours', 'seo', 'websites', 'reviews']
+              const names: DoodleName[] = ['ads', 'booking', 'afterhours', 'seo', 'websites', 'reviews']
               const colors = ['#0E7FA8', '#0E8C7B', '#FF7D54', '#127C8E', '#E0A12E', '#E85A9B']
               const c = colors[i]
               const featured = i === 0 || i === 4
@@ -666,8 +678,9 @@ export function LandingPage() {
                     display: 'flex', flexDirection: 'column', transition: 'transform 0.2s',
                   }}
                   whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}>
-                  <div style={{ width: 54, height: 54, borderRadius: BLOB[i % BLOB.length], background: featured ? 'rgba(255,255,255,0.22)' : c, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: featured ? 'none' : `0 8px 18px ${c}59` }}>
-                    <SwimIcon name={names[i]} size={25} color="#FFFFFF" />
+                  {/* hand-drawn doodle drawn straight on the card — no icon tile */}
+                  <div style={{ height: 64, marginBottom: 12, display: 'flex', alignItems: 'flex-end' }}>
+                    <Doodle name={names[i]} size={62} color={featured ? '#FFFFFF' : c} />
                   </div>
                   <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 700, marginBottom: 10, color: featured ? '#FFFFFF' : INK }}>{s.title}</h3>
                   <p style={{ color: featured ? 'rgba(255,255,255,0.9)' : BODY, fontSize: 14, lineHeight: 1.6 }}>{s.desc}</p>
