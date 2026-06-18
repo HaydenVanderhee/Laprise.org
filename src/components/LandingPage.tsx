@@ -7,7 +7,7 @@ const EASE = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 36 },
   whileInView: { opacity: 1, y: 0 } as const,
-  viewport: { once: false, amount: 0.12 } as const,
+  viewport: { once: true, amount: 0.12 } as const,
   transition: { duration: 0.75, ease: EASE, delay },
 })
 
@@ -39,7 +39,7 @@ function Bubbles({ items }: { items: Bubble[] }) {
           position: 'absolute', width: b.size, height: b.size, borderRadius: '50%',
           top: b.top, bottom: b.bottom, left: b.left, right: b.right,
           ...(b.soft
-            ? { background: `radial-gradient(circle, ${b.color}, transparent 70%)`, filter: 'blur(6px)' }
+            ? { background: `radial-gradient(circle, ${b.color}, transparent 70%)` }
             : b.ring
               ? { background: 'transparent', border: `2px solid ${b.color}` }
               : { background: b.color }),
@@ -190,16 +190,16 @@ function FeatureRow({ eyebrow, title, accent, body, bullets, visual, reverse, to
         <TickList items={bullets} tint={tone} />
       </motion.div>
       <motion.div {...fadeUp(0.1)} style={{ order: reverse ? 1 : 2, display: 'flex', justifyContent: 'center', position: 'relative' }}>
-        {/* soft tone shading radiating from the visual — organic, varied, spilling past the edges */}
-        <div aria-hidden="true" className="blob" style={{
+        {/* soft tone shading radiating from the visual — static radial glows (cheap) */}
+        <div aria-hidden="true" style={{
           position: 'absolute', width: '116%', height: '110%', top: '6%', left: reverse ? '-10%' : '8%',
           background: `radial-gradient(circle at 40% 42%, ${tone}30, ${tone}16 46%, transparent 72%)`,
           zIndex: 0,
         }} />
-        <div aria-hidden="true" className="blob" style={{
+        <div aria-hidden="true" style={{
           position: 'absolute', width: '58%', height: '54%', bottom: '-4%', right: reverse ? '6%' : '-8%',
           background: `radial-gradient(circle, ${tone}26, transparent 68%)`,
-          zIndex: 0, animationDelay: '-6s',
+          zIndex: 0,
         }} />
         <div style={{ position: 'relative', zIndex: 1 }}>{visual}</div>
       </motion.div>
@@ -228,8 +228,7 @@ function Nav() {
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
         transition: 'all 0.3s',
-        background: scrolled ? 'rgba(255,255,255,0.85)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        background: scrolled ? 'rgba(255,255,255,0.95)' : 'transparent',
         borderBottom: scrolled ? '1px solid rgba(14,42,56,0.08)' : '1px solid transparent',
         padding: scrolled ? '12px 0' : '20px 0',
       }}
@@ -276,7 +275,7 @@ function Nav() {
       </div>
 
       {mobileOpen && (
-        <div style={{ background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(20px)', padding: '16px 24px', borderTop: '1px solid rgba(14,42,56,0.08)' }}>
+        <div style={{ background: '#FFFFFF', padding: '16px 24px', borderTop: '1px solid rgba(14,42,56,0.08)' }}>
           {links.map(l => (
             <a key={l.href} href={l.href} style={{ display: 'block', color: INK, padding: '12px 0', textDecoration: 'none', fontSize: 15, borderBottom: '1px solid rgba(14,42,56,0.06)' }}>
               {l.label}

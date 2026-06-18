@@ -24,8 +24,8 @@ function PageNav() {
   return (
     <header style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-      background: scrolled ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.7)',
-      backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(14,42,56,0.08)',
+      background: scrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.92)',
+      borderBottom: '1px solid rgba(14,42,56,0.08)',
       padding: '14px 0', transition: 'background 0.3s',
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px,5vw,80px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

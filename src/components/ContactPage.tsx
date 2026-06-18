@@ -27,8 +27,8 @@ function PageNav() {
   return (
     <header style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-      background: scrolled ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.7)',
-      backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(14,42,56,0.08)',
+      background: scrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.92)',
+      borderBottom: '1px solid rgba(14,42,56,0.08)',
       padding: '14px 0', transition: 'background 0.3s',
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px,5vw,80px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -106,9 +106,9 @@ export function ContactPage() {
     <div style={{ minHeight: '100vh', background: BG, color: '#0F2A38', fontFamily: "'Hanken Grotesk',sans-serif", position: 'relative', overflow: 'hidden' }}>
       {/* blue haze — soft depth/contrast behind the light contact body */}
       <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '20%', left: '-7%', width: 460, height: 460, borderRadius: '50%', background: 'radial-gradient(circle, rgba(28,167,196,0.26), transparent 70%)', filter: 'blur(26px)' }} />
-        <div style={{ position: 'absolute', top: '46%', right: '-6%', width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, rgba(14,127,168,0.20), transparent 70%)', filter: 'blur(30px)' }} />
-        <div style={{ position: 'absolute', bottom: '-4%', left: '28%', width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle, rgba(23,181,174,0.16), transparent 70%)', filter: 'blur(28px)' }} />
+        <div style={{ position: 'absolute', top: '20%', left: '-7%', width: 460, height: 460, borderRadius: '50%', background: 'radial-gradient(circle, rgba(28,167,196,0.24), transparent 70%)' }} />
+        <div style={{ position: 'absolute', top: '46%', right: '-6%', width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, rgba(14,127,168,0.18), transparent 70%)' }} />
+        <div style={{ position: 'absolute', bottom: '-4%', left: '28%', width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle, rgba(23,181,174,0.15), transparent 70%)' }} />
       </div>
       <PageNav />
 
