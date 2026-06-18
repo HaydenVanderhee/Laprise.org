@@ -7,13 +7,12 @@ const EASE = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 36 },
   whileInView: { opacity: 1, y: 0 } as const,
-  viewport: { once: true, amount: 0.12 } as const,
+  viewport: { once: false, amount: 0.12 } as const,
   transition: { duration: 0.75, ease: EASE, delay },
 })
 
 // ── Palette ───────────────────────────────────────────────────────────────────
 const NAVY = '#0B2A38'
-const NAVY_GRAD = 'linear-gradient(180deg, #0B2A38 0%, #0E3346 100%)'
 const CYAN = '#1CA7C4'
 const WHITE_BAND = '#F7FAFB'
 const INK = '#0F2A38'
@@ -464,7 +463,7 @@ export function LandingPage() {
       <Nav />
 
       {/* ── HERO (dark navy, two-column) ──────────────────────────────────── */}
-      <section style={{ position: 'relative', zIndex: 20, background: NAVY_GRAD, paddingTop: 'clamp(140px,18vw,180px)', paddingBottom: 'clamp(72px,9vw,110px)', overflow: 'visible' }}>
+      <section style={{ position: 'relative', zIndex: 20, background: NAVY, paddingTop: 'clamp(140px,18vw,180px)', paddingBottom: 'clamp(72px,9vw,110px)', overflow: 'visible' }}>
         {/* soft water blooms + a warm Aussie sun glow top-right */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 42% 40% at 88% 6%, rgba(255,194,71,0.18), transparent 55%), radial-gradient(ellipse 50% 50% at 78% 14%, rgba(28,167,196,0.22), transparent 60%), radial-gradient(ellipse 45% 45% at 6% 92%, rgba(23,181,174,0.18), transparent 60%)', pointerEvents: 'none' }} />
         <Bubbles items={[
