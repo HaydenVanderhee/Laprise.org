@@ -113,9 +113,6 @@ export function BookPage() {
         <span aria-hidden="true" className="bubble-c" style={{ position: 'absolute', width: 52, height: 52, borderRadius: '50%', top: '32%', right: '9%', border: '2px solid rgba(255,194,71,0.45)', zIndex: 0 }} />
         <span aria-hidden="true" className="bubble-b" style={{ position: 'absolute', width: 30, height: 30, borderRadius: '50%', bottom: '24%', left: '20%', background: 'rgba(84,224,214,0.45)', zIndex: 0 }} />
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#FFFFFF', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', padding: '6px 16px', borderRadius: 9999, marginBottom: 20 }}>
-            Free Discovery Call
-          </span>
           <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 'clamp(2.5rem,7vw,4.25rem)', fontWeight: 700, lineHeight: 1.05, marginBottom: 20, color: '#FFFFFF' }}>
             Book Your Discovery Call
           </h1>

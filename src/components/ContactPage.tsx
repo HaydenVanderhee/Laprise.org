@@ -115,13 +115,10 @@ export function ContactPage() {
       {/* Cyan hero header + wave into the body */}
       <section style={{ position: 'relative', zIndex: 1, background: '#1CA7C4', padding: 'clamp(120px,16vw,160px) clamp(20px,5vw,40px) clamp(48px,7vw,72px)', textAlign: 'center' }}>
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ maxWidth: 720, margin: '0 auto' }}>
-          <span style={{ display: 'inline-block', fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#FFFFFF', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', padding: '6px 16px', borderRadius: 9999, marginBottom: 20 }}>
-            Get in Touch
-          </span>
-          <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 'clamp(2rem,5.5vw,3.2rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 16, color: '#FFFFFF' }}>
+          <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 'clamp(2.5rem,7vw,4.25rem)', fontWeight: 700, lineHeight: 1.05, marginBottom: 20, color: '#FFFFFF' }}>
             Let's Start a Conversation
           </h1>
-          <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.9)', lineHeight: 1.7, maxWidth: 520, margin: '0 auto' }}>
+          <p style={{ fontSize: 'clamp(1.05rem,2.2vw,1.35rem)', color: 'rgba(255,255,255,0.9)', lineHeight: 1.7, maxWidth: 600, margin: '0 auto' }}>
             Have questions about how Laprise works for swim schools? We're here to help.
           </p>
         </motion.div>
