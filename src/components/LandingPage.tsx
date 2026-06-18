@@ -125,15 +125,16 @@ const BLOB = [
 // Two tiled copies per layer translate for a seamless loop; the back layer drifts
 // slower and dips lower so the bands feel like they pour into each other.
 export function WaveDivider({ top, bottom, height = 96 }: { top: string; bottom: string; height?: number }) {
-  // One smooth periodic wave — starts and ends at the same height (y=60) so the
-  // two tiled copies join seamlessly, and no second layer to create an edge line.
-  const front = 'M0,60 C240,26 480,26 720,60 C960,94 1200,94 1440,60 L1440,0 L0,0 Z'
+  // Container is the UPPER band colour, so the divider's top edge always matches the
+  // band above exactly (no sub-pixel gap). The wave shape fills the BOTTOM with the
+  // lower band colour, down past y=120, so the bottom edge matches the band below.
+  const wave = 'M0,60 C240,26 480,26 720,60 C960,94 1200,94 1440,60 L1440,121 L0,121 Z'
   return (
-    <div style={{ background: bottom, overflow: 'hidden', lineHeight: 0, position: 'relative', height, marginTop: -1, marginBottom: -1, zIndex: 21 }} aria-hidden="true">
+    <div style={{ background: top, overflow: 'hidden', lineHeight: 0, position: 'relative', height, zIndex: 21 }} aria-hidden="true">
       <div className="wave-drift" style={{ position: 'absolute', inset: 0, display: 'flex', width: '200%', animation: 'wave-drift 26s linear infinite' }}>
         {[0, 1].map(i => (
           <svg key={i} viewBox="0 0 1440 120" width="50%" height={height} preserveAspectRatio="none" style={{ display: 'block' }}>
-            <path d={front} fill={top} />
+            <path d={wave} fill={bottom} />
           </svg>
         ))}
       </div>
