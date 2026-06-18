@@ -6,7 +6,7 @@ import { Mail, Globe, Clock, CheckCircle2, Send, ChevronDown, ChevronUp } from '
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 const TEAL = '#0E7FA8'
-const BG = '#F7FAFB'
+const BG = '#1CA7C4'
 
 const SUBJECTS = [
   { value: 'general', label: 'General Inquiry' },
@@ -91,12 +91,12 @@ export function ContactPage() {
         <PageNav />
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: EASE }}
           style={{ textAlign: 'center', maxWidth: 480, padding: '0 24px' }}>
-          <div style={{ width: 72, height: 72, borderRadius: '50%', background: `linear-gradient(135deg,#1CA7C4,#17B5AE)`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+          <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
             <CheckCircle2 size={36} color="#FFFFFF" />
           </div>
-          <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 28, fontWeight: 700, marginBottom: 12, color: TEAL }}>Message sent!</h1>
-          <p style={{ color: '#54707C', fontSize: 16, marginBottom: 32 }}>Thanks for reaching out. We'll get back to you within one business day.</p>
-          <a href="/" style={{ display: 'inline-block', background: TEAL, color: '#FFFFFF', padding: '14px 32px', borderRadius: 9999, fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>Return to Home</a>
+          <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 28, fontWeight: 700, marginBottom: 12, color: '#FFFFFF' }}>Message sent!</h1>
+          <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 16, marginBottom: 32 }}>Thanks for reaching out. We'll get back to you within one business day.</p>
+          <a href="/" style={{ display: 'inline-block', background: '#FFFFFF', color: TEAL, padding: '14px 32px', borderRadius: 9999, fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>Return to Home</a>
         </motion.div>
       </div>
     )
@@ -104,17 +104,15 @@ export function ContactPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: BG, color: '#0F2A38', fontFamily: "'Hanken Grotesk',sans-serif", position: 'relative', overflow: 'hidden' }}>
-      {/* blue haze — soft depth/contrast behind the light contact body */}
-      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: '20%', left: '-7%', width: 460, height: 460, borderRadius: '50%', background: 'radial-gradient(circle, rgba(28,167,196,0.24), transparent 70%)' }} />
-        <div style={{ position: 'absolute', top: '46%', right: '-6%', width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, rgba(14,127,168,0.18), transparent 70%)' }} />
-        <div style={{ position: 'absolute', bottom: '-4%', left: '28%', width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle, rgba(23,181,174,0.15), transparent 70%)' }} />
-      </div>
       <PageNav />
 
-      {/* Cyan hero header + wave into the body */}
-      <section style={{ position: 'relative', zIndex: 1, background: '#1CA7C4', padding: 'clamp(120px,16vw,160px) clamp(20px,5vw,40px) clamp(48px,7vw,72px)', textAlign: 'center' }}>
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ maxWidth: 720, margin: '0 auto' }}>
+      {/* Navy hero header (glow + shapes) + wave into the cyan body */}
+      <section style={{ position: 'relative', overflow: 'hidden', zIndex: 1, background: '#0B2A38', padding: 'clamp(120px,16vw,160px) clamp(20px,5vw,40px) clamp(48px,7vw,72px)', textAlign: 'center' }}>
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundImage: 'radial-gradient(ellipse 42% 55% at 88% 0%, rgba(255,194,71,0.16), transparent 55%), radial-gradient(ellipse 55% 60% at 82% 18%, rgba(28,167,196,0.26), transparent 60%), radial-gradient(ellipse 48% 55% at 6% 92%, rgba(23,181,174,0.18), transparent 60%)' }} />
+        <span aria-hidden="true" className="bubble-a" style={{ position: 'absolute', width: 96, height: 96, borderRadius: '50%', top: '20%', left: '6%', background: 'rgba(127,215,230,0.16)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-c" style={{ position: 'absolute', width: 52, height: 52, borderRadius: '50%', top: '32%', right: '9%', border: '2px solid rgba(255,194,71,0.45)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-b" style={{ position: 'absolute', width: 30, height: 30, borderRadius: '50%', bottom: '24%', left: '20%', background: 'rgba(84,224,214,0.45)', zIndex: 0 }} />
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
           <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 'clamp(2.5rem,7vw,4.25rem)', fontWeight: 700, lineHeight: 1.05, marginBottom: 20, color: '#FFFFFF' }}>
             Let's Start a Conversation
           </h1>
@@ -123,31 +121,36 @@ export function ContactPage() {
           </p>
         </motion.div>
       </section>
-      <WaveDivider top="#1CA7C4" bottom="#F7FAFB" />
+      <WaveDivider top="#0B2A38" bottom="#1CA7C4" />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(20px,5vw,40px) 80px' }}>
+      <div style={{ position: 'relative', overflow: 'hidden', zIndex: 1 }}>
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundImage: 'radial-gradient(ellipse 80% 36% at 50% 22%, rgba(255,255,255,0.14), transparent 70%)' }} />
+        <span aria-hidden="true" className="bubble-a" style={{ position: 'absolute', width: 140, height: 140, borderRadius: '50%', top: '4%', left: '2%', background: 'rgba(255,255,255,0.10)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-c" style={{ position: 'absolute', width: 66, height: 66, borderRadius: '50%', top: '26%', right: '4%', border: '2px solid rgba(255,255,255,0.4)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-b" style={{ position: 'absolute', width: 40, height: 40, borderRadius: '50%', bottom: '8%', left: '6%', background: 'rgba(255,194,71,0.5)', zIndex: 0 }} />
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(20px,5vw,40px) 80px' }}>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40, alignItems: 'start' }}>
 
           {/* Contact info sidebar */}
           <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}>
-            <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 20 }}>Contact Information</h2>
-            <p style={{ color: '#54707C', fontSize: 15, lineHeight: 1.7, marginBottom: 32 }}>
+            <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 20, color: '#FFFFFF' }}>Contact Information</h2>
+            <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 15, lineHeight: 1.7, marginBottom: 32 }}>
               Ready to transform your swim school's enrolment pipeline? Reach out and let's discuss how Laprise can help you grow.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginBottom: 36 }}>
               {[
-                { icon: <Mail size={20} color="#FFFFFF" />, label: 'Email Us', content: <a href="mailto:haydenvanderhee@laprise.org" style={{ color: '#54707C', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = TEAL)} onMouseLeave={e => (e.currentTarget.style.color = '#54707C')}>haydenvanderhee@laprise.org</a> },
-                { icon: <Globe size={20} color="#FFFFFF" />, label: 'Website', content: <a href="https://laprise.org" target="_blank" rel="noopener noreferrer" style={{ color: '#54707C', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = TEAL)} onMouseLeave={e => (e.currentTarget.style.color = '#54707C')}>laprise.org</a> },
-                { icon: <Clock size={20} color="#FFFFFF" />, label: 'Response Time', content: <span style={{ color: '#54707C' }}>Within one business day</span> },
+                { icon: <Mail size={20} color="#FFFFFF" />, label: 'Email Us', content: <a href="mailto:haydenvanderhee@laprise.org" style={{ color: 'rgba(255,255,255,0.92)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = '#FFFFFF')} onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.92)')}>haydenvanderhee@laprise.org</a> },
+                { icon: <Globe size={20} color="#FFFFFF" />, label: 'Website', content: <a href="https://laprise.org" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.92)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = '#FFFFFF')} onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.92)')}>laprise.org</a> },
+                { icon: <Clock size={20} color="#FFFFFF" />, label: 'Response Time', content: <span style={{ color: 'rgba(255,255,255,0.92)' }}>Within one business day</span> },
               ].map(({ icon, label, content }) => (
                 <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 12, background: `linear-gradient(135deg,#1CA7C4,#17B5AE)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.28)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     {icon}
                   </div>
                   <div>
-                    <p style={{ fontWeight: 600, fontSize: 15, marginBottom: 4, fontFamily: "'Space Grotesk',sans-serif" }}>{label}</p>
+                    <p style={{ fontWeight: 600, fontSize: 15, marginBottom: 4, fontFamily: "'Space Grotesk',sans-serif", color: '#FFFFFF' }}>{label}</p>
                     {content}
                   </div>
                 </div>
@@ -242,6 +245,7 @@ export function ContactPage() {
               </div>
             </form>
           </motion.div>
+        </div>
         </div>
       </div>
     </div>
