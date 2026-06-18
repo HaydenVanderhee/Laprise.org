@@ -69,6 +69,15 @@ function FloatChip({ icon, iconBg, title, sub, style, delay = 0 }: {
   )
 }
 
+// ── Animated hand-drawn ribbon underline (draws on / slides off every 6s) ─────
+function ScribbleUnderline({ color = '#FFC247', strokeW = 5 }: { color?: string; strokeW?: number }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 300 18" preserveAspectRatio="none" style={{ position: 'absolute', left: 0, bottom: '-0.26em', width: '100%', height: '0.42em', overflow: 'visible' }}>
+      <path className="ribbon-draw" d="M4,11 C70,3 150,3 210,9 C245,12 275,9 296,5" fill="none" stroke={color} strokeWidth={strokeW} strokeLinecap="round" pathLength={100} />
+    </svg>
+  )
+}
+
 // ── Hand-drawn swim doodles — clean line sketches run through a subtle roughen ──
 // filter so they read as penned, not vector-perfect (the opposite of stock icons).
 type DoodleName = 'ads' | 'booking' | 'afterhours' | 'seo' | 'websites' | 'reviews'
@@ -490,10 +499,8 @@ export function LandingPage() {
                 <span style={{ backgroundImage: 'linear-gradient(to right, #54E0D6, #1CA7C4, #7FD7E6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                   Keep Teaching.
                 </span>
-                {/* hand-drawn underline */}
-                <svg aria-hidden="true" viewBox="0 0 300 18" preserveAspectRatio="none" style={{ position: 'absolute', left: 0, bottom: '-0.28em', width: '100%', height: '0.4em', overflow: 'visible' }}>
-                  <path d="M4,11 C70,3 150,3 210,9 C245,12 275,9 296,5" fill="none" stroke="#FFC247" strokeWidth="5" strokeLinecap="round" />
-                </svg>
+                {/* animated hand-drawn underline */}
+                <ScribbleUnderline />
               </span>
             </motion.h1>
 
@@ -685,7 +692,7 @@ export function LandingPage() {
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 1240, margin: '0 auto' }}>
           <motion.div {...fadeUp(0)} style={{ textAlign: 'center', marginBottom: 56, maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 16, color: '#FFFFFF' }}>
-              What We Offer
+              What We <span style={{ position: 'relative', display: 'inline-block' }}>Offer<ScribbleUnderline /></span>
             </h2>
             <p style={{ color: 'rgba(255,255,255,0.92)', fontSize: 18, lineHeight: 1.6 }}>
               We build everything your school needs to keep classes full — without adding to your plate.
@@ -770,6 +777,9 @@ export function LandingPage() {
           { size: 120, top: '-44px', right: '10%', color: 'rgba(255,255,255,0.16)', anim: 'bubble-a' },
           { size: 64, top: '20%', left: '7%', color: 'rgba(11,42,56,0.18)', ring: true, anim: 'bubble-b' },
           { size: 190, bottom: '-80px', left: '-40px', color: 'rgba(255,255,255,0.10)', anim: 'bubble-c' },
+          { size: 40, top: '13%', right: '6%', color: 'rgba(255,194,71,0.6)', anim: 'bubble-c' },
+          { size: 96, bottom: '8%', right: '4%', color: 'rgba(255,255,255,0.5)', ring: true, anim: 'bubble-b' },
+          { size: 30, top: '58%', left: '4%', color: 'rgba(255,255,255,0.55)', anim: 'bubble-a' },
         ]} />
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 1024, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <motion.h2 {...fadeUp(0)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: 48, textAlign: 'center', color: INK }}>
@@ -807,13 +817,16 @@ export function LandingPage() {
           { size: 70, top: '24%', right: '10%', color: 'rgba(255,255,255,0.5)', ring: true, anim: 'bubble-b' },
           { size: 50, bottom: '14%', left: '12%', color: 'rgba(255,194,71,0.5)', anim: 'bubble-c' },
           { size: 220, bottom: '-100px', right: '-50px', color: 'rgba(255,255,255,0.07)', anim: 'bubble-b' },
+          { size: 104, top: '8%', left: '-2%', color: 'rgba(255,255,255,0.4)', ring: true, anim: 'bubble-c' },
+          { size: 34, top: '32%', left: '22%', color: 'rgba(255,255,255,0.6)', anim: 'bubble-a' },
+          { size: 56, bottom: '22%', right: '15%', color: 'rgba(255,194,71,0.45)', ring: true, anim: 'bubble-c' },
         ]} />
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 1024, margin: '0 auto', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <motion.div {...fadeUp(0)} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 20px', borderRadius: 9999, border: '1px solid rgba(255,255,255,0.35)', background: 'rgba(255,255,255,0.15)', color: '#FFFFFF', fontSize: 13, letterSpacing: '0.08em', marginBottom: 40, fontWeight: 700, textTransform: 'uppercase' }}>
             <LogoMark size={16} /> The Performance Guarantee
           </motion.div>
           <motion.h2 {...fadeUp(0.1)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.5rem, 7vw, 5rem)', fontWeight: 700, marginBottom: 32, lineHeight: 1.05, color: '#FFFFFF' }}>
-            Increase Your Bookings<br />by 30% in 90 Days.{' '}
+            Increase Your Bookings<br />by 30% in <span style={{ position: 'relative', display: 'inline-block' }}>90 Days.<ScribbleUnderline /></span>{' '}
             <span style={{ display: 'block', color: 'rgba(255,255,255,0.75)', fontSize: 'clamp(1.5rem, 4vw, 3.25rem)', marginTop: 16 }}>Or We Work for Free Until You Do.</span>
           </motion.h2>
           <motion.p {...fadeUp(0.2)} style={{ fontSize: 'clamp(1rem, 2vw, 1.4rem)', color: 'rgba(255,255,255,0.9)', maxWidth: 768, textAlign: 'center', marginBottom: 56, lineHeight: 1.7 }}>

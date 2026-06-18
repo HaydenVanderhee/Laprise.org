@@ -190,6 +190,18 @@ body {
 .bubble-b { animation: bubble-b 14s ease-in-out infinite; }
 .bubble-c { animation: bubble-c 17s ease-in-out infinite; }
 
+/* ── Hand-drawn ribbon underline that draws on, holds, then slides off (6s) ── */
+@keyframes ribbon-draw {
+  0%   { stroke-dashoffset: 100; }   /* empty (in from left) */
+  40%  { stroke-dashoffset: 0; }     /* fully drawn */
+  62%  { stroke-dashoffset: 0; }     /* hold */
+  100% { stroke-dashoffset: -100; }  /* slides out the right — seamless loop */
+}
+.ribbon-draw {
+  stroke-dasharray: 100 100;
+  animation: ribbon-draw 6s ease-in-out infinite;
+}
+
 /* ── Film-grain texture overlay — subtle analog "crafted" feel (anti-AI-slop) ── */
 body::after {
   content: "";
@@ -208,7 +220,8 @@ body::after {
   .wave-drift,
   .blob,
   .soft-float,
-  .bubble-a, .bubble-b, .bubble-c {
+  .bubble-a, .bubble-b, .bubble-c,
+  .ribbon-draw {
     animation: none !important;
   }
 }
