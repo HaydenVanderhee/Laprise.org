@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { BackgroundIllustration } from './components/BackgroundIllustration'
-import { CursorSpotlight } from './components/CursorSpotlight'
 import { LandingPage } from './components/LandingPage'
 import { BookPage } from './components/BookPage'
 import { ContactPage } from './components/ContactPage'
@@ -16,11 +14,9 @@ function NewHomePage() {
         aria-hidden="true"
         initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
-        transition={{ duration: 1.4, ease: 'easeOut', delay: 0.15 }}
-        style={{ position: 'fixed', inset: 0, zIndex: 200, background: '#080c0c', pointerEvents: 'none' }}
+        transition={{ duration: 1.0, ease: 'easeOut', delay: 0.1 }}
+        style={{ position: 'fixed', inset: 0, zIndex: 200, background: '#F7FAFB', pointerEvents: 'none' }}
       />
-      <BackgroundIllustration />
-      <CursorSpotlight />
       <LandingPage />
     </div>
   )

@@ -1,0 +1,185 @@
+Company Name | Website | Location | Status | Details
+================================================================================
+Ascend Swimming | ascendswimming.com.au | North Sydney | Indoor & Outdoor | DDG Search
+swim with a smile | swimwithasmile.com | Greenwich | Indoor | DDG Search
+In The Deep Swim School | inthedeep.com.au | Kingsford | Indoor | DDG Search
+Swimtastic | swimtastic.com.au | Hornsby | Indoor | Cache
+Pacific Swim School | pacificswimschool.com.au | Crows Nest | Indoor | Cache
+Nereids Aquatic Coaching | nereids.com.au | North Sydney | Outdoor | Website Scrape
+Terrey Hills Swim School | thswim.com.au | Terrey Hills | Indoor | Cache
+Aqua Culture Swim Academy | aquacultureswim.com.au | Brookvale | Indoor | DDG Search
+Little Fishes Swim School | littlefishes.com.au | Oakhurst | Indoor | Website Scrape
+Swimly | swimly.com.au | Willoughby | Indoor (Likely) | Default Heuristic
+KICK Learn to Swim | kickswim.com.au | Edgecliff | Indoor (Likely) | Default Heuristic
+Kool Swim Skool | koolswimskool.com.au | Belrose | Indoor (Likely) | Default Heuristic
+Let's Swim! | letsswim.com.au | Newport | Indoor (Likely) | Default Heuristic
+Platypus Swimming School | platypusswim.com | Rose Bay | Indoor (Likely) | Default Heuristic
+Fit2Swim | fit2swim.com | Maroubra | Indoor | Website Scrape
+Emma's Babyswim | emmasbabyswim.com.au | Kilsyth | Indoor (Likely) | Default Heuristic
+Myswim | myswim.com.au | Bass Hill | Indoor (Likely) | Default Heuristic
+Swim 4 All | swim4all.com.au | Werribee | Outdoor | Website Scrape
+swim 2 me | swim2me.com.au | Prestons | Indoor (Likely) | Default Heuristic
+EwSwim | ewswim.com.au | Ewingsdale | Indoor | Cache
+SwimAway | swimaway.com.au | Camden | Indoor (Likely) | Default Heuristic
+Fit Futures Swim School | fitfutures.com.au | Miranda | Indoor (Likely) | Default Heuristic
+Splash Swim Soar Swim School | splashswimsoar.com.au | Pambula | Indoor (Likely) | Default Heuristic
+Daleys Point Swim School | daleyspointswimschool.com.au | Daleys Point | Indoor | Cache
+AquaStars Swim School & Fitness | aquastars.com.au | Warners Bay | Indoor (Likely) | Default Heuristic
+Nippers 2 Flippers | nippers2flippers.com.au | Figtree | Indoor (Likely) | Default Heuristic
+Bangalow Swim School | bangalowswim.com.au | Binna Burra | Indoor | Cache
+Wagga Swim School | waggaswimschool.com.au | Wagga Wagga | Indoor (Likely) | Default Heuristic
+Swim with Grace | iwillteachyoutoswim.com | Richmond | Indoor (Likely) | Default Heuristic
+Elite Swimming | eliteswimming.com.au | Brunswick | Indoor (Likely) | Default Heuristic
+Hawthorn Swimming Clinic | hawthornswimmingclinic.com.au | Hawthorn VIC | Indoor | Cache
+Eltham Swimming School | elthamswim.com.au | Eltham | Indoor (Likely) | Default Heuristic
+Bright Waves | brightwaves.com.au | Westmeadows | Indoor (Likely) | Default Heuristic
+Tullamarine Swimming School | tullamarineswimming.com.au | Tullamarine | Indoor (Likely) | Default Heuristic
+Just Swimming | justswimming.com.au | Glen Waverley | Indoor (Likely) | Default Heuristic
+Starfish Swim School | starfishswimschool.com.au | Bentleigh | Indoor (Likely) | Default Heuristic
+Star Aquatics | staraquatics.au | Mentone | Indoor (Likely) | Default Heuristic
+Hampton Swim School | hamptonswimschool.com.au | Morningside | Indoor (Likely) | Default Heuristic
+GEL Swim School | geleisure.com.au | Bentleigh East | Indoor (Likely) | Default Heuristic
+swimWell | swimwell.com.au | Moorabbin | Indoor (Likely) | Default Heuristic
+Western Waves Swimming | westernwavesswimming.com.au | Footscray | Indoor (Likely) | Default Heuristic
+Bright Waves | brightwaves.com.au | Werribee | Indoor (Likely) | Default Heuristic
+Sweeney's Swim School | sweeneysswimschool.com.au | Altona | Indoor (Likely) | Default Heuristic
+Tri Swimming | triswimming.com.au | Geelong West | Indoor (Likely) | Default Heuristic
+Paddles Swim School | paddlesswimschool.com.au | Altona Meadows | Indoor (Likely) | Default Heuristic
+Swimz | swimzbendigo.com.au | East Bendigo | Indoor (Likely) | Default Heuristic
+Shapland Swim School | shapland.com.au | Taigum | Indoor (Likely) | Default Heuristic
+Shapland Swim School | shapland.com.au | Everton Park | Indoor (Likely) | Default Heuristic
+Dipadees | dipadees.com | Everton Hills | Indoor | Cache
+Swim Mechanix | swimmechanix.com.au | Success | Indoor (Likely) | Default Heuristic
+Little Big Swim School | littlebigswim.com.au | Bunya | Outdoor | Cache
+Shapland Swim School | shapland.com.au | Kallangur | Indoor (Likely) | Default Heuristic
+BLACK LINE SWIM SCHOOL | blacklineswimschool.com | Griffith | Indoor (Likely) | Default Heuristic
+Joyous Swim School 2.0 | joyous.net.au | Eight Mile Plains | Indoor (Likely) | Default Heuristic
+Wam Water Babes | wamwaterbabes.com.au | Wamuran | Indoor (Likely) | Default Heuristic
+Shapland Swim School | shapland.com.au | Moorooka | Indoor (Likely) | Default Heuristic
+Shapland Swim School | shapland.com.au | Stretton | Indoor (Likely) | Default Heuristic
+Hydroskills | hydroskills.com.au | Kangaroo Point | Indoor (Likely) | Default Heuristic
+Shapland Swim School | shapland.com.au | Capalaba | Indoor (Likely) | Default Heuristic
+Shapland Swim School | shapland.com.au | Sinnamon Park | Indoor (Likely) | Default Heuristic
+Swimtastic | swimtasticswimschool.com.au | Loganholme | Indoor | Cache
+Shapland Swim School | shapland.com.au | Logan Reserve | Indoor (Likely) | Default Heuristic
+Des Johns Swim | desjohns.com.au | Burleigh Heads | Indoor (Likely) | Default Heuristic
+Helen's Swim School | helenswimschool.com.au | Worongary | Indoor (Likely) | Default Heuristic
+Shapland Swim School | shapland.com.au | Pacific Pines | Indoor (Likely) | Default Heuristic
+Superfish Swim Schools | superfish.com.au | Worongary | Indoor | Cache
+SwimWorld | myswimworld.com.au | Worongary | Indoor (Likely) | Default Heuristic
+Bubble 'n' Kick Swim School | bubblenkick.com | Forest Glen | Indoor (Likely) | Default Heuristic
+Moffat Beach Swim School | moffatbss.com | Moffat Beach | Outdoor | Name Heuristic
+Swim1 | swim1.com.au | Coolum Beach | Indoor | Cache
+TJ's Swim | tjsswim.net | Harristown | Indoor (Likely) | Default Heuristic
+Darren Lange Swimming Academy | dlsa.com.au | Centenary Heights | Indoor | Name Heuristic
+Kylie's Swim School | kyliesswimschool.com.au | Garbutt | Indoor (Likely) | Default Heuristic
+Glenn Buchanan Swim School | glennbuchananswimschool.com.au | Kirwan | Indoor (Likely) | Default Heuristic
+Swimmeroo | swimmeroo.com.au | Caboolture | Indoor (Likely) | Default Heuristic
+School of Little Swimmers | schooloflittleswimmers.com.au | Klemzig | Indoor | Cache
+Aquafanatics | aquafanatics.com.au | Salter Point | Outdoor | Cache
+Swim Smooth | swimsmooth.com | Claremont | Indoor (Likely) | Default Heuristic
+Water Ponyz | waterponyz.com | Floreat | Indoor (Likely) | Default Heuristic
+Speed with Style | speedwithstyle.com.au | Bateman | Indoor (Likely) | Default Heuristic
+Oceanic Waterbabies | waterbabies.com.au | Success | Outdoor | Name Heuristic
+Billabong Swim School | billabongswimschool.com.au | Casuarina | Indoor (Likely) | Default Heuristic
+Swim Evolution | swimevolution.co.nz | Wellsford | Indoor | Website Scrape
+Stellar Swim | stellarcanberra.com.au | Phillip | Indoor | Cache
+Streamline Swim Academy | streamlineswimacademynp.com | New Plymouth | Indoor | Cache
+Silverstream Swim Academy | swimacademy.co.nz | Upper Hutt | Indoor | Name Heuristic
+Aqua Artist | aquaartist.co.nz | Auckland | Outdoor | Website Scrape
+WaterLions Swim School | waterlionsswimschool.co.nz | Auckland | Indoor (Likely) | Default Heuristic
+SwimTastic | swimtastic.co.nz | Auckland | Indoor (Likely) | Default Heuristic
+Swim Smooth | swimsmoothauckland.co.nz | Auckland | Indoor (Likely) | Default Heuristic
+Swim360 | swim360.co.nz | Auckland | Indoor (Likely) | Default Heuristic
+Trentham Swim School | trenthamswimschool.nz | Upper Hutt | Indoor (Likely) | Default Heuristic
+Tauranga Swim School | taurangaswimschool.co.nz | Tauranga | Indoor (Likely) | Default Heuristic
+Splash Swim School | splashswimschool.co.nz | Napier | Indoor (Likely) | Default Heuristic
+Dolphin Academy Ltd | dolphinacademy.co.nz | Napier | Indoor | Name Heuristic
+The Valley Swim School | thevalleyswimschool.com | Christchurch | Indoor (Likely) | Default Heuristic
+Propeller Swim School | propellerswimschool.nz | Christchurch | Indoor (Likely) | Default Heuristic
+Fit and Abel | fitandabel.com | Rangiora | Indoor | Cache
+Vladswim | vladswim.com.au | Sydney | Outdoor | Website Scrape
+Swimbaby Mobile | swimbabymobile.com.au | Dee Why | Indoor (Likely) | Default Heuristic
+Swim Stars | swimstarsswimschool.com.au | Warriewood | Indoor (Likely) | Default Heuristic
+Mosman Swim Centre | mosmanswimcentre.com.au | Mosman | Indoor | Cache
+Little Heroes Swim Academy | littleheroesswimacademy.org | Alexandria | Indoor | Name Heuristic
+Swimmerz Academy | swimmerz.com.au | Caringbah | Indoor | Name Heuristic
+Swim Development Australia | swimdevelopmentaustralia.com.au | Greenwich | Indoor (Likely) | Default Heuristic
+Western Sydney Aquatics | westernsydneyaquatics.com.au | Castle Hill | Indoor (Likely) | Default Heuristic
+Austgrade Swim School | austgrade.com.au | Mascot | Indoor (Likely) | Default Heuristic
+Puddle Ducks Swim Academy | pdswim.com.au | Rouse Hill | Indoor | Name Heuristic
+Akua Swim School | akuaswimschool.com.au | Cabramatta | Indoor | Cache
+Ready 2 Swim | ready2swim.biz | Minchinbury | Indoor | Cache
+Aqua Odyssey Swim School | aquaodysseyswimschool.com.au | Leumeah | Indoor (Likely) | Default Heuristic
+Aquafit | aquafit.com.au | Campbelltown | Indoor (Likely) | Default Heuristic
+Little Fins Swim School Bangor | littlefinsswimming.com | Bangor | Indoor (Likely) | Default Heuristic
+Cronulla Beach Swim School | cronullabeachswimschool.com.au | Cronulla | Indoor | Cache
+Surf Swim Learn To Swim | surfswimcc.com.au | Picketts Valley | Outdoor | Name Heuristic
+AUSKOR SWIMMING | auskorswimming.com.au | Mascot | Indoor (Likely) | Default Heuristic
+AquaBuddies Swim School Coogee | aquabuddies.com.au | Coogee | Indoor (Likely) | Default Heuristic
+Elite Salt Academy | elitesaltacademy.com | Toowoon Bay | Indoor | Name Heuristic
+Little Swim Stars | littleswimstars.com.au | East Maitland | Indoor | Cache
+Charmhaven Aqua Centre - Private Swimming Lessons, Swimming Classes for Kids and Swim School in NSW | charmhavenaquacentre.com.au | Charmhaven | Indoor | Website Scrape
+New Wave Swim Centre | newwaveswim.au | Ettalong Beach | Indoor | Cache
+Wyee Point Swim Centre | wyeepointsc.com.au | Wyee Point | Indoor | Cache
+The Gym @ Forries & The Swim School @ Forries | fbiswimgym.com.au | Forresters Beach | Indoor | Name Heuristic
+First Splashes | firstsplashes.com.au | Toronto | Indoor (Likely) | Default Heuristic
+Mauro Swim Team | mauroswimteam.com | Newcastle West | Indoor (Likely) | Default Heuristic
+Starfish Aquatics | starfishaquatics.com.au | North Richmond | Indoor (Likely) | Default Heuristic
+Aspire Aquatics Academy | aspireaquaticsacademy.com.au | Thornton | Indoor | Name Heuristic
+Ripples Swim School Mudgee | ripplesswimschool.com.au | Budgee Budgee | Indoor | Website Scrape
+McKeon Swim Centre | mckeonswimming.com.au | Fairy Meadow | Indoor | Name Heuristic
+Bathurst Swimming Academy at Cityfit | cityfit.fitness | Bathurst | Indoor | Name Heuristic
+Ballina Swim School | ballinaswimschool.com.au | Ballina | Indoor | Website Scrape
+Flow State Swim | flowstateswim.co | Suffolk Park | Indoor (Likely) | Default Heuristic
+Byron Bay Ocean Swim | byronbayoceanswim.com.au | Byron Bay | Outdoor | Website Scrape
+The Village Swim School | thevillagegym.com.au | Pottsville | Indoor (Likely) | Default Heuristic
+Aqua Harmony - Swim School | aquaharmony.com.au | Kambah | Indoor (Likely) | Default Heuristic
+ACSA Swim | acsaswim.com | Glen Iris | Indoor (Likely) | Default Heuristic
+Learn To Swim Victoria | learntoswimvic.com.au | Heidelberg | Indoor | Website Scrape
+Mentone Aquatic | mentoneaquatic.com | Mentone | Indoor (Likely) | Default Heuristic
+Korowa Aquatics | korowaaquatics.com | Glen Iris | Indoor (Likely) | Default Heuristic
+Toby Haenen Swim Centre | thsc.com.au | Sandringham | Indoor | Name Heuristic
+The Little Swim School | thelittleswimschool.com.au | Clayton South | Indoor (Likely) | Default Heuristic
+New Wave Swim School | newwaveswim.com.au | Frankston South | Indoor | Website Scrape
+John Sugden Swim School Balywn | jsss.com.au | Balwyn | Indoor (Likely) | Default Heuristic
+arena Swimming South Melbourne | arenaswimming.com.au | South Melbourne | Outdoor | Website Scrape
+Tateswim - Glen Waverley | tateswim.com.au | Glen Waverley | Indoor (Likely) | Default Heuristic
+Time For A Swim | timeforaswim.com.au | Keysborough | Indoor (Likely) | Default Heuristic
+Berrydale Swim School | berrydaleswimschool.com.au | Sunbury | Indoor (Likely) | Default Heuristic
+Swim4Life Swim School Williams Landing | swim4lifeschools.com.au | Williams Landing | Indoor | Website Scrape
+Kiddieswim Australia | kiddieswim.com.au | Mount Martha | Indoor (Likely) | Default Heuristic
+Musgrave Park Swim Centre | musgraveparkaquaticcentre.com.au | South Brisbane | Outdoor | Website Scrape
+Clem Jones Centre Swim School | clemjonescentre.com.au | Carina | Indoor | Name Heuristic
+Aquatic Education | aquaticeducation.com.au | Greenslopes | Indoor (Likely) | Default Heuristic
+SwimMastery Swim Studio | atoneswimming.com | Sumner | Indoor (Likely) | Default Heuristic
+Little Narwhals Adaptive Swim Club | narwhalswim.com.au | Eastern Heights | Indoor (Likely) | Default Heuristic
+Grace Swimming | graceswim.org.au | Rothwell | Indoor (Likely) | Default Heuristic
+Paradise Swim Miami | paradiseswim.com.au | Miami | Indoor (Likely) | Default Heuristic
+Sunny Skye's Aquatics and Wellness Hub | sunnyskyes.com.au | Burleigh Heads | Outdoor | Website Scrape
+DGSWIM | dgswim.com.au | Surfers Paradise | Outdoor | Website Scrape
+TSS Aquatics | tssaquatic.com.au | Southport | Indoor | Website Scrape
+Flying Fish Swim School | flyingfishswimschool.com.au | Kuluin | Indoor | Website Scrape
+John Wallace Swim School | johnwallaceswimschool.com.au | Baringa | Indoor (Likely) | Default Heuristic
+AQUANAT | aquanat.com.au | Alfred Cove | Indoor (Likely) | Default Heuristic
+FLINDERS AQUATIC ACADEMY | flindersaquaticacademy.com.au | Buderim | Indoor | Name Heuristic
+Mako's Swim School | makosswimschool.com.au | Urangan | Indoor (Likely) | Default Heuristic
+Swimtek | swimtek.com.au | North Perth | Indoor (Likely) | Default Heuristic
+Bold Park Aquatic | boldparkaquatic.com.au | City Beach | Indoor (Likely) | Default Heuristic
+DR Swim | gkdsc.com.au | Forrestfield | Indoor (Likely) | Default Heuristic
+Waves Swim School West Lakes | nxtlevelfithub.com.au | West Lakes | Outdoor | Name Heuristic
+The Oaks Swim Centre | oaksswimcentre.au | Gilles Plains | Indoor | Name Heuristic
+The Pond Swim Centre | thepondswimcentre.com.au | Totness | Indoor | Name Heuristic
+Jodi Harrison's Swim Central - New Town | swimcentral.com.au | New Town | Indoor (Likely) | Default Heuristic
+Bubbles Swim Centre | bubblesswimcentre.com | Lenah Valley | Indoor | Website Scrape
+HC Swim School | hcswimschool.com | Auckland | Indoor (Likely) | Default Heuristic
+Northern Arena | northernarena.co.nz | Auckland | Indoor (Likely) | Default Heuristic
+BaySwim | bayswim.co.nz | Tauranga | Indoor (Likely) | Default Heuristic
+Get Wet Waikato | getwetwaikato.co.nz | Hamilton | Outdoor | Website Scrape
+Evolution Aquatics Tauranga | evolutionaquatics.co.nz | Tauranga | Indoor (Likely) | Default Heuristic
+Kiwi West Aquatics & F3 Coaching | kiwiwest.org | Palmerston North | Indoor | Website Scrape
+The Swim Society | theswimsociety.co.nz | Christchurch | Indoor (Likely) | Default Heuristic
+AquaGym Swim Centre | aquagym.co.nz | Christchurch | Indoor | Name Heuristic
+Sam Riley Swim Schools | samrileyswimschools.com | North Lakes | Indoor (Likely) | Default Heuristic
+Little Snappers Swim School Moorooka | littlesnappers.com.au | Moorooka | Indoor (Likely) | Default Heuristic
+Swim Safe Academy - Gilles Plains | swimsafeacademy.com.au | Gilles Plains | Indoor | Name Heuristic

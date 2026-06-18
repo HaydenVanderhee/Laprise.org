@@ -4,8 +4,8 @@ import { LogoMark } from './LogoMark'
 import { CheckCircle2, Building2, ChevronDown, ChevronUp, MessageSquare } from 'lucide-react'
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
-const TEAL = '#48CFCB'
-const BG = '#0D0D12'
+const TEAL = '#0E7FA8'
+const BG = '#F7FAFB'
 
 const SERVICES = [
   'Trial Lesson Enquiry', 'Term Enrolment', 'Group Lessons', 'Private Lessons',
@@ -23,18 +23,18 @@ function PageNav() {
   return (
     <header style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-      background: scrolled ? 'rgba(13,13,18,0.9)' : 'rgba(13,13,18,0.6)',
-      backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)',
+      background: scrolled ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.7)',
+      backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(14,42,56,0.08)',
       padding: '14px 0', transition: 'background 0.3s',
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 clamp(20px,5vw,80px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
           <LogoMark size={32} />
-          <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 20, fontWeight: 700, color: '#dce4e2', letterSpacing: '-0.01em' }}>Laprise</span>
+          <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 20, fontWeight: 700, color: '#0F2A38', letterSpacing: '-0.01em' }}>Laprise</span>
         </a>
-        <a href="/" style={{ color: 'rgba(220,228,226,0.55)', fontSize: 14, textDecoration: 'none', fontFamily: "'Space Grotesk',sans-serif", transition: 'color 0.2s' }}
+        <a href="/" style={{ color: '#54707C', fontSize: 14, textDecoration: 'none', fontFamily: "'Space Grotesk',sans-serif", transition: 'color 0.2s' }}
           onMouseEnter={e => (e.currentTarget.style.color = TEAL)}
-          onMouseLeave={e => (e.currentTarget.style.color = 'rgba(220,228,226,0.55)')}>
+          onMouseLeave={e => (e.currentTarget.style.color = '#54707C')}>
           ← Back to home
         </a>
       </div>
@@ -44,8 +44,8 @@ function PageNav() {
 
 const inputStyle: React.CSSProperties = {
   width: '100%', padding: '13px 16px',
-  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-  borderRadius: 10, color: '#dce4e2', fontSize: 15,
+  background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.12)',
+  borderRadius: 10, color: '#0F2A38', fontSize: 15,
   fontFamily: "'Hanken Grotesk',sans-serif", outline: 'none',
   transition: 'border-color 0.2s', boxSizing: 'border-box',
 }
@@ -102,35 +102,35 @@ export function BookPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: BG, color: '#dce4e2', fontFamily: "'Hanken Grotesk',sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: BG, color: '#0F2A38', fontFamily: "'Hanken Grotesk',sans-serif" }}>
       <PageNav />
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(100px,12vw,140px) clamp(20px,5vw,40px) 80px' }}>
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ textAlign: 'center', marginBottom: 40 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: TEAL, background: 'rgba(72,207,203,0.08)', border: '1px solid rgba(72,207,203,0.2)', padding: '6px 16px', borderRadius: 9999, marginBottom: 20 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: TEAL, background: 'rgba(28,167,196,0.10)', border: '1px solid rgba(28,167,196,0.25)', padding: '6px 16px', borderRadius: 9999, marginBottom: 20 }}>
             Free Discovery Call
           </span>
           <h1 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 'clamp(2rem,5.5vw,3.2rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: 16 }}>
             Book Your <span style={{ color: TEAL }}>Discovery Call</span>
           </h1>
-          <p style={{ fontSize: 16, color: '#9ca3af', lineHeight: 1.7, maxWidth: 520, margin: '0 auto' }}>
+          <p style={{ fontSize: 16, color: '#54707C', lineHeight: 1.7, maxWidth: 520, margin: '0 auto' }}>
             Tell us about your swim school so we can prepare a customised demonstration of how Laprise can transform your enrolment pipeline.
           </p>
         </motion.div>
 
         {/* Form card */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}
-          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 24, padding: 'clamp(24px,5vw,40px)' }}>
+          style={{ background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 24, padding: 'clamp(24px,5vw,40px)', boxShadow: '0 14px 40px rgba(14,127,168,0.08)' }}>
 
           {/* Section label */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg,${TEAL},#3b82f6)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Building2 size={18} color="#0D0D12" />
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#1CA7C4,#17B5AE)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Building2 size={18} color="#FFFFFF" />
             </div>
             <div>
               <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: 16, marginBottom: 2 }}>Your Information</p>
-              <p style={{ fontSize: 13, color: '#9ca3af' }}>Let's get to know you and your school</p>
+              <p style={{ fontSize: 13, color: '#54707C' }}>Let's get to know you and your school</p>
             </div>
           </div>
 
@@ -138,13 +138,13 @@ export function BookPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
             {[['firstName', 'First Name', 'Emma', true], ['lastName', 'Last Name', 'Wilson', true]].map(([k, label, ph, req]) => (
               <div key={k as string}>
-                <label style={{ display: 'block', fontSize: 13, color: '#9ca3af', marginBottom: 8, fontWeight: 500 }}>
+                <label style={{ display: 'block', fontSize: 13, color: '#54707C', marginBottom: 8, fontWeight: 500 }}>
                   {label as string}{req && <span style={{ color: '#ef4444' }}> *</span>}
                 </label>
                 <input value={(form as any)[k as string]} onChange={e => set(k as string, e.target.value)}
                   placeholder={ph as string} style={inputStyle}
-                  onFocus={e => (e.currentTarget.style.borderColor = 'rgba(72,207,203,0.4)')}
-                  onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')} />
+                  onFocus={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.5)')}
+                  onBlur={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.12)')} />
               </div>
             ))}
           </div>
@@ -152,38 +152,38 @@ export function BookPage() {
           {/* Email / phone */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
             <div>
-              <label style={{ display: 'block', fontSize: 13, color: '#9ca3af', marginBottom: 8, fontWeight: 500 }}>Email Address <span style={{ color: '#ef4444' }}>*</span></label>
+              <label style={{ display: 'block', fontSize: 13, color: '#54707C', marginBottom: 8, fontWeight: 500 }}>Email Address <span style={{ color: '#ef4444' }}>*</span></label>
               <input type="email" value={form.email} onChange={e => set('email', e.target.value)}
                 placeholder="emma@aquaswim.com.au" style={inputStyle}
-                onFocus={e => (e.currentTarget.style.borderColor = 'rgba(72,207,203,0.4)')}
-                onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')} />
+                onFocus={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.5)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.12)')} />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: 13, color: '#9ca3af', marginBottom: 8, fontWeight: 500 }}>Phone Number</label>
+              <label style={{ display: 'block', fontSize: 13, color: '#54707C', marginBottom: 8, fontWeight: 500 }}>Phone Number</label>
               <input type="tel" value={form.phone} onChange={e => set('phone', e.target.value)}
                 placeholder="+61 400 000 000" style={inputStyle}
-                onFocus={e => (e.currentTarget.style.borderColor = 'rgba(72,207,203,0.4)')}
-                onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')} />
+                onFocus={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.5)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.12)')} />
             </div>
           </div>
 
           {/* School name */}
           <div style={{ marginBottom: 24 }}>
-            <label style={{ display: 'block', fontSize: 13, color: '#9ca3af', marginBottom: 8, fontWeight: 500 }}>Swim School Name <span style={{ color: '#ef4444' }}>*</span></label>
+            <label style={{ display: 'block', fontSize: 13, color: '#54707C', marginBottom: 8, fontWeight: 500 }}>Swim School Name <span style={{ color: '#ef4444' }}>*</span></label>
             <input value={form.businessName} onChange={e => set('businessName', e.target.value)}
               placeholder="Aqua Swim School" style={inputStyle}
-              onFocus={e => (e.currentTarget.style.borderColor = 'rgba(72,207,203,0.4)')}
-              onBlur={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')} />
+              onFocus={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.5)')}
+              onBlur={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.12)')} />
           </div>
 
           {/* Services multiselect */}
           <div style={{ marginBottom: 24 }} ref={dropRef}>
-            <label style={{ display: 'block', fontSize: 13, color: '#9ca3af', marginBottom: 8, fontWeight: 500 }}>Primary Services Offered <span style={{ color: '#ef4444' }}>*</span></label>
+            <label style={{ display: 'block', fontSize: 13, color: '#54707C', marginBottom: 8, fontWeight: 500 }}>Primary Services Offered <span style={{ color: '#ef4444' }}>*</span></label>
 
             {form.services.length > 0 && (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 10 }}>
                 {form.services.map(s => (
-                  <span key={s} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px', borderRadius: 9999, background: 'rgba(72,207,203,0.12)', border: '1px solid rgba(72,207,203,0.3)', color: TEAL, fontSize: 13, fontWeight: 500 }}>
+                  <span key={s} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px', borderRadius: 9999, background: 'rgba(28,167,196,0.10)', border: '1px solid rgba(28,167,196,0.30)', color: TEAL, fontSize: 13, fontWeight: 600 }}>
                     {s}
                     <button type="button" onClick={() => toggleService(s)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', padding: 0, lineHeight: 1, fontSize: 16 }}>×</button>
                   </span>
@@ -197,17 +197,17 @@ export function BookPage() {
               onBlur={() => setTimeout(() => setDropdownOpen(false), 200)}
               placeholder="Type to search services..."
               style={inputStyle}
-              onFocusCapture={e => (e.currentTarget.style.borderColor = 'rgba(72,207,203,0.4)')}
-              onBlurCapture={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')} />
+              onFocusCapture={e => (e.currentTarget.style.borderColor = 'rgba(28,167,196,0.5)')}
+              onBlurCapture={e => (e.currentTarget.style.borderColor = 'rgba(14,42,56,0.12)')} />
 
             {dropdownOpen && filteredServices.length > 0 && (
-              <div style={{ position: 'absolute', zIndex: 50, top: 'calc(100% + 4px)', left: 0, right: 0, background: '#12121A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, maxHeight: 200, overflowY: 'auto', boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
+              <div style={{ position: 'absolute', zIndex: 50, top: 'calc(100% + 4px)', left: 0, right: 0, background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.12)', borderRadius: 10, maxHeight: 200, overflowY: 'auto', boxShadow: '0 8px 32px rgba(14,127,168,0.16)' }}>
                 {filteredServices.map(s => (
                   <button key={s} type="button"
                     onMouseDown={e => { e.preventDefault(); toggleService(s); setServiceSearch('') }}
-                    style={{ width: '100%', textAlign: 'left', padding: '10px 16px', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: '#9ca3af', transition: 'background 0.15s, color 0.15s' }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(72,207,203,0.08)'; (e.currentTarget as HTMLElement).style.color = '#fff' }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'none'; (e.currentTarget as HTMLElement).style.color = '#9ca3af' }}>
+                    style={{ width: '100%', textAlign: 'left', padding: '10px 16px', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: '#54707C', transition: 'background 0.15s, color 0.15s' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(28,167,196,0.10)'; (e.currentTarget as HTMLElement).style.color = '#0F2A38' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'none'; (e.currentTarget as HTMLElement).style.color = '#54707C' }}>
                     {s}
                   </button>
                 ))}
@@ -215,17 +215,17 @@ export function BookPage() {
             )}
             </div>
 
-            <p style={{ fontSize: 12, color: 'rgba(72,207,203,0.6)', marginTop: 6 }}>
+            <p style={{ fontSize: 12, color: '#0E7FA8', marginTop: 6 }}>
               Helps us build a custom growth plan before the call so we hit the ground running.
             </p>
           </div>
 
           {/* Terms */}
-          <div style={{ padding: '16px 20px', borderRadius: 12, border: '1px solid rgba(255,255,255,0.07)', background: 'rgba(0,0,0,0.2)', marginBottom: 24 }}>
+          <div style={{ padding: '16px 20px', borderRadius: 12, border: '1px solid rgba(14,42,56,0.08)', background: '#F1F7F9', marginBottom: 24 }}>
             <label style={{ display: 'flex', alignItems: 'flex-start', gap: 12, cursor: 'pointer' }}>
               <input type="checkbox" checked={form.agreedToTerms} onChange={e => set('agreedToTerms', e.target.checked)}
                 style={{ marginTop: 2, accentColor: TEAL, width: 16, height: 16, flexShrink: 0 }} />
-              <span style={{ fontSize: 13, color: '#9ca3af', lineHeight: 1.6 }}>
+              <span style={{ fontSize: 13, color: '#54707C', lineHeight: 1.6 }}>
                 I agree to Laprise's{' '}
                 <a href="https://app.termly.io/policy-viewer/policy.html?policyUUID=ca6aefbb-e411-4065-8cfb-36cbea11c613" target="_blank" rel="noopener noreferrer" style={{ color: TEAL, textDecoration: 'none' }}>Terms & Conditions</a>
                 {' '}and{' '}
@@ -238,9 +238,9 @@ export function BookPage() {
           {error && <p style={{ color: '#ef4444', fontSize: 14, marginBottom: 16 }}>{error}</p>}
 
           {/* Submit */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: 16, borderTop: '1px solid rgba(14,42,56,0.08)' }}>
             <button onClick={handleSubmit} disabled={isSubmitting}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: TEAL, color: '#0D0D12', padding: '14px 32px', borderRadius: 9999, border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: 15, opacity: isSubmitting ? 0.7 : 1, transition: 'transform 0.2s, opacity 0.2s' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: TEAL, color: '#FFFFFF', padding: '14px 32px', borderRadius: 9999, border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: 15, opacity: isSubmitting ? 0.7 : 1, transition: 'transform 0.2s, opacity 0.2s' }}
               onMouseEnter={e => { if (!isSubmitting) (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)' }}>
               {isSubmitting ? 'Submitting…' : <><MessageSquare size={16} /> Submit Request</>}
@@ -248,7 +248,7 @@ export function BookPage() {
           </div>
 
           {/* Disclaimer */}
-          <div style={{ marginTop: 20, fontSize: 12, color: 'rgba(156,163,175,0.7)', lineHeight: 1.6 }}>
+          <div style={{ marginTop: 20, fontSize: 12, color: '#7C95A0', lineHeight: 1.6 }}>
             <div style={{ overflow: 'hidden', maxHeight: showDisclaimer ? 200 : 40, transition: 'max-height 0.4s ease', maskImage: showDisclaimer ? 'none' : 'linear-gradient(to bottom, black 40%, transparent 100%)', WebkitMaskImage: showDisclaimer ? 'none' : 'linear-gradient(to bottom, black 40%, transparent 100%)' }}>
               <p style={{ marginBottom: 8 }}>By clicking 'Submit', I agree to receive recurring marketing messages and outbound calls at the number provided. These communications may be sent via automated technology, including an AI voice, from Laprise or its partners.</p>
               <p>Consent is not a condition of purchase. Msg & data rates may apply. Opt out anytime by replying STOP or stating 'Unsubscribe' during a call.</p>
@@ -263,10 +263,10 @@ export function BookPage() {
         {/* Trust row */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.3 }}
           style={{ marginTop: 32, textAlign: 'center' }}>
-          <p style={{ fontSize: 13, color: '#6b7280', marginBottom: 16 }}>Your information is secure and used only to prepare for your call.</p>
+          <p style={{ fontSize: 13, color: '#7C95A0', marginBottom: 16 }}>Your information is secure and used only to prepare for your call.</p>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 32, flexWrap: 'wrap' }}>
             {['No commitment', 'Free consultation', 'Custom demo'].map(t => (
-              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#9ca3af' }}>
+              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#54707C' }}>
                 <CheckCircle2 size={15} color={TEAL} />{t}
               </div>
             ))}
