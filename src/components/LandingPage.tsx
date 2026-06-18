@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Check, CheckCircle2, ChevronDown, Megaphone, CalendarClock, PhoneCall, MapPin, Monitor, Star } from 'lucide-react'
+import { ArrowRight, Check, CheckCircle2, ChevronDown } from 'lucide-react'
 import { LogoMark } from './LogoMark'
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
@@ -43,6 +43,37 @@ function Bubbles({ items }: { items: Bubble[] }) {
     </div>
   )
 }
+
+// ── Bespoke swim iconography (custom — deliberately NOT the stock lucide set) ──
+type SwimIconName = 'ads' | 'booking' | 'afterhours' | 'seo' | 'websites' | 'reviews'
+function SwimIcon({ name, size = 24, color = '#FFFFFF' }: { name: SwimIconName; size?: number; color?: string }) {
+  const c = { fill: 'none', stroke: color, strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
+  const glyph: Record<SwimIconName, React.ReactNode> = {
+    // ripple target — reaching the right local ripples
+    ads: (<><circle cx="12" cy="12" r="2.4" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="9.6" /></>),
+    // water drop + tick — a booked trial
+    booking: (<><path d="M12 3.5C9 8 6.5 11.4 6.5 14.5a5.5 5.5 0 0 0 11 0C17.5 11.4 15 8 12 3.5Z" /><path d="M9.6 14.4l1.8 1.8 3.2-3.5" /></>),
+    // crescent moon — after hours
+    afterhours: (<><path d="M19.2 13.2A7.3 7.3 0 1 1 10.9 4.8 5.8 5.8 0 0 0 19.2 13.2Z" /><circle cx="17.4" cy="6.4" r="0.9" fill={color} stroke="none" /></>),
+    // pin shaped like a droplet — local
+    seo: (<><path d="M12 21s-6.5-6.2-6.5-10.8a6.5 6.5 0 1 1 13 0C18.5 14.8 12 21 12 21Z" /><circle cx="12" cy="10.2" r="2.4" /></>),
+    // browser window with a wave
+    websites: (<><rect x="3.2" y="5" width="17.6" height="14" rx="2.6" /><path d="M3.2 9.3h17.6" /><circle cx="6" cy="7.15" r="0.7" fill={color} stroke="none" /><circle cx="8.2" cy="7.15" r="0.7" fill={color} stroke="none" /><path d="M6 14.6q1.8-2 3.6 0t3.6 0 3.6 0" /></>),
+    // star — reviews
+    reviews: (<path d="M12 4.2l2.2 4.5 5 .7-3.6 3.5.85 4.95L12 15.9l-4.45 2.35.85-4.95L4.8 9.4l5-.7Z" />),
+  }
+  return <svg viewBox="0 0 24 24" width={size} height={size} {...c}>{glyph[name]}</svg>
+}
+
+// organic "squishy" blob radii for icon holders (kills the rounded-square AI tell)
+const BLOB = [
+  '46% 54% 57% 43% / 52% 44% 56% 48%',
+  '57% 43% 47% 53% / 56% 52% 48% 44%',
+  '42% 58% 54% 46% / 44% 51% 49% 56%',
+  '54% 46% 43% 57% / 49% 57% 43% 51%',
+  '47% 53% 60% 40% / 53% 46% 54% 47%',
+  '60% 40% 49% 51% / 47% 55% 45% 53%',
+]
 
 // ── Wave divider — big sweeping arch + a translucent echo for depth ───────────
 // Two tiled copies per layer translate for a seamless loop; the back layer drifts
@@ -516,7 +547,7 @@ export function LandingPage() {
               const tints = ['#FFC247', '#FF7D54', '#34D8C2']
               return (
                 <motion.div key={col.heading} {...fadeUp(i * 0.1)} style={{ background: '#FFFFFF', borderRadius: 26, padding: 'clamp(26px,3vw,34px)', boxShadow: '0 18px 44px rgba(4,49,63,0.18)', marginTop: i === 1 ? 'clamp(0px,4vw,40px)' : 0 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 14, background: tints[i], display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: `0 8px 18px ${tints[i]}66` }}>
+                  <div style={{ width: 48, height: 48, borderRadius: BLOB[i % BLOB.length], background: tints[i], display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: `0 8px 18px ${tints[i]}66` }}>
                     <Check size={22} strokeWidth={3} color="#FFFFFF" />
                   </div>
                   <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 19, fontWeight: 700, color: INK, marginBottom: 18 }}>{col.heading}</h3>
@@ -621,9 +652,8 @@ export function LandingPage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 20, alignItems: 'start' }}>
             {SERVICES.map((s, i) => {
-              const icons = [Megaphone, CalendarClock, PhoneCall, MapPin, Monitor, Star]
+              const names: SwimIconName[] = ['ads', 'booking', 'afterhours', 'seo', 'websites', 'reviews']
               const colors = ['#0E7FA8', '#0E8C7B', '#FF7D54', '#127C8E', '#E0A12E', '#E85A9B']
-              const Icon = icons[i]
               const c = colors[i]
               const featured = i === 0 || i === 4
               const lift = i % 2 === 1 ? 'clamp(0px,3vw,28px)' : 0
@@ -636,8 +666,8 @@ export function LandingPage() {
                     display: 'flex', flexDirection: 'column', transition: 'transform 0.2s',
                   }}
                   whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}>
-                  <div style={{ width: 50, height: 50, borderRadius: 15, background: featured ? 'rgba(255,255,255,0.2)' : c, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: featured ? 'none' : `0 8px 18px ${c}59`, transform: 'rotate(-5deg)' }}>
-                    <Icon size={24} strokeWidth={2.2} color="#FFFFFF" />
+                  <div style={{ width: 54, height: 54, borderRadius: BLOB[i % BLOB.length], background: featured ? 'rgba(255,255,255,0.22)' : c, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18, boxShadow: featured ? 'none' : `0 8px 18px ${c}59` }}>
+                    <SwimIcon name={names[i]} size={25} color="#FFFFFF" />
                   </div>
                   <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 700, marginBottom: 10, color: featured ? '#FFFFFF' : INK }}>{s.title}</h3>
                   <p style={{ color: featured ? 'rgba(255,255,255,0.9)' : BODY, fontSize: 14, lineHeight: 1.6 }}>{s.desc}</p>
