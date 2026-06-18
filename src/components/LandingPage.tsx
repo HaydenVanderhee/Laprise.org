@@ -124,21 +124,13 @@ const BLOB = [
 // ── Wave divider — big sweeping arch + a translucent echo for depth ───────────
 // Two tiled copies per layer translate for a seamless loop; the back layer drifts
 // slower and dips lower so the bands feel like they pour into each other.
-export function WaveDivider({ top, bottom, height = 104 }: { top: string; bottom: string; height?: number }) {
-  // Smooth periodic waves: start and end at the same height (y=60) so the two
-  // tiled copies join seamlessly — no jagged connector. Back layer ~70% taller.
-  const front = 'M0,60 C240,28 480,28 720,60 C960,92 1200,92 1440,60 L1440,0 L0,0 Z'
-  const back = 'M0,60 C240,5 480,5 720,60 C960,115 1200,115 1440,60 L1440,0 L0,0 Z'
+export function WaveDivider({ top, bottom, height = 96 }: { top: string; bottom: string; height?: number }) {
+  // One smooth periodic wave — starts and ends at the same height (y=60) so the
+  // two tiled copies join seamlessly, and no second layer to create an edge line.
+  const front = 'M0,60 C240,26 480,26 720,60 C960,94 1200,94 1440,60 L1440,0 L0,0 Z'
   return (
     <div style={{ background: bottom, overflow: 'hidden', lineHeight: 0, position: 'relative', height, marginTop: -1, marginBottom: -1, zIndex: 21 }} aria-hidden="true">
-      <div className="wave-drift" style={{ position: 'absolute', inset: 0, display: 'flex', width: '200%', animation: 'wave-drift 34s linear infinite' }}>
-        {[0, 1].map(i => (
-          <svg key={i} viewBox="0 0 1440 120" width="50%" height={height} preserveAspectRatio="none" style={{ display: 'block' }}>
-            <path d={back} fill={top} fillOpacity={0.4} />
-          </svg>
-        ))}
-      </div>
-      <div className="wave-drift" style={{ position: 'absolute', inset: 0, display: 'flex', width: '200%', animation: 'wave-drift 22s linear infinite' }}>
+      <div className="wave-drift" style={{ position: 'absolute', inset: 0, display: 'flex', width: '200%', animation: 'wave-drift 26s linear infinite' }}>
         {[0, 1].map(i => (
           <svg key={i} viewBox="0 0 1440 120" width="50%" height={height} preserveAspectRatio="none" style={{ display: 'block' }}>
             <path d={front} fill={top} />
