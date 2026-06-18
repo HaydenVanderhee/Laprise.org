@@ -130,7 +130,7 @@ export function WaveDivider({ top, bottom, height = 104 }: { top: string; bottom
   const front = 'M0,60 C240,28 480,28 720,60 C960,92 1200,92 1440,60 L1440,0 L0,0 Z'
   const back = 'M0,60 C240,5 480,5 720,60 C960,115 1200,115 1440,60 L1440,0 L0,0 Z'
   return (
-    <div style={{ background: bottom, overflow: 'hidden', lineHeight: 0, position: 'relative', height, zIndex: 21 }} aria-hidden="true">
+    <div style={{ background: bottom, overflow: 'hidden', lineHeight: 0, position: 'relative', height, marginTop: -1, marginBottom: -1, zIndex: 21 }} aria-hidden="true">
       <div className="wave-drift" style={{ position: 'absolute', inset: 0, display: 'flex', width: '200%', animation: 'wave-drift 34s linear infinite' }}>
         {[0, 1].map(i => (
           <svg key={i} viewBox="0 0 1440 120" width="50%" height={height} preserveAspectRatio="none" style={{ display: 'block' }}>
@@ -190,15 +190,15 @@ function FeatureRow({ eyebrow, title, accent, body, bullets, visual, reverse, to
         <TickList items={bullets} tint={tone} />
       </motion.div>
       <motion.div {...fadeUp(0.1)} style={{ order: reverse ? 1 : 2, display: 'flex', justifyContent: 'center', position: 'relative' }}>
-        {/* soft tone shading radiating from the visual — static radial glows (cheap) */}
+        {/* soft tone shading radiating from the visual — gentle radial glow that fully fades out */}
         <div aria-hidden="true" style={{
-          position: 'absolute', width: '116%', height: '110%', top: '6%', left: reverse ? '-10%' : '8%',
-          background: `radial-gradient(circle at 40% 42%, ${tone}30, ${tone}16 46%, transparent 72%)`,
+          position: 'absolute', width: '124%', height: '120%', top: '0%', left: reverse ? '-14%' : '4%',
+          background: `radial-gradient(ellipse at 44% 46%, ${tone}24, ${tone}0d 40%, transparent 62%)`,
           zIndex: 0,
         }} />
         <div aria-hidden="true" style={{
-          position: 'absolute', width: '58%', height: '54%', bottom: '-4%', right: reverse ? '6%' : '-8%',
-          background: `radial-gradient(circle, ${tone}26, transparent 68%)`,
+          position: 'absolute', width: '64%', height: '60%', bottom: '-6%', right: reverse ? '4%' : '-10%',
+          background: `radial-gradient(ellipse, ${tone}1a, transparent 58%)`,
           zIndex: 0,
         }} />
         <div style={{ position: 'relative', zIndex: 1 }}>{visual}</div>
@@ -609,7 +609,7 @@ export function LandingPage() {
       <WaveDivider top={CYAN} bottom={WHITE_BAND} />
 
       {/* ── HOW IT WORKS — alternating feature rows (white) ───────────────── */}
-      <section id="how-it-works" className="mesh-bg" style={{ position: 'relative', zIndex: 20, background: WHITE_BAND, padding: 'clamp(72px,10vw,112px) 24px', scrollMarginTop: 96, overflow: 'visible' }}>
+      <section id="how-it-works" style={{ position: 'relative', zIndex: 20, background: WHITE_BAND, padding: 'clamp(72px,10vw,112px) 24px', scrollMarginTop: 96, overflow: 'visible' }}>
         {/* soft drifting gradient glows — coloured to read against the white band */}
         <Bubbles items={[
           { size: 300, top: '2%', left: '-4%', color: 'rgba(28,167,196,0.22)', soft: true, anim: 'bubble-a' },
