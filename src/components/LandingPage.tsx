@@ -68,8 +68,8 @@ function Doodle({ name, size = 56, color = ACCENT }: { name: DoodleName; size?: 
     <svg viewBox="0 0 48 48" width={size} height={size} {...s}>
       <defs>
         <filter id={fid} x="-15%" y="-15%" width="130%" height="130%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="7" result="n" />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7" xChannelSelector="R" yChannelSelector="G" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.013" numOctaves="1" seed="7" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G" />
         </filter>
       </defs>
       <g filter={`url(#${fid})`}>{glyph[name]}</g>

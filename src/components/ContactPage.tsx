@@ -103,11 +103,17 @@ export function ContactPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: BG, color: '#0F2A38', fontFamily: "'Hanken Grotesk',sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: BG, color: '#0F2A38', fontFamily: "'Hanken Grotesk',sans-serif", position: 'relative', overflow: 'hidden' }}>
+      {/* blue haze — soft depth/contrast behind the light contact body */}
+      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '20%', left: '-7%', width: 460, height: 460, borderRadius: '50%', background: 'radial-gradient(circle, rgba(28,167,196,0.26), transparent 70%)', filter: 'blur(26px)' }} />
+        <div style={{ position: 'absolute', top: '46%', right: '-6%', width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, rgba(14,127,168,0.20), transparent 70%)', filter: 'blur(30px)' }} />
+        <div style={{ position: 'absolute', bottom: '-4%', left: '28%', width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle, rgba(23,181,174,0.16), transparent 70%)', filter: 'blur(28px)' }} />
+      </div>
       <PageNav />
 
       {/* Cyan hero header + wave into the body */}
-      <section style={{ background: '#1CA7C4', padding: 'clamp(120px,16vw,160px) clamp(20px,5vw,40px) clamp(48px,7vw,72px)', textAlign: 'center' }}>
+      <section style={{ position: 'relative', zIndex: 1, background: '#1CA7C4', padding: 'clamp(120px,16vw,160px) clamp(20px,5vw,40px) clamp(48px,7vw,72px)', textAlign: 'center' }}>
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ maxWidth: 720, margin: '0 auto' }}>
           <span style={{ display: 'inline-block', fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#FFFFFF', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', padding: '6px 16px', borderRadius: 9999, marginBottom: 20 }}>
             Get in Touch
@@ -122,7 +128,7 @@ export function ContactPage() {
       </section>
       <WaveDivider top="#1CA7C4" bottom="#F7FAFB" />
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(20px,5vw,40px) 80px' }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(20px,5vw,40px) 80px' }}>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40, alignItems: 'start' }}>
 
