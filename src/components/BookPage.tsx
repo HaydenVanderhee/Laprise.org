@@ -6,7 +6,7 @@ import { CheckCircle2, Building2, ChevronDown, ChevronUp, MessageSquare } from '
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 const TEAL = '#0E7FA8'
-const BG = '#F7FAFB'
+const BG = '#1CA7C4'
 
 const SERVICES = [
   'Trial Lesson Enquiry', 'Term Enrolment', 'Group Lessons', 'Private Lessons',
@@ -103,12 +103,16 @@ export function BookPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: BG, color: '#0F2A38', fontFamily: "'Hanken Grotesk',sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: BG, color: '#0F2A38', fontFamily: "'Hanken Grotesk',sans-serif", position: 'relative', overflow: 'hidden' }}>
       <PageNav />
 
-      {/* Cyan hero header + wave into the form */}
-      <section style={{ background: '#1CA7C4', padding: 'clamp(120px,16vw,160px) clamp(20px,5vw,40px) clamp(48px,7vw,72px)', textAlign: 'center' }}>
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ maxWidth: 720, margin: '0 auto' }}>
+      {/* Navy hero header (glow + shapes) + wave into the cyan body */}
+      <section style={{ position: 'relative', overflow: 'hidden', background: '#0B2A38', padding: 'clamp(120px,16vw,160px) clamp(20px,5vw,40px) clamp(48px,7vw,72px)', textAlign: 'center' }}>
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundImage: 'radial-gradient(ellipse 42% 55% at 88% 0%, rgba(255,194,71,0.16), transparent 55%), radial-gradient(ellipse 55% 60% at 82% 18%, rgba(28,167,196,0.26), transparent 60%), radial-gradient(ellipse 48% 55% at 6% 92%, rgba(23,181,174,0.18), transparent 60%)' }} />
+        <span aria-hidden="true" className="bubble-a" style={{ position: 'absolute', width: 96, height: 96, borderRadius: '50%', top: '20%', left: '6%', background: 'rgba(127,215,230,0.16)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-c" style={{ position: 'absolute', width: 52, height: 52, borderRadius: '50%', top: '32%', right: '9%', border: '2px solid rgba(255,194,71,0.45)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-b" style={{ position: 'absolute', width: 30, height: 30, borderRadius: '50%', bottom: '24%', left: '20%', background: 'rgba(84,224,214,0.45)', zIndex: 0 }} />
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE }} style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#FFFFFF', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', padding: '6px 16px', borderRadius: 9999, marginBottom: 20 }}>
             Free Discovery Call
           </span>
@@ -120,9 +124,15 @@ export function BookPage() {
           </p>
         </motion.div>
       </section>
-      <WaveDivider top="#1CA7C4" bottom="#F7FAFB" />
+      <WaveDivider top="#0B2A38" bottom="#1CA7C4" />
 
-      <div style={{ maxWidth: 720, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(20px,5vw,40px) 80px' }}>
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundImage: 'radial-gradient(ellipse 80% 36% at 50% 24%, rgba(255,255,255,0.14), transparent 70%)' }} />
+        <span aria-hidden="true" className="bubble-a" style={{ position: 'absolute', width: 140, height: 140, borderRadius: '50%', top: '5%', left: '3%', background: 'rgba(255,255,255,0.10)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-c" style={{ position: 'absolute', width: 66, height: 66, borderRadius: '50%', top: '32%', right: '5%', border: '2px solid rgba(255,255,255,0.4)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-b" style={{ position: 'absolute', width: 40, height: 40, borderRadius: '50%', bottom: '8%', left: '7%', background: 'rgba(255,194,71,0.5)', zIndex: 0 }} />
+        <span aria-hidden="true" className="bubble-a" style={{ position: 'absolute', width: 90, height: 90, borderRadius: '50%', bottom: '16%', right: '8%', background: 'rgba(255,255,255,0.08)', zIndex: 0 }} />
+        <div style={{ position: 'relative', zIndex: 1, maxWidth: 720, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(20px,5vw,40px) 80px' }}>
 
         {/* Form card */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}
@@ -268,15 +278,16 @@ export function BookPage() {
         {/* Trust row */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.3 }}
           style={{ marginTop: 32, textAlign: 'center' }}>
-          <p style={{ fontSize: 13, color: '#7C95A0', marginBottom: 16 }}>Your information is secure and used only to prepare for your call.</p>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.85)', marginBottom: 16 }}>Your information is secure and used only to prepare for your call.</p>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 32, flexWrap: 'wrap' }}>
             {['No commitment', 'Free consultation', 'Custom demo'].map(t => (
-              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#54707C' }}>
-                <CheckCircle2 size={15} color={TEAL} />{t}
+              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.92)', fontWeight: 600 }}>
+                <CheckCircle2 size={15} color="#FFFFFF" />{t}
               </div>
             ))}
           </div>
         </motion.div>
+        </div>
       </div>
     </div>
   )
