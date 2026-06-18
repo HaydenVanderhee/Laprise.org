@@ -23,6 +23,11 @@ const ACCENT = '#0E7FA8'
 const GREEN = '#1FB39B'   // aqua-green (default tick colour)
 const MINT = '#26D7C4'    // bright spring-teal band (Soakly-style)
 
+// depth-bloom gradients — warm glow + highlight + shadow so a flat band gets light & shade
+const CYAN_BLOOM = 'radial-gradient(ellipse 45% 40% at 86% 5%, rgba(255,194,71,0.20), transparent 60%), radial-gradient(ellipse 55% 55% at 8% 94%, rgba(255,255,255,0.22), transparent 62%), radial-gradient(ellipse 48% 52% at 96% 88%, rgba(11,42,56,0.22), transparent 60%)'
+const NAVY_BLOOM = 'radial-gradient(ellipse 45% 40% at 88% 5%, rgba(255,194,71,0.14), transparent 55%), radial-gradient(ellipse 55% 55% at 6% 94%, rgba(23,181,174,0.20), transparent 60%), radial-gradient(ellipse 50% 50% at 82% 85%, rgba(28,167,196,0.22), transparent 60%)'
+const MINT_BLOOM = 'radial-gradient(ellipse 45% 40% at 85% 7%, rgba(255,255,255,0.26), transparent 60%), radial-gradient(ellipse 55% 55% at 6% 92%, rgba(14,127,168,0.18), transparent 62%), radial-gradient(ellipse 46% 52% at 96% 86%, rgba(255,194,71,0.14), transparent 60%)'
+
 // ── Decorative drifting bubbles (organic depth; circles cross section edges) ──
 // `soft: true` renders a blurred radial-gradient glow instead of a hard circle/ring.
 type Bubble = { size: number; top?: string; bottom?: string; left?: string; right?: string; color: string; ring?: boolean; soft?: boolean; anim: string }
@@ -40,6 +45,26 @@ function Bubbles({ items }: { items: Bubble[] }) {
               : { background: b.color }),
         }} />
       ))}
+    </div>
+  )
+}
+
+// ── Depth blooms — soft radial glows that give a flat band light + shadow ─────
+function Blooms({ gradient }: { gradient: string }) {
+  return <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundImage: gradient }} />
+}
+
+// ── Floating "proof" chip — the little corner card from the hero, reusable ────
+function FloatChip({ icon, iconBg, title, sub, style, delay = 0 }: {
+  icon: React.ReactNode; iconBg: string; title: string; sub: string; style?: React.CSSProperties; delay?: number
+}) {
+  return (
+    <div className="soft-float" style={{ position: 'absolute', zIndex: 5, background: '#FFFFFF', borderRadius: 16, boxShadow: '0 16px 40px rgba(4,49,63,0.20)', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, animationDelay: `${delay}s`, ...style }}>
+      <div style={{ width: 26, height: 26, borderRadius: '50%', background: iconBg, color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flexShrink: 0 }}>{icon}</div>
+      <div>
+        <div style={{ fontSize: 12, fontWeight: 700, color: INK, whiteSpace: 'nowrap' }}>{title}</div>
+        <div style={{ fontSize: 11, color: '#7C95A0', whiteSpace: 'nowrap' }}>{sub}</div>
+      </div>
     </div>
   )
 }
@@ -341,7 +366,8 @@ const FAQS = [
 // ── Mockup visuals (light, plain-language) ────────────────────────────────────
 function TimelineCard() {
   return (
-    <div style={{ width: '100%', maxWidth: 420, background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 24, padding: 24, boxShadow: '0 20px 50px rgba(14,127,168,0.12)', display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <div style={{ position: 'relative', width: '100%', maxWidth: 420, background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 24, padding: 24, boxShadow: '0 20px 50px rgba(14,127,168,0.12)', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <FloatChip icon="⚡" iconBg="#FF7D54" title="Replied in 8s" sub="before they left" style={{ top: -16, right: -12 }} delay={0.6} />
       {[
         { label: 'New enquiry received', sub: 'Emma W. — Trial Lesson', time: '10:42 pm', color: '#7C95A0' },
         { label: 'Reply sent automatically', sub: 'Answered pricing & availability', time: '10:42 pm', color: CYAN },
@@ -362,7 +388,8 @@ function TimelineCard() {
 
 function BookingCard() {
   return (
-    <div style={{ width: '100%', maxWidth: 360, background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 24, padding: 24, boxShadow: '0 20px 50px rgba(14,127,168,0.12)' }}>
+    <div style={{ position: 'relative', width: '100%', maxWidth: 360, background: '#FFFFFF', border: '1px solid rgba(14,42,56,0.10)', borderRadius: 24, padding: 24, boxShadow: '0 20px 50px rgba(14,127,168,0.12)' }}>
+      <FloatChip icon="✓" iconBg="#17B5AE" title="On your calendar" sub="no double-booking" style={{ top: -16, right: -12 }} delay={1.1} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
         <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 15, color: INK }}>October</span>
         <span style={{ fontSize: 12, color: '#7C95A0', fontWeight: 600 }}>Trial lessons</span>
@@ -398,7 +425,8 @@ function BookingCard() {
 
 function StatsCard() {
   return (
-    <div style={{ width: '100%', maxWidth: 420, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+    <div style={{ position: 'relative', width: '100%', maxWidth: 420, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <FloatChip icon="↑" iconBg="#0E8C7B" title="+18% trials" sub="this term" style={{ top: -18, right: -10 }} delay={0.4} />
       {[{ label: 'Conversion', val: '68%', color: INK }, { label: 'Cost / booking', val: '$14', color: ACCENT }].map(m => (
         <div key={m.label} style={{ background: '#FFFFFF', padding: 24, borderRadius: 18, border: '1px solid rgba(14,42,56,0.10)', boxShadow: '0 14px 36px rgba(14,127,168,0.10)' }}>
           <div style={{ fontSize: 11, color: '#7C95A0', marginBottom: 8, fontWeight: 600 }}>{m.label}</div>
@@ -538,6 +566,7 @@ export function LandingPage() {
 
       {/* ── VALUE CHECKLIST (light blue) ──────────────────────────────────── */}
       <section style={{ position: 'relative', zIndex: 20, background: CYAN, padding: 'clamp(64px,9vw,96px) 24px', overflow: 'visible' }}>
+        <Blooms gradient={CYAN_BLOOM} />
         <Bubbles items={[
           { size: 130, top: '-50px', left: '5%', color: 'rgba(255,255,255,0.10)', anim: 'bubble-a' },
           { size: 64, top: '18%', right: '9%', color: 'rgba(255,255,255,0.5)', ring: true, anim: 'bubble-b' },
@@ -647,6 +676,7 @@ export function LandingPage() {
 
       {/* ── WHAT WE OFFER (light blue) ────────────────────────────────────── */}
       <section style={{ position: 'relative', zIndex: 20, background: CYAN, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
+        <Blooms gradient={CYAN_BLOOM} />
         <Bubbles items={[
           { size: 90, top: '-30px', right: '12%', color: 'rgba(255,255,255,0.5)', ring: true, anim: 'bubble-a' },
           { size: 160, top: '30%', left: '-50px', color: 'rgba(255,255,255,0.08)', anim: 'bubble-c' },
@@ -695,6 +725,7 @@ export function LandingPage() {
 
       {/* ── RESULTS / WHY AUTOMATION WINS (dark navy) ─────────────────────── */}
       <section style={{ position: 'relative', zIndex: 20, background: NAVY_GRAD, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
+        <Blooms gradient={NAVY_BLOOM} />
         <Bubbles items={[
           { size: 120, top: '-40px', left: '8%', color: 'rgba(28,167,196,0.18)', anim: 'bubble-a' },
           { size: 70, top: '22%', right: '7%', color: 'rgba(127,215,230,0.4)', ring: true, anim: 'bubble-b' },
@@ -734,6 +765,7 @@ export function LandingPage() {
 
       {/* ── FAQ (Soakly-style mint green) ─────────────────────────────────── */}
       <section style={{ position: 'relative', zIndex: 20, background: MINT, padding: 'clamp(72px,9vw,104px) 24px', overflow: 'visible' }}>
+        <Blooms gradient={MINT_BLOOM} />
         <Bubbles items={[
           { size: 120, top: '-44px', right: '10%', color: 'rgba(255,255,255,0.16)', anim: 'bubble-a' },
           { size: 64, top: '20%', left: '7%', color: 'rgba(11,42,56,0.18)', ring: true, anim: 'bubble-b' },
@@ -769,6 +801,7 @@ export function LandingPage() {
 
       {/* ── GUARANTEE + CTA (light blue) ──────────────────────────────────── */}
       <section style={{ position: 'relative', zIndex: 20, background: CYAN, padding: 'clamp(80px,10vw,120px) 24px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'visible' }}>
+        <Blooms gradient={CYAN_BLOOM} />
         <Bubbles items={[
           { size: 150, top: '-60px', left: '8%', color: 'rgba(255,255,255,0.10)', anim: 'bubble-a' },
           { size: 70, top: '24%', right: '10%', color: 'rgba(255,255,255,0.5)', ring: true, anim: 'bubble-b' },
