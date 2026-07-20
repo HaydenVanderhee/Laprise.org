@@ -117,7 +117,7 @@ export function BookPage() {
             Book Your Discovery Call
           </h1>
           <p style={{ fontSize: 'clamp(1.05rem,2.2vw,1.35rem)', color: 'rgba(255,255,255,0.9)', lineHeight: 1.7, maxWidth: 600, margin: '0 auto' }}>
-            Tell us about your swim school so we can prepare a customised demonstration of how Laprise can transform your enrolment pipeline.
+            Tell us about your swim school so we can prepare a customised demonstration of how Laprise can help your school grow.
           </p>
         </motion.div>
       </section>

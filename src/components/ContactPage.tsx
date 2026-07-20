@@ -136,7 +136,7 @@ export function ContactPage() {
           <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}>
             <h2 style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 20, color: '#FFFFFF' }}>Contact Information</h2>
             <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 15, lineHeight: 1.7, marginBottom: 32 }}>
-              Ready to transform your swim school's enrolment pipeline? Reach out and let's discuss how Laprise can help you grow.
+              Ready to grow your swim school? Reach out and let's discuss how Laprise can help, whether that's filling lanes or staffing them.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginBottom: 36 }}>

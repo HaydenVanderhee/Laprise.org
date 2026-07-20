@@ -80,7 +80,7 @@ function ScribbleUnderline({ color = '#FFC247', strokeW = 5 }: { color?: string;
 
 // ── Hand-drawn swim doodles — clean line sketches run through a subtle roughen ──
 // filter so they read as penned, not vector-perfect (the opposite of stock icons).
-type DoodleName = 'ads' | 'booking' | 'afterhours' | 'seo' | 'websites' | 'reviews'
+type DoodleName = 'ads' | 'booking' | 'afterhours' | 'seo' | 'websites' | 'reviews' | 'staff'
 function Doodle({ name, size = 56, color = ACCENT }: { name: DoodleName; size?: number; color?: string }) {
   const fid = `rough-${name}`
   const s = { fill: 'none', stroke: color, strokeWidth: 2.1, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
@@ -97,6 +97,8 @@ function Doodle({ name, size = 56, color = ACCENT }: { name: DoodleName; size?: 
     websites: (<><path d="M7 12 h34 a2.5 2.5 0 0 1 2.5 2.5 v21 a2.5 2.5 0 0 1 -2.5 2.5 h-34 a2.5 2.5 0 0 1 -2.5 -2.5 v-21 a2.5 2.5 0 0 1 2.5 -2.5 Z" /><path d="M5 20 h38" /><circle cx="10" cy="16" r="1" fill={color} stroke="none" /><circle cx="14" cy="16" r="1" fill={color} stroke="none" /><path d="M11 30 q3.5 -3.5 7 0 t7 0 t7 0" /></>),
     // two hand-drawn stars — reviews
     reviews: (<><path d="M20 9 l3.4 7 7.6 .9 -5.6 5.2 1.4 7.5 -6.8 -3.7 -6.8 3.7 1.4 -7.5 -5.6 -5.2 7.6 -.9 Z" /><path d="M38 8 l1.5 3 3.3 .4 -2.4 2.3 .6 3.3 -3 -1.6 -3 1.6 .6 -3.3 -2.4 -2.3 3.3 -.4 Z" /></>),
+    // coach's whistle — recruiting trained teachers
+    staff: (<><circle cx="23" cy="28" r="9" /><path d="M32 24 h10 a2 2 0 0 1 2 2 v3 a2 2 0 0 1 -2 2 h-10" /><circle cx="23" cy="28" r="2.6" /><path d="M20 19 q3 -3.5 6.5 -0.5" /></>),
   }
   return (
     <svg viewBox="0 0 48 48" width={size} height={size} {...s}>
@@ -303,9 +305,9 @@ const SERVICES = [
   { title: 'Personalised Ads', desc: 'High-converting ad creatives designed specifically to attract families searching for swim lessons in your local area.' },
   { title: 'Trial Booking Automation', desc: 'Streamlined workflows that guide new families from first enquiry to confirmed trial lesson without any manual follow-up.' },
   { title: 'After-Hours Handling', desc: "Seamless call and message management when you're in the pool. Your AI assistant handles enquiries professionally after 6pm and on weekends." },
-  { title: 'Local SEO', desc: 'Long-term organic growth strategies ensuring your swim school ranks #1 for families searching "swim lessons near me" in your suburb.' },
+  { title: 'Teacher Recruitment', desc: 'We help you find trained, ready-to-work swim teachers, so a full waitlist never has to sit behind a lane you cannot staff.' },
   { title: 'Custom Websites', desc: 'Stunning, high-performance web architecture that not only looks incredible but actively drives trial bookings and enrolments.' },
-  { title: 'Review Management', desc: 'Automated follow-up protocols to capture 5-star reviews from happy families while intercepting negative feedback privately.' },
+  { title: 'Review Management', desc: "Automated follow-up that captures 5-star reviews from happy families while handling any negative feedback privately, lifting your school up the local search results when parents search 'swim lessons near me' in your suburb." },
 ]
 
 const BENCHMARKS = [
@@ -359,7 +361,11 @@ const FAQS = [
     answer: 'Absolutely. Our system uses enterprise-grade encryption and compliant data routing to ensure all family information remains strictly confidential.',
   },
   {
-    question: 'What if we don\'t see more trial bookings — do we still pay?',
+    question: 'Do you help with finding swim teachers, not just enquiries?',
+    answer: "Yes. Alongside filling your lanes, we help you find trained, ready-to-work teachers so you can actually open the classes families are waiting for. If staffing is the thing holding your growth back, we can start there.",
+  },
+  {
+    question: 'What if we don\'t see more trial bookings, do we still pay?',
     answer: "No. We exclusively partner with swim schools and our system is performance-guaranteed. We guarantee more trial bookings in 90 days, or we work with you for free until you see results.",
   },
 ]
@@ -497,7 +503,7 @@ export function LandingPage() {
             </motion.h1>
 
             <motion.p {...fadeUp(0.2)} style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', color: 'rgba(230,240,243,0.82)', marginBottom: 32, maxWidth: 540, lineHeight: 1.7 }}>
-              We install a 24/7 enrolment system that instantly answers pricing questions, books qualified trial lessons, and follows up on no-shows — even while you're in the pool teaching.
+              We fill your lanes and help you staff them: ads and 24/7 follow-up that book trials while you're in the pool teaching, plus trained, ready-to-work teachers when you need them.
             </motion.p>
 
             <motion.div {...fadeUp(0.3)} style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'center' }}>
@@ -514,7 +520,7 @@ export function LandingPage() {
 
             {/* trust strip */}
             <motion.div {...fadeUp(0.4)} style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(14px,3vw,28px)', marginTop: 28 }}>
-              {['Built for AU & NZ swim schools', 'You only pay for results'].map(t => (
+              {['Built for swim schools', 'You only pay for results'].map(t => (
                 <span key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'rgba(230,240,243,0.78)', fontSize: 13, fontWeight: 600 }}>
                   <Check size={15} strokeWidth={3} color="#54E0D6" /> {t}
                 </span>
@@ -578,7 +584,7 @@ export function LandingPage() {
               Fair, simple and clear
             </h2>
             <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 18, lineHeight: 1.6 }}>
-              Most agencies sell you cheap quick wins. We install systems that fill your lanes every term — and you only pay when families actually show up.
+              Most agencies sell you cheap quick wins. We help you fill your lanes and staff them every term, and you only pay when it actually works.
             </p>
           </motion.div>
 
@@ -687,14 +693,14 @@ export function LandingPage() {
               What We <span style={{ position: 'relative', display: 'inline-block' }}>Offer<ScribbleUnderline /></span>
             </h2>
             <p style={{ color: 'rgba(255,255,255,0.92)', fontSize: 18, lineHeight: 1.6 }}>
-              We build everything your school needs to keep classes full — without adding to your plate.
+              Everything your school needs to fill your classes and staff them, without adding to your plate.
             </p>
           </motion.div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 20, alignItems: 'start' }}>
             {SERVICES.map((s, i) => {
-              const names: DoodleName[] = ['ads', 'booking', 'afterhours', 'seo', 'websites', 'reviews']
-              const colors = ['#0E7FA8', '#0E8C7B', '#FF7D54', '#127C8E', '#E0A12E', '#E85A9B']
+              const names: DoodleName[] = ['ads', 'booking', 'afterhours', 'staff', 'websites', 'reviews']
+              const colors = ['#0E7FA8', '#0E8C7B', '#FF7D54', '#6C63E0', '#E0A12E', '#E85A9B']
               const c = colors[i]
               const featured = i === 0 || i === 4
               const lift = i % 2 === 1 ? 'clamp(0px,3vw,28px)' : 0
@@ -733,7 +739,7 @@ export function LandingPage() {
         ]} />
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 1152, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <motion.h2 {...fadeUp(0)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 700, marginBottom: 16, textAlign: 'center', color: '#FFFFFF' }}>
-            Why <span style={{ color: '#7FD7E6' }}>Automation Wins for Swim Schools</span>
+            Why <span style={{ color: '#7FD7E6' }}>the Right Systems Win for Swim Schools</span>
           </motion.h2>
           <motion.p {...fadeUp(0.1)} style={{ color: 'rgba(230,240,243,0.82)', textAlign: 'center', fontSize: 18, maxWidth: 768, margin: '0 auto 56px', lineHeight: 1.6 }}>
             Response speed and persistent follow-up are the deciding factors in whether a family enrols with you or the school down the road.
@@ -814,9 +820,6 @@ export function LandingPage() {
           { size: 56, bottom: '22%', right: '15%', color: 'rgba(255,194,71,0.45)', ring: true, anim: 'bubble-c' },
         ]} />
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 1024, margin: '0 auto', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <motion.div {...fadeUp(0)} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 20px', borderRadius: 9999, border: '1px solid rgba(255,255,255,0.35)', background: 'rgba(255,255,255,0.15)', color: '#FFFFFF', fontSize: 13, letterSpacing: '0.08em', marginBottom: 40, fontWeight: 700, textTransform: 'uppercase' }}>
-            <LogoMark size={16} /> The Performance Guarantee
-          </motion.div>
           <motion.h2 {...fadeUp(0.1)} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(2.5rem, 7vw, 5rem)', fontWeight: 700, marginBottom: 32, lineHeight: 1.05, color: '#FFFFFF' }}>
             Increase Your Bookings<br />by 30% in <span style={{ position: 'relative', display: 'inline-block' }}>90 Days.<ScribbleUnderline /></span>{' '}
             <span style={{ display: 'block', color: 'rgba(255,255,255,0.75)', fontSize: 'clamp(1.5rem, 4vw, 3.25rem)', marginTop: 16 }}>Or We Work for Free Until You Do.</span>
@@ -849,7 +852,7 @@ export function LandingPage() {
                 <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: '#FFFFFF' }}>Laprise</span>
               </a>
               <p style={{ color: 'rgba(230,240,243,0.65)', maxWidth: 384, lineHeight: 1.7, fontSize: 14 }}>
-                Filling swim school lanes every term with intelligent enrolment automation.
+                Helping private swim schools grow: filling lanes, and finding the teachers to take them.
               </p>
             </div>
             <div>
